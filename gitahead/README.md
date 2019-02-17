@@ -11,3 +11,5 @@ sh GitAhead
 # The desktop shortcut is located at, you may need to restart your x-window
 ll ~/.local/share/applications/gitahead.desktop
 ```
+
+![Screenshot](screenshot.png "GitAhead log screenshot")

@@ -29,6 +29,8 @@ Pages
 
 [Bookmarks](pages/bookmarks/README.md)
 
-Code Snippets
+[Linux Tweaks](pages/linux-tweaks/README.md)
 
+Code Snippets
+-------------
 [Visual Studio Settings](snippets/visual-studio-settings/README.md)

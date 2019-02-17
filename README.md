@@ -15,6 +15,10 @@ Blog Posts
 
 [Standalone MySql with Docker](posts/standalone-mysql-with-docker/README.md)
 
+[Linux Mint Keyboard on OS X](posts/linux-mint-keyboard-on-osx/README.md)
+
+[Install Docker on Linux Mint](posts/intall-docker-on-linux-mint/README.md)
+
 Pages
 -----
 [Git Cheat Sheet](pages/git-cheat-sheet/README.md)

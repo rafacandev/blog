@@ -16,3 +16,7 @@ Pages
 [Docker Cheat Sheet](pages/docker-cheat-sheet/README.md)
 
 [Bookmarks](pages/bookmarks/README.md)
+
+Code Snippets
+
+[Visual Studio Settings](snippets/visual-studio-settings/README.md)

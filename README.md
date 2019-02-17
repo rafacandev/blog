@@ -19,6 +19,8 @@ Blog Posts
 
 [Install Docker on Linux Mint](posts/intall-docker-on-linux-mint/README.md)
 
+[Linux - Disable USB Auto Suspend](posts/linux-disable-usb-auto-suspend/README.md)
+
 Pages
 -----
 [Git Cheat Sheet](pages/git-cheat-sheet/README.md)

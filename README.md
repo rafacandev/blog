@@ -21,6 +21,8 @@ Blog Posts
 
 [Linux - Disable USB Auto Suspend](posts/linux-disable-usb-auto-suspend/README.md)
 
+[How to Create Many-to-Many Resources with REST](posts/how-to-create-many-to-many-resources-with-rest/README.md)
+
 Pages
 -----
 [Git Cheat Sheet](pages/git-cheat-sheet/README.md)

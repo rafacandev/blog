@@ -11,6 +11,8 @@ Blog Posts
 
 [Deploying Angular With Apache](posts/deploying-angular-with-apache/README.md)
 
+[How to Create a Git Server](posts/how-to-create-a-git-server)
+
 Pages
 -----
 [Git Cheat Sheet](pages/git-cheat-sheet/README.md)

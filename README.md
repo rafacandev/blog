@@ -3,9 +3,9 @@ Rafa Santos Blog
 
 Blog Posts
 ----------
-[GitAhead a graphical git client](gitahead/README.md)
+[GitAhead a graphical git client](posts/gitahead/README.md)
 
-[How to use Maps with Castor XML](how-to-use-maps-with-castor-xml/README.md)
+[How to use Maps with Castor XML](posts/how-to-use-maps-with-castor-xml/README.md)
 
 Pages
 -----

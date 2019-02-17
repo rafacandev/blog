@@ -9,9 +9,11 @@ Blog Posts
 
 [Generate Centered Thumbnails In Java](posts/generate-centered-thumbnails-in-java/README.md)
 
-[Deploying Angular With Apache](posts/deploying-angular-with-apache/README.md)
+[Deploying Angular with Apache](posts/deploying-angular-with-apache/README.md)
 
 [How to Create a Git Server](posts/how-to-create-a-git-server)
+
+[Standalone MySql with Docker](posts/standalone-mysql-with-docker/README.md)
 
 Pages
 -----

@@ -12,3 +12,5 @@ Pages
 [Git Cheat Sheet](pages/git-cheat-sheet/README.md)
 
 [Docker Cheat Sheet](pages/docker-cheat-sheet/README.md)
+
+[Bookmarks](pages/bookmarks/README.md)

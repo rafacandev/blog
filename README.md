@@ -9,6 +9,8 @@ Blog Posts
 
 [Generate Centered Thumbnails In Java](posts/generate-centered-thumbnails-in-java/README.md)
 
+[Deploying Angular With Apache](posts/deploying-angular-with-apache/README.md)
+
 Pages
 -----
 [Git Cheat Sheet](pages/git-cheat-sheet/README.md)

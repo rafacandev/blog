@@ -7,6 +7,8 @@ Blog Posts
 
 [How to use Maps with Castor XML](posts/how-to-use-maps-with-castor-xml/README.md)
 
+[Generate Centered Thumbnails In Java](posts/generate-centered-thumbnails-in-java/README.md)
+
 Pages
 -----
 [Git Cheat Sheet](pages/git-cheat-sheet/README.md)

@@ -12,9 +12,10 @@ It is turned off by default. Normally, you just need to search for _firewall_ in
 * `apt-xapian-index`: indexing application speeds up certain search operations but in general isn't a good trade-off
 * `pidgin`: chatting app
 * `hexchat: chatting app
+* `thunderbird`: email client
 
 ```bash
-sudo apt-get remove mono-runtime-common gnome-orca apt-xapian-index pidgin hexchat
+sudo apt-get remove mono-runtime-common gnome-orca apt-xapian-index pidgin hexchat thunderbird
 ```
 
 

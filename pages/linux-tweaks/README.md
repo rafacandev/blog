@@ -116,6 +116,19 @@ export JAVA_HOME=/usr/lib/jvm/java-1.10.0-openjdk-amd64/
 export PATH=$PATH:$JAVA_HOME
 ```
 
+### Install open-jdk
+```
+# List installed java packages
+dpkg --get-selections | grep -v deinstall | grep "jdk\|jre"
+# List java alternatives
+sudo update-alternatives --config java
+
+# Install jdk 11
+sudo apt install openjdk-11-jdk
+
+```
+
+
 ### Useful Apps
 
 Useful apps

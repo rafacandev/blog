@@ -23,6 +23,7 @@ sudo apt-get remove mono-runtime-common gnome-orca apt-xapian-index pidgin hexch
 If you are using grub for boot management (e.g.: when you have a dual boot) you may want to reduce the default timeout.
 
 ```
+sudo cp /etc/default/grub /etc/default/grub.bk
 sudo vim /etc/default/grub
 # Change the value of GRUB_TIMEOUT to 1
 GRUB_TIMEOUT=1

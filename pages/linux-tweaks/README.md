@@ -6,18 +6,30 @@ Useful tweaks for linux distribution based on debian (ubuntu, mint, etc).
 ### Turn on the firewall
 It is turned off by default. Normally, you just need to search for _firewall_ in your distribution menu.
 
+
+### Useful Apps
+
+Essential apps
+```bash
+sudo apt-get install vim curl git maven artha chromium-browser
+```
+
+VLC (plus MIDI support)
+```bash
+sudo apt-get install vlc browser-plugin-vlc vlc-plugin-fluidsynth
+```
+
 ### Remove 'unnecessary' apps
 * `mono-runtime-common`: .NET Framework for Linux
 * `gnome-orca`: screen reader
 * `apt-xapian-index`: indexing application speeds up certain search operations but in general isn't a good trade-off
 * `pidgin`: chatting app
-* `hexchat: chatting app
+* `hexchat`: chatting app
 * `thunderbird`: email client
 
 ```bash
 sudo apt-get remove mono-runtime-common gnome-orca apt-xapian-index pidgin hexchat thunderbird
 ```
-
 
 ### Reduce grub timeout
 If you are using grub for boot management (e.g.: when you have a dual boot) you may want to reduce the default timeout.
@@ -126,19 +138,6 @@ sudo update-alternatives --config java
 # Install jdk 11
 sudo apt install openjdk-11-jdk
 
-```
-
-
-### Useful Apps
-
-Useful apps
-```bash
-sudo apt-get install vim curl git maven artha chromium-browser
-```
-
-VLC (plus MIDI support)
-```bash
-sudo apt-get install vlc browser-plugin-vlc vlc-plugin-fluidsynth
 ```
 
 ### Docker

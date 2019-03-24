@@ -27,6 +27,10 @@ Debugging with Visual Studio Code
 
 https://code.visualstudio.com/docs/nodejs/angular-tutorial
 
+Create Angular libraries
+
+https://angular.io/guide/creating-libraries
+
 Mac OS
 ------
 

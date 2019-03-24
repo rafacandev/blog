@@ -25,6 +25,8 @@ Blog Posts
 
 [Git Rebase Tutorial](posts/git-rebase-tutorial/README.md)
 
+[Linux Network Driver for rtl8192EU chipset](posts/linux-driver-for-rtl8192EU/README.md)
+
 Pages
 -----
 [Git Cheat Sheet](pages/git-cheat-sheet/README.md)

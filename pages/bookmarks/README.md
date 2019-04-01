@@ -44,3 +44,8 @@ https://github.com/tekezo/Karabiner
 Brew Formulas for OpenJDK
 
 https://github.com/AdoptOpenJDK/homebrew-openjdk
+
+Software Engineering
+--------------------
+Monitoring Distributed Systems
+https://landing.google.com/sre/sre-book/chapters/monitoring-distributed-systems/

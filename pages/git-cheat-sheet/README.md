@@ -39,3 +39,9 @@ Clear local branches which no long exist in the remote.
 ```bash
 git remote prune origin
 ```
+
+References
+----------
+Use multiple ssh keys
+
+https://medium.com/@trionkidnapper/ssh-keys-with-multiple-github-accounts-c67db56f191e

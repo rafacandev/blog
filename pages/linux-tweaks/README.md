@@ -177,3 +177,11 @@ The `Ctrl+Alt+Up` and `Ctrl+Alt+Down` are traditionally used with for toggle wor
 gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-down []
 gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-up []
 ```
+
+#### Shortcuts for Xfce
+![Windows Manager](window-manager-screenshot.png "Windows Manager")
+
+![Keyboard](keyboard-screenshot.png "Keyboard")
+
+
+

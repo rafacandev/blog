@@ -57,38 +57,6 @@ sudo vim /etc/sysctl.conf
 vm.swappiness = 1
 ```
 
-### Disable Unwanted Shortcuts
-The `Ctrl+Alt+Up` and `Ctrl+Alt+Down` are traditionally used with for toggle workspaces up and down but they conflic to many development IDEs.
-
-```bash
-## Lookup for shortcuts Ctrl+Alt+Up and Ctrl+Alt+Down
-## gsettings list-recursively | grep -i "up\|down" | grep -i "Alt" | grep -i "Control"
-
-gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-down []
-gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-up []
-```
-
-### UI tweaks
-
-##### Mate
-You can improve graphical performance of your Linux Mint Mate like this:
-```
-Menu button >> Preferences >> Windows
-Deselect "enable software compositing window manager"
-```
-
-#### Cinnamon
-Turn off effects
-```
-Menu Button >> Preferences >> Effects
-Turn everything [off]
-
-Menu button >> Preferences >> System Settings >> General
-Disable compositing for full-screen windows [off]
-
-Menu button >> Preferences >> Window Tiling [off]
-```
-
 ### Mount additional partitions at startup
 If you have additional partitions you may want to mount them during startup. See more details at: [What Is the Linux fstab File, and How Does It Work?](http://www.howtogeek.com/howto/38125/htg-explains-what-is-the-linux-fstab-and-how-does-it-work/)
 
@@ -147,6 +115,10 @@ sudo apt-get install docker-ce
 sudo usermod -aG docker $USER
 ```
 
+Or follow this guide if you are running Linux Mint:
+[Install Docker on Linux Mint](/posts/intall-docker-on-linux-mint/README.md)
+
+
 ### NodeJS via Node Version Manager
 ```bash
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
@@ -172,3 +144,36 @@ Active tab color: `Action Context Menu (Ctrl + A) | Registry` search for `ide.ne
 
 Add asterisk to tabs with modified tabs:
 `Settings | Editor | Mark Modified tabs with asterisk`
+
+UI tweaks
+---------
+
+### Mate
+You can improve graphical performance of your Linux Mint Mate like this:
+```
+Menu button >> Preferences >> Windows
+Deselect "enable software compositing window manager"
+```
+
+### Cinnamon
+Turn off effects
+```
+Menu Button >> Preferences >> Effects
+Turn everything [off]
+
+Menu button >> Preferences >> System Settings >> General
+Disable compositing for full-screen windows [off]
+
+Menu button >> Preferences >> Window Tiling [off]
+```
+
+#### Disable Unwanted Shortcuts
+The `Ctrl+Alt+Up` and `Ctrl+Alt+Down` are traditionally used with for toggle workspaces up and down but they conflic to many development IDEs.
+
+```bash
+## Lookup for shortcuts Ctrl+Alt+Up and Ctrl+Alt+Down
+## gsettings list-recursively | grep -i "up\|down" | grep -i "Alt" | grep -i "Control"
+
+gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-down []
+gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-up []
+```

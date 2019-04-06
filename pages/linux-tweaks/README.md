@@ -136,7 +136,7 @@ dpkg --get-selections | grep -v deinstall | grep "jdk\|jre"
 sudo update-alternatives --config java
 
 # Install jdk 11
-sudo apt install openjdk-11-jdk
+sudo apt install openjdk-11-jdk openjdk-11-source
 
 ```
 

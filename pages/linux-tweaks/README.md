@@ -108,6 +108,10 @@ sudo apt install openjdk-11-jdk openjdk-11-source
 
 ```
 
+### Install Adobe Acrobat Reader
+[Install Adobe Acrobat Reader on Ubuntu Distros](/posts/install-adobe-reader-on-ubuntu-based-distributions/README.md)
+
+
 ### Docker
 ```bash
 sudo apt-get install docker-ce

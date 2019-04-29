@@ -3,7 +3,7 @@ Rafa Santos Blog
 
 Blog Posts
 ----------
-[Install Adobe Acrobat Reader on Ubuntu Distros] (posts/install-adobe-reader-on-ubuntu-based-distributions/README.md)
+[Install Adobe Acrobat Reader on Ubuntu Distros](posts/install-adobe-reader-on-ubuntu-based-distributions/README.md)
 
 [GitAhead a graphical git client](posts/gitahead/README.md)
 

@@ -135,6 +135,12 @@ npm -v
 
 ### VirtualBox
 Download and install [VirtualBox](https://www.virtualbox.org/wiki/Linux_Downloads).
+After installing the guest additions, add your user to the vboxsf group
+
+```
+cat /etc/group | grep vboxsf
+sudo usermod -aG vboxsf [YOUR_USERNAME]
+```
 
 ### Intellij
 ```bash

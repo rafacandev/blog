@@ -14,6 +14,9 @@ gradle tasks --all
 gradle task1 task2 task3
 ```
 
+Gradle properties can be set via a file named `gradle.properties`. Various ways to set properties are described in the [Build Environment](https://docs.gradle.org/current/userguide/build_environment.html) documentation.
+
+
 Snippets
 ========
 Working with properties and variables

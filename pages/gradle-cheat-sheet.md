@@ -1,8 +1,21 @@
+Gradle Cheat Sheet
+==================
+
+[Gradle Build Language Reference](https://docs.gradle.org/current/dsl/)
+
+Commands
+--------
 List all available tasks
 ```
+# List all task
 gradle tasks --all
+
+# Run tasks
+gradle task1 task2 task3
 ```
 
+Snippets
+========
 Working with properties and variables
 ```
 ext.myExtendedProperty = "My extended property"

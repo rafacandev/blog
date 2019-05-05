@@ -5,15 +5,18 @@ Gradle Cheat Sheet
 
 Commands
 --------
-List all available tasks
 ```
 # List all task
 gradle tasks --all
 
 # Run tasks
 gradle task1 task2 task3
+
+# Status of any deamon running in the background
+gradle --status
 ```
 
+### Properties
 Gradle properties can be set via a file named `gradle.properties`. Various ways to set properties are described in the [Build Environment](https://docs.gradle.org/current/userguide/build_environment.html) documentation.
 
 

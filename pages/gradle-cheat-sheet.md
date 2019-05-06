@@ -14,6 +14,18 @@ gradle task1 task2 task3
 
 # Status of any deamon running in the background
 gradle --status
+
+# List dependencies
+gradle -q dependencies
+
+# List default gradle cache folder
+ls -la ~/.gradle
+
+# Executes a single specified test in SomeTestClass
+gradle test --tests SomeTestClass.someSpecificMethod
+
+# Executes all tests in SomeTestClass where the name of the test contains 'someMethod'
+gradle test --tests SomeTestClass.*someMethod*
 ```
 
 ### Properties

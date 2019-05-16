@@ -26,7 +26,7 @@ docker rm [CONTAINER_ID]
 # Pull ubuntu image from https://hub.docker.com/_/ubuntu
 docker pull ubuntu
 
-# Run the ubuntu image
+# Run the ubuntu image, attatch to its bash and install the tree command in the container
 docker run ubuntu
 docker ps -a
 docker run -it ubuntu bash
@@ -35,5 +35,15 @@ docker run -it ubuntu bash
     apt-get install tree
     tree
     history
-    
-    
+    exit
+
+# Run the ubuntu image again and explain that a new container is created from the image and the tree command is not installed
+docker run -it ubuntu bash
+    tree
+
+# Create an image based on an existing container
+docker commit [CONTAINER_ID] ubuntu-with-tree
+
+# Run our custom image
+docker run -it ubuntu-with-tree bash
+    tree

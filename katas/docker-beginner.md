@@ -31,8 +31,8 @@ docker run ubuntu
 docker ps -a
 docker run -it ubuntu bash
     tree
-    apt-get update
-    apt-get install tree
+    apt update
+    apt install tree
     tree
     history
     exit
@@ -40,10 +40,27 @@ docker run -it ubuntu bash
 # Run the ubuntu image again and explain that a new container is created from the image and the tree command is not installed
 docker run -it ubuntu bash
     tree
+    exit
 
 # Create an image based on an existing container
 docker commit [CONTAINER_ID] ubuntu-with-tree
 
-# Run our custom image
+# Run the custom image previously created
 docker run -it ubuntu-with-tree bash
     tree
+    exit
+
+# Remove all containers
+docker rm $(docker ps -a -q)
+
+# Create a custom container running apache2
+docker run -it ubuntu bash
+    apt update
+    aptt install apache2
+    curl http://localhost
+    apt install curl
+    curl http://localhost
+    /etc/init.d/apache2 start
+    curl http://localhost
+    exit
+

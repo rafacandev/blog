@@ -118,3 +118,47 @@ docker run -it -p 81:80 -v "$PWD":/var/www/html ubuntu-with-apache bash
     firefox http://localhost:81
     exit
 ```
+
+
+
+```
+# Start the app in stand-alone mode
+java -jar app/build/libs/docker-compose-kata-0.0.1-SNAPSHOT.jar
+
+# Create a message in the app
+curl -H "Content-Type: text/plain" -d "My message" http://localhost:8080/messages
+curl http://localhost:8080/messages
+
+# Create a file named Dockerfile-app with the following content
+FROM java
+CMD java -jar /jars/docker-compose-kata-0.0.1-SNAPSHOT.jar
+
+# Build an image based on the file above
+docker build -f Dockerfile-app -t app .
+
+# Check that 'app' is now listed as an image
+docker images
+
+# Try to execute the image
+docker run --name myapp -v $PWD/app/build/libs/:/jars -p 8080:8080 app
+
+# Verify REST endpoints
+curl -H "Content-Type: text/plain" -d "My message" http://localhost:8080/messages
+curl http://localhost:8080/messages
+
+# Create a file name Dockerfile-mydb with the following content
+FROM mysql
+ENV MYSQL_ROOT_PASSWORD password
+
+# Build the database image
+docker build -f Dockerfile-db -t db .
+
+# Run the image we created
+docker run --name mydb -it db
+
+# Execute mysql command inside mydb
+docker exec -it mydb mysql -p
+
+
+```
+

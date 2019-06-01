@@ -1,14 +1,3 @@
-https://vitux.com/how-to-install-kvm-to-create-and-manage-virtual-machines-in-ubuntu/
-
-https://www.linuxtechi.com/install-configure-kvm-ubuntu-18-04-server/
-
-https://linuxconfig.org/install-and-set-up-kvm-on-ubuntu-18-04-bionic-beaver-linux
-
-
-https://help.ubuntu.com/community/KVM/Installation
-
-
-
 KVM on Linux
 ============
 
@@ -39,6 +28,11 @@ KVM acceleration can be used
 Install KVM and its dependencies.
 ```
 sudo apt install qemu-kvm libvirt-bin bridge-utils virt-manager
+sudo apt install ebtables dnsmasq firewalld
+sudo apt install qemu-utils
+sudo apt install gir1.2-spiceclientgtk-3.0
+
+
 sudo apt install qemu qemu-kvm libvirt-bin  bridge-utils virt-manager
 ```
 
@@ -50,29 +44,34 @@ sudo adduser $USER libvirt
 sudo adduser $USER libvirtd
 ```
 
-Verifying successful installation
+Verifying if the installation was successful
 ```
 virsh -c qemu:///system list
 service libvirtd status
 ```
 
-
+Start firewalld
 ```
-apt install ebtables dnsmasq firewalld
 sudo systemctl start firewalld
 sudo systemctl enable firewalld
 sudo systemctl restart libvirtd
 ```
 
+At this point you should be able to run Virtual Machine Manager from you start menu.
+
+
+References
+----------
+https://vitux.com/how-to-install-kvm-to-create-and-manage-virtual-machines-in-ubuntu/
+
+https://www.linuxtechi.com/install-configure-kvm-ubuntu-18-04-server/
+
+https://linuxconfig.org/install-and-set-up-kvm-on-ubuntu-18-04-bionic-beaver-linux
+
+https://help.ubuntu.com/community/KVM/Installation
+
+You may also need these dependencies depending on your needs
 ```
 sudo apt install qemu
-sudo apt install qemu-utils
-```
-
-
-
-INVESTIGATE
-```
 sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
-sudo apt install gir1.2-spiceclientgtk-3.0
 ```

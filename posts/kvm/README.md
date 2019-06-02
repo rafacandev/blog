@@ -32,28 +32,19 @@ sudo apt install build-essential libepoxy-dev libdrm-dev libgbm-dev libx11-dev l
 
 wget https://download.qemu.org/qemu-4.0.0.tar.xz -O qemu.tar.xz
 
-mkdir qemu && tar -xf qemu.tar.xz -C qemu --strip-components=1 && cd qemu
+mkdir qemu && tar -xf qemu.tar.xz -C qemu --strip-components=1
+
+cd qemu
 
 ./configure --enable-sdl --enable-opengl --enable-virglrenderer --enable-system --enable-modules --audio-drv-list=pa --target-list=x86_64-softmmu --enable-kvm
 
 make -j$(nproc)
 
-sudo make install
 
-cd ..
-```
+sudo apt-get install checkinstall
+sudo checkinstall make install
+sudo apt-get install ./*.deb
 
-### Install libvirt
-```
-sudo apt-get purge git build-essential xsltproc libxml-xpath-perl libyajl-dev libdevmapper-dev libpciaccess-dev libnl-3-dev libnl-route-3-dev systemtap-sdt-dev uuid-dev libtool autoconf pkg-config libxml2 libxml2-utils autopoint python-dev libnuma-dev gettext gnutls-dev libxml2-dev numad librbd-dev build-essential
-
-wget https://libvirt.org/sources/libvirt-5.3.0.tar.xz -O libvirt.tar.xz
-
-mkdir libvirt && tar xf libvirt.tar.xz -C libvirt --strip-components=1 && cd libvirt
-
-./configure --with-qemu=yes --with-dtrace --with-numad --with-storage-rbd --disable-nls
-
-make -j$(nproc)
 
 sudo make install
 
@@ -120,5 +111,3 @@ sudo apt install ebtables dnsmasq firewalld
 *VMVGA* Repainting: 4 stars; mouse accelarions: 3 stars; mouse hickups: 2 starts
 *VGA* Repainting: 4 stars; mouse acceleration: 4 stars; mouse hickups: 2 stars
 *Cirrus* Repaiting: 3 stars; mouse acceleration: 3 starts: mouse hickups: 2 starts
-
-

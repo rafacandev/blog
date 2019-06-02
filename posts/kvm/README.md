@@ -23,18 +23,51 @@ INFO: /dev/kvm exists
 KVM acceleration can be used
 ```
 
-### Installation
+Installation
+------------
+
+### Install qemu
+```
+sudo apt install build-essential libepoxy-dev libdrm-dev libgbm-dev libx11-dev libvirglrenderer-dev libpulse-dev libsdl2-dev python python-dev libpixman-1-dev build-essential
+
+wget https://download.qemu.org/qemu-4.0.0.tar.xz -O qemu.tar.xz
+
+mkdir qemu && tar -xf qemu.tar.xz -C qemu --strip-components=1 && cd qemu
+
+./configure --enable-sdl --enable-opengl --enable-virglrenderer --enable-system --enable-modules --audio-drv-list=pa --target-list=x86_64-softmmu --enable-kvm
+
+make -j$(nproc)
+
+sudo make install
+
+cd ..
+```
+
+### Install libvirt
+```
+sudo apt-get purge git build-essential xsltproc libxml-xpath-perl libyajl-dev libdevmapper-dev libpciaccess-dev libnl-3-dev libnl-route-3-dev systemtap-sdt-dev uuid-dev libtool autoconf pkg-config libxml2 libxml2-utils autopoint python-dev libnuma-dev gettext gnutls-dev libxml2-dev numad librbd-dev build-essential
+
+wget https://libvirt.org/sources/libvirt-5.3.0.tar.xz -O libvirt.tar.xz
+
+mkdir libvirt && tar xf libvirt.tar.xz -C libvirt --strip-components=1 && cd libvirt
+
+./configure --with-qemu=yes --with-dtrace --with-numad --with-storage-rbd --disable-nls
+
+make -j$(nproc)
+
+sudo make install
+
+cd ..
+```
+
+### Install Virtual Machine Manager
 
 Install KVM and its dependencies.
 ```
 sudo apt install libvirt-daemon-system libvirt-clients
 sudo apt install qemu-kvm libvirt-bin bridge-utils virt-manager
 sudo apt install qemu-utils
-sudo apt install ebtables dnsmasq firewalld
 sudo apt install gir1.2-spiceclientgtk-3.0
-
-
-sudo apt install qemu qemu-kvm libvirt-bin  bridge-utils virt-manager
 ```
 
 Add your user as a KVM user. You can use virtual machines on KVM only if you are a root user or if you are part of the libvirt/libvirtd group. *Completely restart your system for the change to take effect*
@@ -63,6 +96,8 @@ At this point you should be able to run Virtual Machine Manager from you start m
 
 References
 ----------
+https://zingmars.info/2018/07/15/Virgl-with-qemu-and-libvirt-on-ubuntu/
+
 https://vitux.com/how-to-install-kvm-to-create-and-manage-virtual-machines-in-ubuntu/
 
 https://www.linuxtechi.com/install-configure-kvm-ubuntu-18-04-server/
@@ -75,4 +110,15 @@ You may also need these dependencies depending on your needs
 ```
 sudo apt install qemu
 sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
+sudo apt install ebtables dnsmasq firewalld
 ```
+
+### Display Comparison
+
+*QXL* Repainting: 4 stars; mouse accelarion 3 stars; mouse hickups: 3 starts
+*Virtio without 3d acceleration* Repainting: 4 stars; mouse accelarion 3 stars; mouse hickups: 3 starts
+*VMVGA* Repainting: 4 stars; mouse accelarions: 3 stars; mouse hickups: 2 starts
+*VGA* Repainting: 4 stars; mouse acceleration: 4 stars; mouse hickups: 2 stars
+*Cirrus* Repaiting: 3 stars; mouse acceleration: 3 starts: mouse hickups: 2 starts
+
+

@@ -1,7 +1,7 @@
 KVM on Linux
 ============
 
-Tutorial for installing KVM on Linux Mint 19.1 (Tessa) which is based on Ubuntu Bionic.
+Tutorial for installing KVM on Linux Mint 19.1 (Tessa) XFCE which is based on Ubuntu Bionic.
 
 ### Verify compatibility
 
@@ -27,9 +27,10 @@ KVM acceleration can be used
 
 Install KVM and its dependencies.
 ```
+sudo apt install libvirt-daemon-system libvirt-clients
 sudo apt install qemu-kvm libvirt-bin bridge-utils virt-manager
-sudo apt install ebtables dnsmasq firewalld
 sudo apt install qemu-utils
+sudo apt install ebtables dnsmasq firewalld
 sudo apt install gir1.2-spiceclientgtk-3.0
 
 

@@ -67,9 +67,19 @@ sudo blkid
 # Create a mount point
 mkdir /home/YOUR_HOME_USER/files
 
-# Add the partition in fstab
+# Add the partition in etc/fstab
 # Mount extra HDD at startup
 UUID=YOUR_UUID  /home/YOUR_HOME_USER/files  ext4  relatime,noexec  0  2
+# Mount extra HDD at startup (alternative options)
+LABEL=YOUR_LABEL /mnt/YOUR_DESIRED_FOLDER_NAME auto defaults,rw,user,x-gvfs-show,noauto 0 0
+```
+
+### Optimize your SSD
+
+For a more comprehensive check out this [SSD Optmization Wiki](https://wiki.debian.org/SSDOptimization). I am adding at least `noatime` to my SSD.
+
+```bash
+UUID=3ad41be8-6ca6-4aeb-9026-f4a09b4dabf2 /               ext4    noatime,errors=remount-ro 0       1
 ```
 
 ### Install Oracle Java JDK 10

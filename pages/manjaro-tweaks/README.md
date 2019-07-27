@@ -65,14 +65,17 @@ Settings
 Setting files are located at: `~/.config/xfce4/xfconf/xfce-perchannel-xml/`
 
 ### Keyboard
+```
 Behavior > Repeat speed: 50
 Application Shortcuts > xfce4-popup-whiskermenu: Super+Space
 Application Shortcuts > xfce4-taskmanager: Super+M
 Application Shortcuts > xfce4-terminal: Super+T
 Application Shortcuts > xkill: Super+K
 Application Shortcuts > exo-open --launch FileManager: Super+E
+```
 
 ### Window Manager
+```
 Keyboard > Raise window > Clear
 Keyboard > Lower window > Clear
 Keyboard > Move window to upper workspace > Clear
@@ -115,6 +118,7 @@ Keyboard > Workspace 11 > Clear
 Keyboard > Workspace 12 > Clear
 Keyboard > Add workspace > Clear
 Keyboard > Delete last workspace > Clear
+```
 
 KVM
 ---

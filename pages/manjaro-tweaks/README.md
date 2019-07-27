@@ -124,20 +124,20 @@ KVM
 ---
 Install KVM and Virtual Machine Manager with this [basic tutorial](https://www.fosslinux.com/2484/how-to-install-virtual-machine-manager-kvm-in-manjaro-and-arch-linux.htm)
 
-On the host:
+### Configure the Host
 ```bash
 sudo pacman -S virt-manager qemu vde2 ebtables dnsmasq bridge-utils openbsd-netcat
 sudo systemctl enable libvirtd.service
 sudo systemctl start libvirtd.service
 ```
 
-On the guest:
+### Configure the Guest
 Recomended reading: [Preparing Arch Linux Guest](https://wiki.archlinux.org/index.php/QEMU#Preparing_an_(Arch)_Linux_guest):
 ```bash
 sudo pacman -S spice-vdagent xf86-video-qxl
 ```
 
-**If you are running Manjaro as your guest OS**
+#### If you are running Manjaro as your guest OS**
 Remove _xorg_ configuration as described [here](https://superuser.com/questions/1464585/how-to-increase-display-resolution-in-qemu-kvm-via-virt-manager-on-manjaro-host):
 ```bash
 sudo rm /etc/X11/xorg.conf.d/90-mhwd.conf
@@ -148,4 +148,23 @@ Add recomended modules to `/etc/mkinitcpio.conf`:
 sudo vim /etc/mkinitcpio.conf
 # Add the following modules
 MODULES=(virtio virtio_blk virtio_pci virtio_net)
+```
+
+### Add a Shared Folder
+Create a new filesystem on the host:
+```
+View > Details
+Attach hardware > Filesystem
+    Type: mount
+    Dirver: Path
+    Mode: Mapped
+    Source path: /home/lukard/dev/shared
+    Target path: /shared
+```
+Mount the filesystem on the guets:
+```
+mkdir -p /home/user/dev/shared
+sudo mount -t 9p -o trans=virtio /shared /home/user/dev/shared/
+# Or add the following to your /etc/fstab
+/shared /home/user/dev/shared   9p  trans=virtio,version=9p2000.L,rw    0   0
 ```

@@ -39,6 +39,8 @@ Pages
 
 [Linux Tweaks](pages/linux-tweaks/README.md)
 
+[Linux Manjaro Tweaks](pages/manjaro-tweaks/README.md)
+
 Code Snippets
 -------------
 [Visual Studio Settings](snippets/visual-studio-settings/README.md)

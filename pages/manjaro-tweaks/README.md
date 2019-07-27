@@ -34,6 +34,12 @@ sudo pacman -S vim curl git maven gradle
 sudo pacman -S install vlc browser-plugin-vlc vlc-plugin-fluidsynth
 ```
 
+### Remove unnecessary apps
+```bash
+sudo pacman -Rs hexchat xfce4-notes-plugin pidgin orage thunderbird xfburn
+
+```
+
 Reduce Grub Timeout
 -------------------
 If you are using grub for boot management (e.g.: when you have a dual boot) you may want to reduce the default timeout.

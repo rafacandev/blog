@@ -157,6 +157,11 @@ MODULES=(virtio virtio_blk virtio_pci virtio_net)
 ```
 
 ### Add a Shared Folder
+Add your user to KVM group:
+```bash
+usermod -a -G kvm $USER
+```
+
 Create a new filesystem on the host:
 ```
 View > Details

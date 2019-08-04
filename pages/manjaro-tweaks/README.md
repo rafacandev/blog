@@ -5,7 +5,7 @@ Update/Upgrade
 --------------
 Update and upgrade installed packages.
 ```bash
-pacman -Syu
+sudo pacman -Syu
 ```
 
 pamac
@@ -37,7 +37,18 @@ sudo pacman -S install vlc browser-plugin-vlc vlc-plugin-fluidsynth
 ### Remove unnecessary apps
 ```bash
 sudo pacman -Rs hexchat xfce4-notes-plugin pidgin orage thunderbird xfburn
+```
 
+### Java OpenJDK
+```
+# Display the current version
+java -version
+# Display installed versions
+archlinux-java status
+# Install a new version
+sudo pacman -S jdk-openjdk
+# Set a version as default
+sudo archlinux-java set java-12-openjdk
 ```
 
 Reduce Grub Timeout

@@ -51,6 +51,14 @@ sudo pacman -S jdk-openjdk
 sudo archlinux-java set java-12-openjdk
 ```
 
+### Docker
+```
+sudo pacman -S docker
+sudo usermod -aG docker $USER
+# reboot
+systemctl start docker
+```
+
 Reduce Grub Timeout
 -------------------
 If you are using grub for boot management (e.g.: when you have a dual boot) you may want to reduce the default timeout.

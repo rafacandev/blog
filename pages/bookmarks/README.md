@@ -49,3 +49,8 @@ Software Engineering
 --------------------
 Monitoring Distributed Systems
 https://landing.google.com/sre/sre-book/chapters/monitoring-distributed-systems/
+
+Android
+-------
+Remote control android devices via USB
+https://github.com/Genymobile/scrcpy/tree/v1.9

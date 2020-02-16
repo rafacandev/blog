@@ -23,6 +23,7 @@ sudo pdbedit -L -v
 # Create the shared folder
 sudo mkdir /home/sailormoon/sambashare
 sudo chown sailormoon:sailormoon /home/sailormoon/sambashare
+sudo chgrp sailormoon:sailormoon /home/sailormoon/sambashare
 
 # Start samba services
 systemctl start smb.service
@@ -37,6 +38,10 @@ smbclient \\\\localhost\\sailormoon -U sailormoon
 # Test if you can write to the share
 smb: \> mkdir temp
 smb: \> exit
+
+# Start samba services at booting time
+systemctl enable smb.service
+systemctl enable nmb.service
 
 ```
 

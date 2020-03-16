@@ -79,6 +79,15 @@ sudo vim /etc/sysctl.d/100-manjaro.conf
 vm.swappiness = 1
 ```
 
+Disable Audio Auto Switch
+-------------------------
+```
+sudo vim /etc/pulse/default.pa
+# Commenting this out to avoid auto switiching
+load-module module-switch-on-port-available
+```
+
+
 Alias
 -----
 ```bash

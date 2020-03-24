@@ -3,6 +3,8 @@ Rafa Santos Blog
 
 Blog Posts
 ----------
+[Download Certificates From HTTPS Website](posts/downloading-certificates/README.md)
+
 [Samba Tutorial for Arch Linux](posts/samba-tutorial/README.md)
 
 [Install Adobe Acrobat Reader on Ubuntu Distros](posts/install-adobe-reader-on-ubuntu-based-distributions/README.md)

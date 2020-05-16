@@ -3,6 +3,9 @@ Rafa Santos Blog
 
 Blog Posts
 ----------
+
+[Tensorflow Object Detection Training With One Custom Class and Transfer Learning Tutorial](posts/tensorflow1-training/README.md)
+
 [Download Certificates From HTTPS Website](posts/downloading-certificates/README.md)
 
 [Generate Self Signed Certificates (PKCS 12 Format) in Java](posts/generate-self-signed-certificates-in-java/README.md)

@@ -1,0 +1,14 @@
+<annotation>
+	<folder>train</folder>
+	<filename>00M0M_5e6vhAPJs5Q_600x450.jpg</filename>
+	<path>/home/rafa/dev/prj/tensorflow-tire/workspace/training_demo/images/train/00M0M_5e6vhAPJs5Q_600x450.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>253</width>
+		<height>450</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+</annotation>

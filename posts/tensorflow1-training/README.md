@@ -1,5 +1,6 @@
 Tensorflow Object Detection Training With One Custom Class and Transfer Learning Tutorial
 =========================================================================================
+
 Introduction
 ------------
 Training Tensorflow (v1.14) modules isn't a trivial task, it requires several manual steps as described in [TensorFlow Object Detection API Tutorial]. In this tutorial, we will automate some of these manual steps and creates a framework to start training our custom models as fast as possible.
@@ -56,7 +57,7 @@ At this point your `PRJ_WORKSPACE_FOLDER` should look like:
 
 - `training_demo`: Our custom model to be created in this tutorial
 - `training_demo/annotations`: all `*.csv` files and the respective TensorFlow `*.record` files, which contain the list of annotations for our dataset images.
-- `training_demo/images`: all the images in our dataset, as well as the respective `*.xml` files produced for each one, once labelImg is used to annotate objects.
+- `training_demo/images`: all the images in our dataset, as well as the respective `*.xml` files produced for each one, once **LabelImg** is used to annotate objects.
 - `training_demo/images/train`: all images, and the respective `*.xml` files, which will be used to train our model.
 - `training_demo/images/test`: all images, and the respective `*.xml` files, which will be used to test our model.
 - `training_demo/pre-trained-model`: pre-trained model of our choice, which shall be used as a starting checkpoint for our training job.
@@ -64,6 +65,7 @@ At this point your `PRJ_WORKSPACE_FOLDER` should look like:
 
 Preparing Images
 ================
+
 Download Images
 ---------------
 Save [download_training_images.sh](training_demo/scripts/extra/download_training_images.sh) in `PRJ_WORKSPACE_FOLDER/training_demo/scripts/extra/download_training_images.sh`.
@@ -95,7 +97,7 @@ item {
 
 Label the Images
 ----------------
-Run LabelImg and label the images in `PRJ_WORKSPACE_FOLDER/training_demo/images/train` and `PRJ_WORKSPACE_FOLDER/training_demo/images/train`. Make sure to label the images using **PascalVOC** format as described in [LabelImg Usage](https://github.com/tzutalin/labelImg#steps-pascalvoc). In some instances, you may see a image without any tire, that is alright just make sure the image also has a corresponding `.xml` label file without objects in it.
+Run **LabelImg** and label the images in `PRJ_WORKSPACE_FOLDER/training_demo/images/train` and `PRJ_WORKSPACE_FOLDER/training_demo/images/train`. Make sure to label the images using **PascalVOC** format as described in [LabelImg Usage](https://github.com/tzutalin/labelImg#steps-pascalvoc). In some instances, you may see a image without any tire, that is alright just make sure the image also has a corresponding `.xml` label file without objects in it. Alternatively, you can donwload our [train labels](training_demo/images/train) and [test labels](training_demo/images/test).
 
 At this point, `PRJ_WORKSPACE_FOLDER/training_demo/images/train` and `PRJ_WORKSPACE_FOLDER/training_demo/images/train` should contain a label `.xml` file for each image.
 
@@ -128,7 +130,7 @@ docker run -it --name tf_training --rm -p 0.0.0.0:6006:6006 -v $PWD:/tensorflow/
 - `tensorflow1-training:1.0`: the docker image, in our case the one we just built.
 - `bash`: runs bash in the interactive terminal.
 
-Now the terminal is attached to bash running in our docker container. Moreover, `-v $PWD:/tensorflow/workspace` mounts the content of the current folder into the containers `/tensorflow/workspace` which means that we should also see our `PRJ_WORKSPACE_FOLDER/training_demo` from this interactive terminal:
+Now the terminal is attached to bash running in our docker container. Moreover, `-v $PWD:/tensorflow/workspace` mounts the content of the current folder into the container's `/tensorflow/workspace` which means that we should see the content `PRJ_WORKSPACE_FOLDER/training_demo` from this interactive terminal:
 
 Change the current directory to `training_demo`.
 ```
@@ -146,6 +148,7 @@ python -c "import tensorflow as tf;print(tf.reduce_sum(tf.random.normal([1000, 1
 
 Preparing for the Training
 ==========================
+
 Converting *.xml to *.csv
 -------------------------
 Save the [xml_to_csv.py](training_demo/scripts/preprocessing/xml_to_csv.py) in `PRJ_WORKSPACE_FOLDER/training_demo/scripts/preprocessing/xml_to_csv.py`.
@@ -180,7 +183,9 @@ Save the [ssd_inception_v2_coco.config](training_demo/training/ssd_inception_v2_
 
 Training the Model
 ==================
-Copy the training script. In `DOCKER_TRAINING_FOLDER`, run:
+Copy the training script.
+
+In `DOCKER_TRAINING_FOLDER`, run:
 ```
 cp /tensorflow/models/research/object_detection/model_main.py .
 ```

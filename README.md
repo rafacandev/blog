@@ -4,6 +4,8 @@ Rafa Santos Blog
 Blog Posts
 ----------
 
+[Keras Retinanet Object Detection Custom Training](posts/keras-retinanet/README.md)
+
 [Tensorflow Object Detection Training With One Custom Class and Transfer Learning Tutorial](posts/tensorflow1-training/README.md)
 
 [Download Certificates From HTTPS Website](posts/downloading-certificates/README.md)

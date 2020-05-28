@@ -54,3 +54,15 @@ Android
 -------
 Remote control android devices via USB
 https://github.com/Genymobile/scrcpy/tree/v1.9
+
+
+Machine Learning
+----------------
+
+[Tensorflow Object Detection Zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md)
+
+[Keras Retinanet](https://github.com/fizyr/keras-retinanet)
+
+[Object Detection on Custom Dataset with TensorFlow 2 and Keras using Python](https://www.curiousily.com/posts/object-detection-on-custom-dataset-with-tensorflow-2-and-keras-using-python/)
+
+[Image Augmentation in Python](https://github.com/aleju/imgaug)

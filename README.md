@@ -4,6 +4,8 @@ Rafa Santos Blog
 Blog Posts
 ----------
 
+[How to Run Tensorflow on GPU on Linux Majaro](posts/tensorflow-keras-gpu/README.md)
+
 [Keras Retinanet Object Detection Custom Training](posts/keras-retinanet/README.md)
 
 [Tensorflow Object Detection Training With One Custom Class and Transfer Learning Tutorial](posts/tensorflow1-training/README.md)

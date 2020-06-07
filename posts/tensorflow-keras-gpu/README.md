@@ -2,7 +2,7 @@ How to Run Tensorflow on GPU on Linux Majaro
 ============================================
 
 In this tutorial we are going to configure Tensorflow to run on GPU on a Linux Manjaro operating system.
-Moreoever, we are going to configure our machine to operate normally with the onboarding Intel GPU but to train our model in our Nvidia GPU.
+Moreover, we are going to configure our machine to operate normally with the integrated Intel GPU but run Tensorflow in our discrete Nvidia GPU.
 
 Requirements
 ------------
@@ -10,7 +10,7 @@ The following applications should be installed beforehand:
 - **Docker**: as described in [Docker Website]
 - **Nvidia GPU with CUDA support**: here is the official list of supported GPU, but in my experience this is not an exhaustive list. You might want to look directly at your GPU specifications as it may support CUDA but it is not in the official list [Recommended GPU for Developers]. Some benchmarks on [Which GPU for deep learning by Tim Dettemers].
 
-We are running on [Linux Manjaro] but other linux distributions should follow similar steps.
+We are running on [Linux Manjaro] but other Linux distributions should follow similar steps.
 
 Install Nvidia Drivers
 ======================

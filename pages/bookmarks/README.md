@@ -50,6 +50,11 @@ Software Engineering
 Monitoring Distributed Systems
 https://landing.google.com/sre/sre-book/chapters/monitoring-distributed-systems/
 
+
+Justin Watts - Loblaws - What got us here, won't get us there
+https://www.youtube.com/watch?v=6VGu4PvEBag
+
+
 Android
 -------
 Remote control android devices via USB

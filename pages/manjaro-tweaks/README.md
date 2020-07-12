@@ -26,12 +26,18 @@ Apps
 
 ### Essential apps
 ```bash
-sudo pacman -S vim curl git maven gradle
+sudo pacman -S vim curl git
 ```
 
-### VLC (plus MIDI support)
+### VLC
 ```bash
-sudo pacman -S install vlc browser-plugin-vlc vlc-plugin-fluidsynth
+sudo pacman -S install vlc
+```
+
+### VLC MIDI support
+AUR package:
+```
+vlc-plugin-fluidsynth
 ```
 
 ### Remove unnecessary apps
@@ -39,16 +45,25 @@ sudo pacman -S install vlc browser-plugin-vlc vlc-plugin-fluidsynth
 sudo pacman -Rs hexchat xfce4-notes-plugin pidgin orage thunderbird xfburn
 ```
 
-### Java OpenJDK
+### Java Apps
+Remove included installation:
 ```
-# Display the current version
-java -version
-# Display installed versions
-archlinux-java status
-# Install a new version
-sudo pacman -S jdk-openjdk
-# Set a version as default
-sudo archlinux-java set java-12-openjdk
+sudo pacman -R jdk8-openjdk
+sudo pacman -R jre8-openjdk
+sudo pacman -R jre8-openjdk-headless
+sudo pacman -R java-environment-common
+sudo pacman -R java-runtime-common
+```
+Intall SDKMAN:
+```
+curl -s "https://get.sdkman.io" | bash
+source "/home/lukard/.sdkman/bin/sdkman-init.sh"
+```
+Install Java Apps:
+```
+sdk i java 8.0.252-open
+sdk i maven
+sdk i gradle
 ```
 
 ### Docker
@@ -197,7 +212,7 @@ Attach hardware > Filesystem
     Type: mount
     Dirver: Path
     Mode: Mapped
-    Source path: /home/lukard/dev/shared
+    Source path: /home/lukard/dev/kvm/shared
     Target path: /shared
 ```
 Mount the filesystem on the guets:

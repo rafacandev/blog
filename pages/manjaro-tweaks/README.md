@@ -102,6 +102,15 @@ sudo vim /etc/pulse/default.pa
 load-module module-switch-on-port-available
 ```
 
+Setup Printer
+-------------
+More info at the [Manjaro Wiki - Printing](https://wiki.manjaro.org/index.php?title=Printing)
+```
+sudo pamac install manjaro-printer
+sudo gpasswd -a $USER sys
+sudo systemctl enable --now org.cups.cupsd.service
+sudo pacman -S system-config-printer
+```
 
 Alias
 -----

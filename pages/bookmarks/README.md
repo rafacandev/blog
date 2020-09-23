@@ -6,6 +6,11 @@ Great article explaining how to apply separation of concerns to software develop
 
 http://aspiringcraftsman.com/2008/01/03/art-of-separation-of-concerns/
 
+Java
+----
+[Wikibooks - Java Persistence](https://en.wikibooks.org/wiki/Java_Persistence)
+
+
 REST
 ----
 The original academic work

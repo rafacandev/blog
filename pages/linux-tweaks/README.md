@@ -11,12 +11,7 @@ It is turned off by default. Normally, you just need to search for _firewall_ in
 
 Essential apps
 ```bash
-sudo apt-get install vim curl git maven artha chromium-browser
-```
-
-VLC (plus MIDI support)
-```bash
-sudo apt-get install vlc browser-plugin-vlc vlc-plugin-fluidsynth
+sudo apt install vim curl git chromium-browser vlc vlc-plugin-fluidsynth
 ```
 
 ### Remove 'unnecessary' apps
@@ -74,48 +69,33 @@ UUID=YOUR_UUID  /home/YOUR_HOME_USER/files  ext4  relatime,noexec  0  2
 LABEL=YOUR_LABEL /mnt/YOUR_DESIRED_FOLDER_NAME auto defaults,rw,user,x-gvfs-show,noauto 0 0
 ```
 
-### Optimize your SSD
+### Java Development
 
-For a more comprehensive check out this [SSD Optmization Wiki](https://wiki.debian.org/SSDOptimization). I am adding at least `noatime` to my SSD.
-
-```bash
-UUID=3ad41be8-6ca6-4aeb-9026-f4a09b4dabf2 /               ext4    noatime,errors=remount-ro 0       1
+Install SDKMAN
+```
+curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk version
 ```
 
-### Install Oracle Java JDK 10
-```bash
-# List installed Java packages
-dpkg --get-selections | grep -v deinstall | grep "jdk\|jre"
-
-# Intall Oracle JDK
-sudo add-apt-repository ppa:linuxuprising/java
-sudo apt update
-sudo apt install oracle-java10-installer
-sudo apt install oracle-java10-set-default
-java -version
-
-# Setup JAVA_HOME
-sudo vim /etc/profile.d/environment-variables.sh
-
-## Example for Oracle JDK
-export JAVA_HOME=/usr/lib/jvm/java-10-oracle/
-export PATH=$PATH:$JAVA_HOME
-
-## Example for OpenJDK
-export JAVA_HOME=/usr/lib/jvm/java-1.10.0-openjdk-amd64/
-export PATH=$PATH:$JAVA_HOME
+List available Java AdoptOpenJDK candiates:
+```
+sdk list java | grep adpt
 ```
 
-### Install open-jdk
+Install Java AdoptOpenJDK:
 ```
-# List installed java packages
-dpkg --get-selections | grep -v deinstall | grep "jdk\|jre"
-# List java alternatives
-sudo update-alternatives --config java
+sdk install java 11.0.11.j9-adpt
+```
 
-# Install jdk 11
-sudo apt install openjdk-11-jdk openjdk-11-source
+Install Maven:
+```
+sdk install maven
+```
 
+Install Gradle:
+```
+sdk install gradle
 ```
 
 ### Install Adobe Acrobat Reader
@@ -123,22 +103,42 @@ sudo apt install openjdk-11-jdk openjdk-11-source
 
 
 ### Docker
-```bash
-sudo apt-get install docker-ce
-# Add current user to docker group; so you don't need to use 'sudo' for every docker command issued
-sudo usermod -aG docker $USER
-```
 
-Or follow this guide if you are running Linux Mint:
+Follow this guide if you are running Linux Mint:
 [Install Docker on Linux Mint](/posts/intall-docker-on-linux-mint/README.md)
 
+```bash
+UBUNTU_CODENAME=$(grep "UBUNTU_CODENAME" /etc/os-release | awk -F'=' '{print $2}')
+
+echo "Found UBUNTU_CODENAME=$UBUNTU_CODENAME"
+
+sudo apt install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+echo \
+  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $UBUNTU_CODENAME stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update
+
+sudo apt install docker-ce docker-ce-cli containerd.io
+```
 
 ### NodeJS via Node Version Manager
+Github official page: https://github.com/nvm-sh/nvm
+
 ```bash
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+
 # Need to exit and reopen the current terminal so the changes take effect
-exit
-nvm install 9.0.0
+nvm install node
 node -v
 npm -v
 ```

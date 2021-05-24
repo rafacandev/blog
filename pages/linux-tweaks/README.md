@@ -143,15 +143,6 @@ node -v
 npm -v
 ```
 
-### VirtualBox
-Download and install [VirtualBox](https://www.virtualbox.org/wiki/Linux_Downloads).
-After installing the guest additions, add your user to the vboxsf group
-
-```
-cat /etc/group | grep vboxsf
-sudo usermod -aG vboxsf [YOUR_USERNAME]
-```
-
 ### Intellij
 ```bash
 wget https://download-cf.jetbrains.com/idea/ideaIC-2018.2.4.tar.gz
@@ -165,17 +156,79 @@ Active tab color: `Action Context Menu (Ctrl + A) | Registry` search for `ide.ne
 Add asterisk to tabs with modified tabs:
 `Settings | Editor | Mark Modified tabs with asterisk`
 
-UI tweaks
----------
+### VirtualBox
+Download and install [VirtualBox](https://www.virtualbox.org/wiki/Linux_Downloads).
+After installing the guest additions, add your user to the vboxsf group
 
-### Mate
-You can improve graphical performance of your Linux Mint Mate like this:
 ```
-Menu button >> Preferences >> Windows
-Deselect "enable software compositing window manager"
+cat /etc/group | grep vboxsf
+sudo usermod -aG vboxsf [YOUR_USERNAME]
 ```
 
-### Cinnamon
+Desktop Tweaks
+==============
+
+XFCE
+---
+
+### Keyboard
+```
+Behavior > Repeat speed: 50
+Application Shortcuts > xfce4-popup-whiskermenu: Super+Space
+Application Shortcuts > xfce4-taskmanager: Super+M
+Application Shortcuts > xfce4-terminal: Super+T
+Application Shortcuts > xkill: Super+K
+Application Shortcuts > exo-open --launch FileManager: Super+E
+```
+
+### Window Manager Keyboard
+```
+Keyboard > Raise window > Clear
+Keyboard > Lower window > Clear
+Keyboard > Move window to upper workspace > Clear
+Keyboard > Move window to bottom workspace > Clear
+Keyboard > Move window to left workspace > Clear
+Keyboard > Move window to right workspace > Clear
+Keyboard > Move window to previous workspace: Shift+Ctrl+Alt+Left
+Keyboard > Move window to next workspace: Shift+Ctrl+Alt+Right
+Keyboard > Move window to workspace 1 > Clear
+Keyboard > Move window to workspace 2 > Clear
+Keyboard > Move window to workspace 3 > Clear
+Keyboard > Move window to workspace 4 > Clear
+Keyboard > Move window to workspace 5 > Clear
+Keyboard > Move window to workspace 6 > Clear
+Keyboard > Move window to workspace 7 > Clear
+Keyboard > Move window to workspace 8 > Clear
+Keyboard > Move window to workspace 9 > Clear
+Keyboard > Tile window to the top: Super+Up
+Keyboard > Tile window to the bottom: Super+Down
+Keyboard > Tile window to the left: Super+Left
+Keyboard > Tile window to the right: Super+Right
+Keyboard > Show Desktop: Super+D
+Keyboard > Upper workspace > Clear
+Keyboard > Bottom workspace > Clear
+Keyboard > Left workspace > Clear
+Keyboard > Right workspace > Clear
+Keyboard > Next workspace: Ctrl+Alt+Right
+Keyboard > Previous workspace: Ctrl+Alt+Left
+Keyboard > Workspace 1 > Clear
+Keyboard > Workspace 2 > Clear
+Keyboard > Workspace 3 > Clear
+Keyboard > Workspace 4 > Clear
+Keyboard > Workspace 5 > Clear
+Keyboard > Workspace 6 > Clear
+Keyboard > Workspace 7 > Clear
+Keyboard > Workspace 8 > Clear
+Keyboard > Workspace 9 > Clear
+Keyboard > Workspace 10 > Clear
+Keyboard > Workspace 11 > Clear
+Keyboard > Workspace 12 > Clear
+Keyboard > Add workspace > Clear
+Keyboard > Delete last workspace > Clear
+```
+
+Cinnamon
+--------
 Turn off effects
 ```
 Menu Button >> Preferences >> Effects
@@ -187,7 +240,7 @@ Disable compositing for full-screen windows [off]
 Menu button >> Preferences >> Window Tiling [off]
 ```
 
-#### Disable Unwanted Shortcuts
+### Disable Unwanted Shortcuts
 The `Ctrl+Alt+Up` and `Ctrl+Alt+Down` are traditionally used with for toggle workspaces up and down but they conflic to many development IDEs.
 
 ```bash
@@ -197,11 +250,3 @@ The `Ctrl+Alt+Up` and `Ctrl+Alt+Down` are traditionally used with for toggle wor
 gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-down []
 gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-up []
 ```
-
-#### Shortcuts for Xfce
-![Windows Manager](window-manager-screenshot.png "Windows Manager")
-
-![Keyboard](keyboard-screenshot.png "Keyboard")
-
-
-

@@ -11,7 +11,7 @@ It is turned off by default. Normally, you just need to search for _firewall_ in
 
 Essential apps
 ```bash
-sudo apt install vim curl git chromium-browser vlc vlc-plugin-fluidsynth
+sudo apt install vim curl git chromium-browser vlc vlc-plugin-fluidsynth gimp
 ```
 
 ### Remove 'unnecessary' apps
@@ -21,9 +21,10 @@ sudo apt install vim curl git chromium-browser vlc vlc-plugin-fluidsynth
 * `pidgin`: chatting app
 * `hexchat`: chatting app
 * `thunderbird`: email client
+* `gnote`: postit notes
 
 ```bash
-sudo apt-get remove mono-runtime-common gnome-orca apt-xapian-index pidgin hexchat thunderbird
+sudo apt-get remove mono-runtime-common gnome-orca apt-xapian-index pidgin hexchat thunderbird gnote
 ```
 
 ### Reduce grub timeout
@@ -68,6 +69,31 @@ UUID=YOUR_UUID  /home/YOUR_HOME_USER/files  ext4  relatime,noexec  0  2
 # Mount extra HDD at startup (alternative options)
 LABEL=YOUR_LABEL /mnt/YOUR_DESIRED_FOLDER_NAME auto defaults,rw,user,x-gvfs-show,noauto 0 0
 ```
+### Enable Hibernate
+Based on this excellent tutorial: https://forums.linuxmint.com/viewtopic.php?t=273202
+
+Lookup for your swap partition:
+```
+cat /etc/fstab
+```
+
+Backup your grub config:
+```
+sudo cp /etc/default/grub.bk /etc/default/grub
+```
+
+Edit your grub config:
+```
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash resume=UUID=putYourSwapUUIDhere"
+```
+
+Update your grup:
+```
+sudo update-grub
+```
+
+
+
 
 ### Java Development
 

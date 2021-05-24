@@ -92,8 +92,10 @@ Update your grup:
 sudo update-grub
 ```
 
-
-
+### Install Virt Manager
+```
+sudo apt install virt-manager
+```
 
 ### Java Development
 

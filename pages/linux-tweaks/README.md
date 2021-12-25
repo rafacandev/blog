@@ -193,6 +193,33 @@ cat /etc/group | grep vboxsf
 sudo usermod -aG vboxsf [YOUR_USERNAME]
 ```
 
+
+Audio
+=====
+
+Install PipeWire
+----------------
+Steps to use [PipeWire](https://pipewire.org) instead of the default pulseaudio. *PipeWire* has better bluetooth support. See this tutorial for reference: https://linuxconfig.org/how-to-install-pipewire-on-ubuntu-linux
+
+```bash
+sudo add-apt-repository ppa:pipewire-debian/pipewire-upstream
+sudo apt update
+sudo apt install pipewire pipewire-audio-client-libraries
+sudo apt install gstreamer1.0-pipewire libpipewire-0.3-{0,dev,modules} libspa-0.2-{bluetooth,dev,jack,modules} pipewire{,-{audio-client-libraries,pulse,media-session,bin,locales,tests}}
+systemctl --user daemon-reload
+systemctl --user --now disable pulseaudio.service pulseaudio.socket
+systemctl --user --now enable pipewire pipewire-pulse
+```
+
+To revert the above changes:
+```bash
+sudo apt remove pipewire pipewire-audio-client-libraries
+sudo apt remove gstreamer1.0-pipewire libpipewire-0.3-{0,dev,modules} libspa-0.2-{bluetooth,dev,jack,modules} pipewire{,-{audio-client-libraries,pulse,media-session,bin,locales,tests}}
+systemctl --user daemon-reload
+systemctl --user --now enable pulseaudio.service pulseaudio.socket
+pactl info
+```
+
 Desktop Tweaks
 ==============
 

@@ -54,6 +54,8 @@ Pages
 
 [Linux Manjaro Tweaks](pages/manjaro-tweaks/README.md)
 
+[Scala](pages/scala/README.md)
+
 Code Snippets
 -------------
 [Visual Studio Settings](snippets/visual-studio-settings/README.md)

@@ -3,30 +3,27 @@ Snippets
 
 ### [ZIO Module Pattern 2.0](https://zio.dev/next/datatypes/contextual/#module-pattern-20)
 
+This example demonstrate how ZIO dependencies can be managed using Module Pattern 2.0.
+
+##### ZIO Type Aliases
+
+| Type        | Has requirement? | Can fail? | Outputs |
+| ----------- |:----------------:| ---------:| -------:|
+| UIO[A]      |        N         |     N     |    A    |
+| URIO[R, A]  |        Y         |     N     |    A    |
+| Task[A]     |        N         |     Y     |    A    |
+| RIO[R, A]   |        Y         |     Y     |    A    |
+| IO[E, A]    |        N         |     Y     |    A    |
+
+##### References
+* https://zio.dev/next/howto/migrate/zio-2.x-migration-guide/#module-pattern
+* https://zio.dev/next/datatypes/contextual/#module-pattern-20
+* https://zio.dev/next/datatypes/contextual/zlayer/#zlayer-example-with-complex-dependencies
 
 ```scala
 import zio.*
 import zio.Clock.*
 import zio.Console.printLine
-
-/*
- * In this example we have two ZIO modules: UserDatabaseModule and EmailModule.
- * They follow Module Pattern 2.0, See:
- * - https://zio.dev/next/howto/migrate/zio-2.x-migration-guide/#module-pattern
- * - https://zio.dev/next/datatypes/contextual/#module-pattern-20
- * - https://zio.dev/next/datatypes/contextual/zlayer/#zlayer-example-with-complex-dependencies
- *
- * ZIO Type Aliases
- *
- * | Type        | Has requirement? | Can fail? | Outputs |
- * |-------------+----------------------------------------+
- * | UIO[A]      |        N         |     N     |    A    |
- * | URIO[R, A]  |        Y         |     N     |    A    |
- * | Task[A]     |        N         |     Y     |    A    |
- * | RIO[R, A]   |        Y         |     Y     |    A    |
- * | IO[E, A]    |        N         |     Y     |    A    |
- *
- */
 
 /**
  * A regular case class for this example

@@ -1,17 +1,13 @@
 Snippets
 ========
 
-[ZIO Module Pattern 2.0](https://zio.dev/next/datatypes/contextual/#module-pattern-20)
+### [ZIO Module Pattern 2.0](https://zio.dev/next/datatypes/contextual/#module-pattern-20)
+
 
 ```scala
 import zio.*
 import zio.Clock.*
 import zio.Console.printLine
-
-/**
- * A regular case class for this example
- */
-case class User(name: String, email: String)
 
 /*
  * In this example we have two ZIO modules: UserDatabaseModule and EmailModule.
@@ -20,16 +16,22 @@ case class User(name: String, email: String)
  * - https://zio.dev/next/datatypes/contextual/#module-pattern-20
  * - https://zio.dev/next/datatypes/contextual/zlayer/#zlayer-example-with-complex-dependencies
  *
- * Zio Effects
+ * ZIO Type Aliases
  *
- * UIO[A] alias for ZIO[Any, Nothing, A]: an Unexceptional effect that doesn't require any specific environment, and cannot fail, but can succeed with an A.
- * URIO[R, A] alias for ZIO[R, Nothing, A]: an effect that requires an R, and cannot fail, but can succeed with an A.
+ * | Type        | Has requirement? | Can fail? | Outputs |
+ * |-------------+----------------------------------------+
+ * | UIO[A]      |        N         |     N     |    A    |
+ * | URIO[R, A]  |        Y         |     N     |    A    |
+ * | Task[A]     |        N         |     Y     |    A    |
+ * | RIO[R, A]   |        Y         |     Y     |    A    |
+ * | IO[E, A]    |        N         |     Y     |    A    |
  *
- * Task[A] alias for ZIO[Any, Throwable, A]: an effect that has no requirements, and may fail with a Throwable value, or succeed with an A.
- *
- * IO[E, A] alias for ZIO[Any, E, A]: an effect that has no requirements, and may fail with an E, or succeed with an A.
- * RIO[R, A] alias for ZIO[R, Throwable, A]: an effect that requires an R, and may fail with a Throwable value, or succeed with an A.
  */
+
+/**
+ * A regular case class for this example
+ */
+case class User(name: String, email: String)
 
 /**
  * UserDatabaseModule mimics a database service to manage users
@@ -47,50 +49,86 @@ object UserDatabaseModule:
 case class UserDatabaseLive() extends UserDatabaseModule:
   override def insert(user: User): UIO[User] =
     UIO.succeed({
-      println(s"insert into user (${user.name}, ${user.email}")
+      println(s"insert into user table (${user.name}, ${user.email})")
       user
     })
 
 // Layer value inside the companion object
+// When implementing a service that doesn't have any dependency we need to manually 'extend (() => YourInterface)'
 object UserDatabaseLive extends (() => UserDatabaseModule):
-  // When implementing a service that doesn't have any dependency we need to manually 'extend () => YourInterface'
   val layer: URLayer[Any, UserDatabaseModule] = UserDatabaseLive.toLayer
+
+
+/**
+ * TemplateModule mimics a template engine
+ */
+// Code to interface
+trait TemplateModule:
+  def welcome(user: User): UIO[String]
+
+/*
+ * Accessor methods are implemented when needed. The TemplateModule is only used internally by the EmailModule,
+ * in this case the dependency injected is going to be injected into EmailModule directly and the accessor
+ * method won't be invoked. Therefore, there is not need to create one at the moment.
+ */
+
+// Implementation inside the case class. It is customary to name it with the suffix *Live
+case class TemplateModuleLive() extends TemplateModule:
+  override def welcome(user: User): UIO[String] =
+    IO.succeed(s"Hi ${user.name}. Welcome to ZIO.")
+
+// Layer value inside the companion object
+// When implementing a service that doesn't have any dependency we need to manually 'extend (() => YourInterface)'
+object TemplateModuleLive extends (() => TemplateModule):
+  val layer: URLayer[Any, TemplateModule] = TemplateModuleLive.toLayer
+
 
 /**
  * EmailModule mimics an email service
  */
 // Code to interface
 trait EmailModule:
-  def welcome(email: String): UIO[String]
+  def welcome(user: User): UIO[String]
 
 // Accessor methods inside the companion object
 object EmailModule:
-  def welcome(email: String): URIO[EmailModule, String] =
-    ZIO.serviceWithZIO(_.welcome(email))
+  def welcome(user: User): URIO[EmailModule, String] =
+    ZIO.serviceWithZIO(_.welcome(user))
 
 // Implementation inside the case class. It is customary to name it with the suffix *Live
-case class EmailModuleLive(clock: Clock) extends EmailModule:
-  override def welcome(email: String): UIO[String] =
+case class EmailModuleLive(templateModule: TemplateModule, clock: Clock) extends EmailModule:
+  override def welcome(user: User): UIO[String] =
     for {
       dt <- clock.currentDateTime
-      out <- IO.succeed(s"mailto: $email; at: $dt; body: Welcome to ZIO")
+      body <- templateModule.welcome(user)
+      out <- IO.succeed(s"mailto: ${user.email}; at: ${dt.toLocalDate}; body: $body")
     } yield out
 
 // Dependencies are passed via constructors
 object EmailModuleLive:
-  val layer: URLayer[Clock, EmailModule] = (EmailModuleLive(_)).toLayer[EmailModule]
+  val layer: URLayer[TemplateModule with Clock, EmailModule] = (EmailModuleLive(_,_)).toLayer[EmailModule]
 
 object ZLayerApp extends ZIOAppDefault:
   // Layers can be composed horizontally and vertically: https://zio.dev/next/datatypes/contextual/zlayer/#vertical-and-horizontal-composition
-  val env = EmailModuleLive.layer ++ UserDatabaseLive.layer ++ ZLayer.environment[Console]
+  // Composing email environment vertically to inject EmailModule dependencies
+  val emailEnvironment = TemplateModuleLive.layer >>> EmailModuleLive.layer
+  // Composing the remaining environment horizontally
+  val environment = emailEnvironment ++ UserDatabaseLive.layer ++ ZLayer.environment[Console]
 
   override def run =
     val rundown = for {
       u <- UserDatabaseModule.insert(User("Yoshi", "supermarioworld@nintendo.ca"))
-      e <- EmailModule.welcome(u.email)
+      e <- EmailModule.welcome(u)
       _ <- printLine(e)
     } yield ()
-    rundown.provideLayer(env).exitCode
+
+    /*
+     * The following is written to the console:
+     *
+     * insert into user (Yoshi, supermarioworld@nintendo.ca
+     * mailto: supermarioworld@nintendo.ca; at: 2022-03-07; body: Hi Yoshi. Welcome to ZIO.
+     */
+    rundown.provideLayer(environment).exitCode
 
 end ZLayerApp
 ```

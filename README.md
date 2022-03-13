@@ -56,6 +56,8 @@ Pages
 
 [Scala](pages/scala/README.md)
 
+[virt-manager GPU Passthrough](pages/virt-manager-passthrough)
+
 Code Snippets
 -------------
 [Visual Studio Settings](snippets/visual-studio-settings/README.md)

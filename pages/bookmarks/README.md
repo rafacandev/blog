@@ -59,6 +59,9 @@ https://landing.google.com/sre/sre-book/chapters/monitoring-distributed-systems/
 Justin Watts - Loblaws - What got us here, won't get us there
 https://www.youtube.com/watch?v=6VGu4PvEBag
 
+Solving distributed data problems in a microservice architecture
+https://www.youtube.com/watch?v=AEbJgpamZ4w
+
 
 Android
 -------

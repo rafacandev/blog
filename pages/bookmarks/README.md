@@ -69,6 +69,12 @@ Remote control android devices via USB
 https://github.com/Genymobile/scrcpy/tree/v1.9
 
 
+Database
+--------
+Database connection pool parameters for HikariCP
+https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing
+
+
 Machine Learning
 ----------------
 

@@ -62,6 +62,9 @@ https://www.youtube.com/watch?v=6VGu4PvEBag
 Solving distributed data problems in a microservice architecture
 https://www.youtube.com/watch?v=AEbJgpamZ4w
 
+Build Services on a Backbone of Events (Event Driven Architecture)
+https://www.confluent.io/blog/build-services-backbone-events/
+
 
 Android
 -------

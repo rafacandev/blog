@@ -42,7 +42,6 @@ Mac OS
 Karabiner Key Mapping
 
 https://pqrs.org/osx/karabiner/index.html
-
 https://github.com/tekezo/Karabiner
 
 
@@ -53,17 +52,26 @@ https://github.com/AdoptOpenJDK/homebrew-openjdk
 Software Engineering
 --------------------
 Monitoring Distributed Systems
+
 https://landing.google.com/sre/sre-book/chapters/monitoring-distributed-systems/
 
 
 Justin Watts - Loblaws - What got us here, won't get us there
+
 https://www.youtube.com/watch?v=6VGu4PvEBag
 
 Solving distributed data problems in a microservice architecture
+
 https://www.youtube.com/watch?v=AEbJgpamZ4w
 
 Build Services on a Backbone of Events (Event Driven Architecture)
+
 https://www.confluent.io/blog/build-services-backbone-events/
+
+Materialized Views
+
+https://docs.ksqldb.io/en/0.23.1-ksqldb/tutorials/materialized
+
 
 
 Android

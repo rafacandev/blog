@@ -36,6 +36,10 @@ Category Theory for Programmers (PDF book)
 
 https://www.dbooks.org/category-theory-for-programmers-0464243874/
 
+Functional programming jargon
+
+https://github.com/hemanth/functional-programming-jargon
+
 
 REST
 ----

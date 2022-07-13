@@ -226,6 +226,16 @@ Desktop Tweaks
 XFCE
 ---
 
+### Install Dracula Theme
+```bash
+mkdir -p ~/.local/share/themes/
+
+cd ~/Downloads/
+wget -O dracula https://github.com/dracula/gtk/archive/master.zip
+unzip dracula.zip 
+mv gtk-master ~/.local/share/themes/dracula
+```
+
 ### Keyboard
 ```
 Behavior > Repeat speed: 50

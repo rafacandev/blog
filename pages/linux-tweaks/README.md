@@ -140,23 +140,17 @@ UBUNTU_CODENAME=$(grep "UBUNTU_CODENAME" /etc/os-release | awk -F'=' '{print $2}
 
 echo "Found UBUNTU_CODENAME=$UBUNTU_CODENAME"
 
-sudo apt install \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
+sudo apt-get install ca-certificates curl gnupg lsb-release
 
-
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+sudo mkdir -p /etc/apt/keyrings
 
 echo \
-  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $UBUNTU_CODENAME stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-sudo apt update
+sudo apt-get update
 
-sudo apt install docker-ce docker-ce-cli containerd.io
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 
 ### NodeJS via Node Version Manager

@@ -151,7 +151,18 @@ echo \
 sudo apt-get update
 
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+sudo docker run hello-world
 ```
+Configure docker to run without `sudo`.
+
+```bash
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker 
+docker run hello-world
+```
+
 
 ### NodeJS via Node Version Manager
 Github official page: https://github.com/nvm-sh/nvm

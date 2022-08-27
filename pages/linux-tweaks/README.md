@@ -1,5 +1,5 @@
-Linux Tweaks
-============
+Linux Mint Tweaks
+=================
 
 Useful tweaks for linux distribution based on debian (ubuntu, mint, etc).
 
@@ -11,8 +11,9 @@ It is turned off by default. Normally, you just need to search for _firewall_ in
 
 Essential apps
 ```bash
-sudo apt install vim curl git chromium-browser vlc vlc-plugin-fluidsynth gimp
+sudo apt install vim curl git chromium-browser vlc vlc-plugin-fluidsynth gimp htop
 ```
+
 
 ### Remove 'unnecessary' apps
 * `mono-runtime-common`: .NET Framework for Linux
@@ -27,6 +28,17 @@ sudo apt install vim curl git chromium-browser vlc vlc-plugin-fluidsynth gimp
 sudo apt-get remove mono-runtime-common gnome-orca apt-xapian-index pidgin hexchat thunderbird gnote
 ```
 
+
+### Update the Kernel
+```bash
+sudo apt-add-repository -y ppa:cappelikan/ppa
+sudo apt update
+sudo apt install mainline
+```
+
+Run mainline from the GUI start menu.
+
+
 ### Reduce grub timeout
 If you are using grub for boot management (e.g.: when you have a dual boot) you may want to reduce the default timeout.
 
@@ -36,6 +48,23 @@ sudo vim /etc/default/grub
 # Change the value of GRUB_TIMEOUT to 1
 GRUB_TIMEOUT=1
 sudo update-grub
+```
+
+### Increase swap file size
+https://arcolinux.com/how-to-increase-the-size-of-your-swapfile/
+
+```bash
+# Turn off all swap processes
+sudo swapoff -a
+
+# Resize the swap to 20Gb
+sudo dd if=/dev/zero of=/swapfile bs=1G count=20
+
+# Make the file usable as swap
+sudo mkswap /swapfile
+
+# Check usage
+free -m
 ```
 
 ### Change swapping tendency
@@ -69,6 +98,7 @@ UUID=YOUR_UUID  /home/YOUR_HOME_USER/files  ext4  relatime,noexec  0  2
 # Mount extra HDD at startup (alternative options)
 LABEL=YOUR_LABEL /mnt/YOUR_DESIRED_FOLDER_NAME auto defaults,rw,user,x-gvfs-show,noauto 0 0
 ```
+
 ### Enable Hibernate
 Based on this excellent tutorial: https://forums.linuxmint.com/viewtopic.php?t=273202
 
@@ -131,31 +161,11 @@ sdk install gradle
 
 
 ### Docker
-
 Follow this guide if you are running Linux Mint:
 [Install Docker on Linux Mint](/posts/intall-docker-on-linux-mint/README.md)
 
-```bash
-UBUNTU_CODENAME=$(grep "UBUNTU_CODENAME" /etc/os-release | awk -F'=' '{print $2}')
 
-echo "Found UBUNTU_CODENAME=$UBUNTU_CODENAME"
-
-sudo apt-get install ca-certificates curl gnupg lsb-release
-
-sudo mkdir -p /etc/apt/keyrings
-
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $UBUNTU_CODENAME stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-sudo apt-get update
-
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
-
-sudo docker run hello-world
-```
-Configure docker to run without `sudo`.
-
+#### Configure docker to run without `sudo`.
 ```bash
 sudo groupadd docker
 sudo usermod -aG docker $USER
@@ -197,7 +207,6 @@ After installing the guest additions, add your user to the vboxsf group
 cat /etc/group | grep vboxsf
 sudo usermod -aG vboxsf [YOUR_USERNAME]
 ```
-
 
 Audio
 =====

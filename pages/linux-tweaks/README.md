@@ -25,7 +25,7 @@ sudo apt install vim curl git chromium-browser vlc vlc-plugin-fluidsynth gimp ht
 * `gnote`: postit notes
 
 ```bash
-sudo apt-get remove mono-runtime-common gnome-orca apt-xapian-index pidgin hexchat thunderbird gnote
+sudo apt-get remove mono-runtime-common gnome-orca apt-xapian-index pidgin hexchat thunderbird gnote sticky
 ```
 
 

@@ -50,7 +50,7 @@ Pages
 
 [Bookmarks](pages/bookmarks/README.md)
 
-[Linux Tweaks](pages/linux-tweaks/README.md)
+[Linux Mint Tweaks](pages/linux-tweaks/README.md)
 
 [Linux Manjaro Tweaks](pages/manjaro-tweaks/README.md)
 

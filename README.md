@@ -4,6 +4,8 @@ Rafa Santos Blog
 Blog Posts
 ----------
 
+[Servidor samba em docker](posts/samba-from-docker/README.md)
+
 [How to Run Tensorflow on GPU on Linux Majaro](posts/tensorflow-keras-gpu/README.md)
 
 [Keras Retinanet Object Detection Custom Training](posts/keras-retinanet/README.md)

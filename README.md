@@ -1,10 +1,25 @@
 Rafa Santos Blog
 ================
 
+A collection of tech articles I have been writting over the years for my own future reference.
+
+
 Blog Posts
 ----------
 
 [Servidor samba em docker](posts/samba-from-docker/README.md)
+
+[Git Cheat Sheet](posts/git-cheat-sheet/README.md)
+
+[Docker Cheat Sheet](posts/docker-cheat-sheet/README.md)
+
+[Linux Mint Tweaks](posts/linux-tweaks/README.md)
+
+[Linux Manjaro Tweaks](posts/manjaro-tweaks/README.md)
+
+[Scala](posts/scala/README.md)
+
+[virt-manager GPU Passthrough](posts/virt-manager-passthrough)
 
 [How to Run Tensorflow on GPU on Linux Majaro](posts/tensorflow-keras-gpu/README.md)
 
@@ -44,21 +59,13 @@ Blog Posts
 
 [Linux Network Driver for rtl8192EU chipset](posts/linux-driver-for-rtl8192EU/README.md)
 
-Pages
------
-[Git Cheat Sheet](pages/git-cheat-sheet/README.md)
+[Dell XPS L502X on Linux][posts/dell-l502x-linux/README.md]
 
-[Docker Cheat Sheet](pages/docker-cheat-sheet/README.md)
 
-[Bookmarks](pages/bookmarks/README.md)
+Bookmarks
+---------
+[Bookmarks](posts/bookmarks/README.md)
 
-[Linux Mint Tweaks](pages/linux-tweaks/README.md)
-
-[Linux Manjaro Tweaks](pages/manjaro-tweaks/README.md)
-
-[Scala](pages/scala/README.md)
-
-[virt-manager GPU Passthrough](pages/virt-manager-passthrough)
 
 Code Snippets
 -------------

@@ -1,8 +1,11 @@
 Bookmarks
 =========
-The art of separation of concerns
 
-http://aspiringcraftsman.com/2008/01/03/art-of-separation-of-concerns/
+Design
+------
+Blush - Editable Illustruations
+
+https://blush.design/
 
 Java
 ----
@@ -12,6 +15,11 @@ https://en.wikibooks.org/wiki/Java_Persistence
 
 Software Engineering
 --------------------
+The art of separation of concerns
+
+http://aspiringcraftsman.com/2008/01/03/art-of-separation-of-concerns/
+
+
 Monitoring Distributed Systems
 
 https://landing.google.com/sre/sre-book/chapters/monitoring-distributed-systems/

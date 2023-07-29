@@ -1,5 +1,5 @@
 Linux Mint Tweaks
-=================
+-----------------
 
 Useful tweaks for linux distribution based on debian (ubuntu, mint, etc).
 

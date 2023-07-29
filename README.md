@@ -1,8 +1,7 @@
+Posts
+=====
+
 A collection of tech articles I have been writting over the years for my own future reference.
-
-
-Blog Posts
-----------
 
 [Servidor samba no docker](pages/samba-from-docker/README.md)
 
@@ -59,11 +58,3 @@ Blog Posts
 [Dell XPS L502X on Linux][pages/dell-l502x-linux/README.md]
 
 
-Bookmarks
----------
-[Bookmarks](pages/bookmarks/README.md)
-
-
-Code Snippets
--------------
-[Visual Studio Settings](snippets/visual-studio-settings/README.md)

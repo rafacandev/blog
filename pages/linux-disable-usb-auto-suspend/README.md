@@ -1,5 +1,5 @@
 Linux - Disable USB Auto Suspend
-================================
+--------------------------------
 
 On my Linux Mint distribution, I am not able to weak up my computer from suspension using my USB keyboard. This happens because Linux Mint disables the USB when the computer is suspended (good strategy if you want to save some energy, although inconvenient if you use an USB keyboard).
 

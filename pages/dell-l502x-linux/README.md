@@ -1,5 +1,5 @@
 Linux on DELL L502X
-===================
+-------------------
 
 #### Slow WIFI
 Slow internet on the wifi card. I noticed that disabling the power management solved the problem.

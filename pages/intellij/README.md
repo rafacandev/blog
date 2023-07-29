@@ -1,5 +1,5 @@
 Intellij Mix
-============
+------------
 
 Recursivelly remove Intellij's projects and configuration files.
 ```bash

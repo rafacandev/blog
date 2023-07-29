@@ -1,5 +1,5 @@
 Generate Self Signed Certificates (PKCS 12 Format) in Java
-==========================================================
+----------------------------------------------------------
 Generate Self Signed certificates in PKCS 12 format in Java might not be trivial.
 Here are the steps. Recommended read: [How to enable communication over https between 2 spring boot applications using self signed certificate](http://www.littlebigextra.com/how-to-enable-communication-over-https-between-2-spring-boot-applications-using-self-signed-certificate)
 

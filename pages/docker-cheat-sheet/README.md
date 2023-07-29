@@ -1,5 +1,5 @@
 Docker Cheat Sheet
-==================
+------------------
 
 Remove any stopped containers and all unused images! *_Use at your own risk_*:
 ```bash

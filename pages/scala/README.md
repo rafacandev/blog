@@ -1,5 +1,5 @@
 Snippets
-========
+--------
 
 ### [ZIO Module Pattern 2.0](https://zio.dev/next/datatypes/contextual/#module-pattern-20)
 

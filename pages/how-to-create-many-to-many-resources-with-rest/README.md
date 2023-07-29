@@ -1,5 +1,5 @@
 How to Create Many-to-Many Resources with REST
-==============================================
+----------------------------------------------
 
 Imagine a classic Many-to-Many relationship where a _User_ can subscribe to many _Groups_ and a _Group_ can have many subscribers. During subscription we need to indicate what is the _*role*_ for that _User_. Possible _*roles*_ are: owner, collaborator or member.
 

@@ -1,5 +1,5 @@
 How to use Maps with Castor XML
-===============================
+-------------------------------
 
 [Castor Documentation](http://castor-data-binding.github.io/castor/reference-guides/1.4.0/html-single/index.html) provides examples for handling the most common collections. However, handling Maps is not straight forward as my colleagues and I hoped.
 

@@ -1,5 +1,5 @@
 Standalone MySql with Docker
-=============================
+----------------------------
 
 Very useful MySQL docker image with an external data folder named `volume-mysql` and which also allows connections from external hosts.
 

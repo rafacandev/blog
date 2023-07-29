@@ -1,5 +1,5 @@
 Linux Mint Keyboard on OS X
-===========================
+---------------------------
 
 My build-in keyboard did not work when installing Linux Mint on a MacBook Pro 2017. To solve this issue I needed to proceed the installation with an external keyboard and follow these steps after installation:
 

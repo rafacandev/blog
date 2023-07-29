@@ -1,5 +1,5 @@
 Pacman Fixes
-============
+------------
 
 
 Pacman Invalid or Corrupted Package

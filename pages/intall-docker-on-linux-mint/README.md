@@ -1,5 +1,5 @@
 Install Docker on Linux Mint
-============================
+----------------------------
 
 If you are trying to install Docker on your Linux Mint distribution you will notice that the official instructions will not work.
 

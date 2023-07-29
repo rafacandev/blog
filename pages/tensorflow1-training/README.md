@@ -1,5 +1,5 @@
 Tensorflow Object Detection Training With One Custom Class and Transfer Learning Tutorial
-=========================================================================================
+-----------------------------------------------------------------------------------------
 
 Introduction
 ------------

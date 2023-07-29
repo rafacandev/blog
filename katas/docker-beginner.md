@@ -1,5 +1,5 @@
 Docker for Beginners - Kata
-===========================
+---------------------------
 
 In this Kata we are going to lear the basic Docker commands. We will see how to pull images, run containers and create our own custom containers.
 

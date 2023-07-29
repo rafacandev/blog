@@ -1,5 +1,5 @@
 Git Rebase Tutorial
-===================
+-------------------
 I find Git rebase to be very different from Git merge. So, I decided to create a step-by-step to practice and illustrate how it works.
 
 *Note*: The `#:` represents my comments whereas `#>` indicates the console output.

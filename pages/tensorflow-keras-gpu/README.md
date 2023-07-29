@@ -1,5 +1,5 @@
 How to Run Tensorflow on GPU on Linux Majaro
-============================================
+--------------------------------------------
 
 In this tutorial we are going to configure Tensorflow to run on GPU on a Linux Manjaro operating system.
 Moreover, we are going to configure our machine to operate normally with the integrated Intel GPU but run Tensorflow in our discrete Nvidia GPU.

@@ -1,5 +1,5 @@
 Deploying Angular with Apache
-=============================
+-----------------------------
 
 [Angular Deployment Guide](https://angular.io/guide/deployment) describes how to deploy angular applications in several web servers including [Apache Http Server](https://httpd.apache.org).
 

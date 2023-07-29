@@ -1,5 +1,5 @@
 Linux Manjaro Tweaks
-====================
+--------------------
 
 Update/Upgrade
 --------------

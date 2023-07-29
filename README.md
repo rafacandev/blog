@@ -1,6 +1,3 @@
-Rafa Santos Blog
-================
-
 A collection of tech articles I have been writting over the years for my own future reference.
 
 

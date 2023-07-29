@@ -34,9 +34,11 @@ const App = () => {
 ```
 
 
+CSS Libraries
+=============
 
-daisyUI
-=======
-The most popular component library for **Tailwind CSS**, daisyUI adds component class names to Tailwind CSS; so you can make beautiful websites faster than ever.
+Tailwind CSS: 15 Component Libraries & UI Kits
+https://stackdiary.com/tailwind-components-ui-kits/
 
+daisyUI: adds component class names to Tailwind CSS; so you can make beautiful websites faster than ever.
 https://daisyui.com/

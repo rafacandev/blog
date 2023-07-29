@@ -2,6 +2,6 @@
 title: [Rafa Santos Blog]
 description: [Passionate about software development]
 google_analytics: [UA-168757524-1]
-remote_theme: pages-themes/tactile@v0.2.0
+remote_theme: pages-themes/minima
 plugins:
   - jekyll-remote-theme # add this line to the plugins list if you already have one

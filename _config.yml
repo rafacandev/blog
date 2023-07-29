@@ -3,16 +3,4 @@ author:
   name: Rafael Santos
   email: rafa.can.dev@gmail.com
 
-# The `>` after `description:` means to ignore line-breaks until next key. If you want to omit the line-break after the end of text, use `>-` instead.
-description: >
-  A collection of tech articles I have been writting over the years for my own future reference.
-
 theme: minima
-
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
-
-minima:
-  social_links:
-    - { platform: github,         user_url: "https://github.com/rafacandev" }

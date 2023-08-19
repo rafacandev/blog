@@ -2,20 +2,11 @@ title: Rafael Santos Blog
 author:
   name: Rafael Santos
   email: rafa.can.dev@gmail.com
+description: A collection of tech articles I have been writting over the years for my own future reference.
 
-# The `>` after `description:` means to ignore line-breaks until next key. If you want to omit the line-break after the end of text, use `>-` instead.
-description: >
-  A collection of tech articles I have been writting over the years for my own future reference.
-
-theme: minima
+remote_theme: pages-themes/slate@v0.2.0
 
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
-
-minima:
-  social_links:
-    - { platform: github,         user_url: "https://github.com/rafacandev" }
-  header_pages:
-    - posts.md
-    - bookmarks.md
+  - jekyll-remote-theme

@@ -3,7 +3,7 @@ Posts
 
 A collection of tech articles I have been writting over the years for my own future reference.
 
-[Tmux](pagex/tmux.md)
+[Tmux](pages/tmux.md)
 
 [Servidor samba no docker](pages/samba-from-docker/README.md)
 

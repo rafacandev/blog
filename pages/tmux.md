@@ -4,11 +4,11 @@ sudo apt install tmux
 ```
 
 ## TPM
-Follow the steps described at https://github.com/tmux-plugins/tpm
+Follow the steps described at <https://github.com/tmux-plugins/tpm>
 
 ## Fonts
 
-Nerd Fonts is a great resource for pached fonts: https://github.com/ryanoasis/nerd-fonts
+Nerd Fonts is a great resource for pached fonts: <https://github.com/ryanoasis/nerd-fonts>
 
 Install only Jet Brans Mono font:
 ```bash
@@ -20,7 +20,7 @@ fc-cache -vf ~/.local/share/fonts
 ```
 
 ## Theme : Dracula
-Dracula is my theme of choice: https://draculatheme.com/tmux
+Dracula is my theme of choice: <https://draculatheme.com/tmux>
 
 ## Configuration
 My final configuration file `~/.tmux.conf`
@@ -51,5 +51,5 @@ run '~/.tmux/plugins/tpm/tpm'
 
 ## Resources
 
-https://github.com/rothgar/awesome-tmux
+<https://github.com/rothgar/awesome-tmux>
 

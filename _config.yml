@@ -7,6 +7,5 @@ description: A collection of tech articles I have been writting over the years f
 remote_theme: pages-themes/slate@v0.2.0
 
 plugins:
-  - jekyll-feed
   - jekyll-seo-tag
   - jekyll-remote-theme

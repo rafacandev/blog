@@ -22,6 +22,9 @@ fc-cache -vf ~/.local/share/fonts
 ## Theme : Dracula
 Dracula is my theme of choice: <https://draculatheme.com/tmux>
 
+## Resurrect
+Restore tmux sessions: <https://github.com/tmux-plugins/tmux-resurrect>
+
 ## Configuration
 My final configuration file `~/.tmux.conf`
 
@@ -29,6 +32,7 @@ My final configuration file `~/.tmux.conf`
 # List of plugins
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
 
 
 # Basic styling

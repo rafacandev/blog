@@ -173,6 +173,16 @@ newgrp docker
 docker run hello-world
 ```
 
+### Bash
+*.inputrc*
+```
+# Ctrl-Delete: delete next word
+"\e[3;5~": shell-kill-word
+
+# Ctrl-Backspace: delete previous word
+"\C-H": shell-backward-kill-word
+```
+
 
 ### NodeJS via Node Version Manager
 Github official page: https://github.com/nvm-sh/nvm

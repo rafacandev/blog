@@ -105,3 +105,9 @@ Machine Learning
 [Object Detection on Custom Dataset with TensorFlow 2 and Keras using Python](https://www.curiousily.com/posts/object-detection-on-custom-dataset-with-tensorflow-2-and-keras-using-python/)
 
 [Image Augmentation in Python](https://github.com/aleju/imgaug)
+
+
+Ergonomics
+----------
+
+[Canadian Centre for Ocupational Health and Safety](https://www.ccohs.ca/oshanswers/ergonomics/office)

@@ -1,61 +1,40 @@
-Posts
-=====
+My collection of tech articles! These posts document the solutions, tools, and workflows I've explored over the years—primarily for my own future reference but also to share with others who might find them useful.
 
-A collection of tech articles I have been writting over the years for my own future reference.
+## [Tmux](pages/tmux.md)
+**tmux** is a powerful terminal multiplexer that lets you run and manage multiple terminal sessions in a single screen. Whether you want to split windows into panes or seamlessly detach and reattach sessions, this tool is indispensable for developers and system administrators.  
 
-[Tmux](pages/tmux.md)
+## [Servidor samba no docker](pages/samba-from-docker/README.md)
+**Samba** bridges the gap between different operating systems by enabling file and printer sharing across Windows, macOS, and Linux. This guide walks you through building a **Samba** server using **Docker** for a streamlined setup.  
 
-[Servidor samba no docker](pages/samba-from-docker/README.md)
+## [Self Hosted Git Server With Gogs](pages/how-to-create-a-git-server)
+Looking for a lightweight, self-hosted Git solution? **Gogs** is a painless Git service that’s easy to deploy. Learn how to set up your own Git server with **Docker Compose** in this step-by-step guide.  
 
-[Git Cheat Sheet](pages/git-cheat-sheet/README.md)
+## [Downloading HTTPS Certificates](pages/downloading-certificates/README.md)
+Need to retrieve SSL certificates from an HTTPS website? This article shows you how to download them, which is especially handy when dealing with trusted sites using self-signed certificates.  
 
-[Docker Cheat Sheet](pages/docker-cheat-sheet/README.md)
+## [Creating Centered Thumbnails In Java](pages/generate-centered-thumbnails-in-java/README.md)
+Generate clean, centered thumbnails in **Java** without relying on external libraries. This post explores a straightforward solution for developers working with image manipulation.  
 
-[Linux Mint Tweaks](pages/linux-tweaks/README.md)
+## [Linux Mint Tweaks](pages/linux-tweaks/README.md)
+Unleash the full potential of **Linux Mint** with a set of tweaks to enhance performance, usability, and workflow.  
 
-[Linux Manjaro Tweaks](pages/manjaro-tweaks/README.md)
-
-[Scala](pages/scala/README.md)
-
-[virt-manager GPU Passthrough](pages/virt-manager-passthrough)
-
-[How to Run Tensorflow on GPU on Linux Majaro](pages/tensorflow-keras-gpu/README.md)
-
-[Keras Retinanet Object Detection Custom Training](pages/keras-retinanet/README.md)
-
-[Tensorflow Object Detection Training With One Custom Class and Transfer Learning Tutorial](pages/tensorflow1-training/README.md)
-
-[Download Certificates From HTTPS Website](pages/downloading-certificates/README.md)
-
-[Generate Self Signed Certificates (PKCS 12 Format) in Java](pages/generate-self-signed-certificates-in-java/README.md)
-
-[Samba Tutorial for Arch Linux](pages/samba-tutorial/README.md)
-
-[Install Adobe Acrobat Reader on Ubuntu Distros](pages/install-adobe-reader-on-ubuntu-based-distributions/README.md)
-
-[GitAhead a graphical git client](pages/gitahead/README.md)
-
-[How to use Maps with Castor XML](pages/how-to-use-maps-with-castor-xml/README.md)
-
-[Generate Centered Thumbnails In Java](pages/generate-centered-thumbnails-in-java/README.md)
-
-[Deploying Angular with Apache](pages/deploying-angular-with-apache/README.md)
-
-[How to Create a Git Server](pages/how-to-create-a-git-server)
-
-[Standalone MySql with Docker](pages/standalone-mysql-with-docker/README.md)
-
-[Linux Mint Keyboard on OS X](pages/linux-mint-keyboard-on-osx/README.md)
+## [MySql Server With Docker](pages/standalone-mysql-with-docker/README.md)
+Simplify your database setup by creating a **MySQL** server using **Docker**
 
 [Install Docker on Linux Mint](pages/intall-docker-on-linux-mint/README.md)
+Installing **Docker** on Linux Mint can sometimes lead to minor hiccups. This guide provides clear, step-by-step instructions to help you set up Docker seamlessly on your system.
 
-[Linux - Disable USB Auto Suspend](pages/linux-disable-usb-auto-suspend/README.md)
+## [Generate Self Signed Certificates (PKCS 12 Format) in Java](pages/generate-self-signed-certificates-in-java/README.md)
+Self-signed certificates are a practical solution for secure communication in test environments or internal applications. In this post, you’ll learn how to programmatically generate **self-signed certificates** in **PKCS#12 format** using **Java**.
 
-[How to Create Many-to-Many Resources with REST](pages/how-to-create-many-to-many-resources-with-rest/README.md)
+## [Linux - Disable USB Auto Suspend](pages/linux-disable-usb-auto-suspend/README.md)
+USB auto-suspend is a power-saving feature in Linux that can sometimes prevent a machine to wake-up when the user presses a keboard's key.
+
+## [How to Create Many-to-Many Resources with REST](pages/how-to-create-many-to-many-resources-with-rest/README.md)
+Handling many-to-many relationships in a RESTful API can be challenging, especially when designing endpoints and managing associations. This post explores strategies for creating and managing many-to-many resources effectively using REST principles, with practical examples to guide you through the implementation.
 
 [Git Rebase Tutorial](pages/git-rebase-tutorial/README.md)
-
-[Linux Network Driver for rtl8192EU chipset](pages/linux-driver-for-rtl8192EU/README.md)
+**Git rebase** is a powerful tool for rewriting commit history, keeping branches clean, and maintaining a linear project timeline. In this tutorial, you'll learn how to use git rebase effectively.
 
 [Dell XPS L502X on Linux][pages/dell-l502x-linux/README.md]
 

@@ -21,7 +21,7 @@ Unleash the full potential of **Linux Mint** with a set of tweaks to enhance per
 ## [MySql Server With Docker](pages/standalone-mysql-with-docker/README.md)
 Simplify your database setup by creating a **MySQL** server using **Docker**
 
-[Install Docker on Linux Mint](pages/intall-docker-on-linux-mint/README.md)
+## [Install Docker on Linux Mint](pages/intall-docker-on-linux-mint/README.md)
 Installing **Docker** on Linux Mint can sometimes lead to minor hiccups. This guide provides clear, step-by-step instructions to help you set up Docker seamlessly on your system.
 
 ## [Generate Self Signed Certificates (PKCS 12 Format) in Java](pages/generate-self-signed-certificates-in-java/README.md)
@@ -33,9 +33,5 @@ USB auto-suspend is a power-saving feature in Linux that can sometimes prevent a
 ## [How to Create Many-to-Many Resources with REST](pages/how-to-create-many-to-many-resources-with-rest/README.md)
 Handling many-to-many relationships in a RESTful API can be challenging, especially when designing endpoints and managing associations. This post explores strategies for creating and managing many-to-many resources effectively using REST principles, with practical examples to guide you through the implementation.
 
-[Git Rebase Tutorial](pages/git-rebase-tutorial/README.md)
+## [Git Rebase Tutorial](pages/git-rebase-tutorial/README.md)
 **Git rebase** is a powerful tool for rewriting commit history, keeping branches clean, and maintaining a linear project timeline. In this tutorial, you'll learn how to use git rebase effectively.
-
-[Dell XPS L502X on Linux][pages/dell-l502x-linux/README.md]
-
-

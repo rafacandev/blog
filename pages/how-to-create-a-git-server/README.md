@@ -1,5 +1,5 @@
-How to Create a Git Server
---------------------------
+Self Hosted Git Server With Gogs
+--------------------------------
 
 Create a private Git server using Docker and [Gogs](https://gogs.io/docs).
 

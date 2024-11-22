@@ -1,6 +1,91 @@
 Generate Centered Thumbnails In Java
 ====================================
-There are many thumbnail libraries out there but if you need a simple thumbnail generator for Java without any external dependencies you can use this [ImageUtil](https://github.com/rafasantos/matchandtrade-web-api/blob/master/src/main/java/com/matchandtrade/util/ImageUtil.java) class.
+There are many thumbnail libraries out there but if you need a simple thumbnail generator for Java without any external dependencies you can use this `ImageUtil` class.
+
+```java
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+public class ImageUtil {
+
+	/**
+	 * Builds a @{code BufferedImage} of an {@code Image}
+	 * 
+	 * @see java.awt.image.BufferedImage
+	 * @see java.awt.Image
+	 * 
+	 * @param image
+	 * @return BufferedImage
+	 */
+	public static BufferedImage buildBufferedImage(Image image) {
+		BufferedImage result = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+	    Graphics2D graphics = result.createGraphics();
+	    graphics.drawImage(image, 0, 0, null);
+	    graphics.dispose();
+	    return result;
+	}
+
+	/**
+	 * Obtains an image resulted from cropping the center of the given {@code image} with the desired {@code width} and {@code height} 
+	 *  
+	 * @param image
+	 * @param width
+	 * @param height
+	 * @return Image
+	 */
+	public static Image obtainCenterCrop(Image image, final int width, final int height) {
+		int imageWidth = image.getWidth(null);
+		int imageHeight = image.getHeight(null);
+		int x = (int) (imageWidth / 2) - (width / 2);
+		int y = (int) (imageHeight / 2) - (height / 2);
+		return buildBufferedImage(image).getSubimage(x, y, width, height);
+	}
+
+	/**
+	 * <p>Obtains a proportionally resized image where its shortest edge is resized to match {@code shortEdgeLength}.</p>
+	 * <p>Examples:<p>
+	 * <ul>
+	 * 	<li>an input image with width=100 and height=50 and shortEdgeLength=25 results in a image with width=50 and height=25</li>
+	 * 	<li>an input image with width=50 and height=100 and shortEdgeLength=25 results in a image with width=25 and height=100</li>
+	 * </ul>
+	 * 
+	 * @param image: the reference image
+	 * @param shortEdgeLength: the target value of the resulting image's short edge
+	 * @return Image
+	 */
+	public static Image obtainShortEdgeResizedImage(final Image image, final int shortEdgeLength) {
+		int imageWidth = image.getWidth(null);
+		int imageHeight = image.getHeight(null);
+		double shortEdgeRatio;
+		int thumbnailHeight;
+		int thumbnailWidth;
+
+		boolean isLandscape = (imageWidth >= imageHeight);
+		if (isLandscape) {
+			shortEdgeRatio = (double) imageHeight / (double) shortEdgeLength;
+			thumbnailWidth = (int) (imageWidth / shortEdgeRatio);
+			thumbnailHeight = shortEdgeLength;
+		} else {
+			shortEdgeRatio = (double) imageWidth / (double) shortEdgeLength;
+			thumbnailHeight = (int) (imageHeight / shortEdgeRatio);
+			thumbnailWidth = shortEdgeLength;			
+		}
+		
+		BufferedImage result = new BufferedImage(thumbnailWidth, thumbnailHeight, BufferedImage.TYPE_INT_RGB);
+		Graphics2D graphics2D = result.createGraphics();
+		graphics2D.setBackground(Color.WHITE);
+		graphics2D.setPaint(Color.WHITE);
+		graphics2D.fillRect(0, 0, thumbnailWidth, thumbnailHeight);
+		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		graphics2D.drawImage(image, 0, 0, thumbnailWidth, thumbnailHeight, null);
+		return result;
+	}
+}
+```
 
 The idea is to resized the image by the short edge and then crop it from the center.
 

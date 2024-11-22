@@ -1,7 +1,7 @@
 Download Certificates From HTTPS Page
 -------------------------------------
-Steps to download certificates from an existing HTTPS website.
-Useful when the website uses self-signed certificates and you want to trust their certificates.
+Download certificates from an existing HTTPS website.
+Useful when you trust a website which uses self-signed certificates.
 
 
 ```$bash

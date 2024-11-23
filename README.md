@@ -1,5 +1,10 @@
 My collection of tech articles! These posts document the solutions, tools, and workflows I've explored over the years—primarily for my own future reference but also to share with others who might find them useful.
 
+## :bookmark_tabs: [My Bookmarks](pages/bookmarks/README.MD)
+My personal bookmarks
+
+---
+
 ## :brazil: [Servidor samba no docker](pages/samba-from-docker/README.md)
 **Samba** conecta diferentes sistemas operacionais, permitindo o compartilhamento de arquivos e impressoras entre Windows, macOS e Linux. Este guia apresenta o passo a passo para criar um servidor **Samba** usando o **Docker**, proporcionando uma configuração simplificada.
 

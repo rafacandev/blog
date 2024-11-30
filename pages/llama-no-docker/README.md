@@ -51,6 +51,7 @@ curl http://localhost:11434/api/generate -d '{
   "stream": false
 }'
 ```
+
 ```json
 {
   "model": "llama3.2",

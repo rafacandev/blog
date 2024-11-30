@@ -3,7 +3,10 @@
 
 ---
 
-### [Servidor samba no docker](pages/samba-from-docker/README.md)
+### [Servidor Llama no Docker](pages/llama-no-docker/README.md)
+<img src="./assets/brazil.png" width="15"> **Llama** é uma poderosa ferramenta gratuita de inteligência artificial que possibilita o processamento de linguagem natural diretamente em servidores locais. Este é um guia para configurar e executar um servidor Llama usando Docker, simplificando a instalação.
+
+### [Servidor samba no Docker](pages/samba-from-docker/README.md)
 <img src="./assets/brazil.png" width="15"> **Samba** conecta diferentes sistemas operacionais, permitindo o compartilhamento de arquivos e impressoras entre Windows, macOS e Linux. Este guia apresenta o passo a passo para criar um servidor **Samba** usando o **Docker**, proporcionando uma configuração simplificada.
 
 ### [Install Docker on Linux Mint](pages/intall-docker-on-linux-mint/README.md)

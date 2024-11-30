@@ -12,8 +12,6 @@ version: '3.8'
 services:
   ollama:
     image: ollama/ollama
-    build:
-      dockerfile: Dockerfile
     container_name: ollama
     ports:
       - "11434:11434"

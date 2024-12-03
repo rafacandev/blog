@@ -9,6 +9,9 @@
 ### [Servidor samba no Docker](pages/samba-from-docker/README.md)
 <img src="./assets/brazil.png" width="15"> **Samba** conecta diferentes sistemas operacionais, permitindo o compartilhamento de arquivos e impressoras entre Windows, macOS e Linux. Este guia apresenta o passo a passo para criar um servidor **Samba** usando o **Docker**, proporcionando uma configuração simplificada.
 
+### [Git no Docker](pages/git-from-docker/README.md)
+<img src="./assets/brazil.png" width="15"> Execute o **git** em um contêiner Docker. Isso é muito útil caso você queira utilizar múltiplos git (com usuários e configs distintos) em uma mesma máquina.
+
 ### [Install Docker on Linux Mint](pages/intall-docker-on-linux-mint/README.md)
 Installing **Docker** on Linux Mint can sometimes lead to minor hiccups. This guide provides clear, step-by-step instructions to help you set up Docker seamlessly on your system.
 

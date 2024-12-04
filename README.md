@@ -12,6 +12,9 @@
 ### [Git no Docker](pages/git-from-docker/README.md)
 <img src="./assets/brazil.png" width="15"> Execute o **git** em um contêiner Docker. Isso é muito útil caso você queira utilizar múltiplos git (com usuários e configs distintos) em uma mesma máquina.
 
+### [Meu Visual Studio Code Config](pages/vs-code-config/README.md)
+<img src="./assets/brazil.png" width="15"> Minha configuração para o **Visual Studio Code**.
+
 ### [Install Docker on Linux Mint](pages/intall-docker-on-linux-mint/README.md)
 Installing **Docker** on Linux Mint can sometimes lead to minor hiccups. This guide provides clear, step-by-step instructions to help you set up Docker seamlessly on your system.
 

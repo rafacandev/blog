@@ -4,7 +4,7 @@ author:
   email: rafa.can.dev@gmail.com
 description: A collection of tech articles I have been writting over the years for my own future reference.
 
-remote_theme: pages-themes/slate@v0.2.0
+remote_theme: pages-themes/midnight@v0.2.0
 
 plugins:
   - jekyll-seo-tag

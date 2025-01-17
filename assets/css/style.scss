@@ -1,16 +1,4 @@
 ---
 ---
 
-@import "{{ site.theme }}";
-
-.inner {
-	position: relative;
-	max-width: 1000px;
-	padding: 20px 10px;
-	margin: 0 auto;
-}
-
-.highlight {
-	background-color: #fff
-}
-
+@import "jekyll-theme-midnight";

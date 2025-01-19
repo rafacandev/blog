@@ -5,7 +5,7 @@ Este guia mostra como executar o Llama em um ambiente Docker expondo o servidor 
 ### Configuração do Docker Compose
 Em um diretório de sua máquina, crie um arquivo chamado `docker-compose.yml` com o seguinte conteúdo:
 
-**docker-compose.yml**
+[docker-compose.yml](./docker-compose.yml)
 ```yml
 version: '3.8'
 

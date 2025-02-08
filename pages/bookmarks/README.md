@@ -10,6 +10,9 @@ https://blush.design/
 UI
 --
 
+Zag - UI components powered by Finite State Machines
+https://zagjs.com/
+
 shadcn - Build your own component library
 https://ui.shadcn.com/docs/components/
 

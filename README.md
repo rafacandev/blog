@@ -3,6 +3,9 @@
 
 ---
 
+### [Editar videos automaticamente](pages/auto-editor/README.md)
+<img src="./assets/brazil.png" width="15"> **auto-editor** é um aplicativo para edição automática de vídeos. Ele oferece diversos parâmetros para editar vídeos, como a remoção automática de trechos silenciosos.
+
 ### [Servidor Llama no Docker](pages/llama-no-docker/README.md)
 <img src="./assets/brazil.png" width="15"> **Llama** é uma poderosa ferramenta gratuita de inteligência artificial que possibilita o processamento de linguagem natural diretamente em servidores locais. Este é um guia para configurar e executar um servidor Llama usando Docker, simplificando a instalação.
 

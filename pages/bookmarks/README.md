@@ -16,6 +16,8 @@ https://zagjs.com/
 shadcn - Build your own component library
 https://ui.shadcn.com/docs/components/
 
+Pixi - Create beautiful digital content with the fastest, most flexible 2D WebGL renderer.
+https://pixijs.com/
 
 Java
 ----

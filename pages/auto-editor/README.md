@@ -8,7 +8,7 @@ Crie um arquivo docker:
 FROM python:3
 WORKDIR /app
 RUN pip install auto-editor
-CMD ["auto-editor"]
+ENTRYPOINT ["auto-editor"]
 VOLUME /app
 ```
 

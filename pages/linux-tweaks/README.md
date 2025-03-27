@@ -39,6 +39,14 @@ sudo apt install mainline
 Run mainline from the GUI start menu.
 
 
+### Do nothing when lid is closed
+
+Edit `/etc/systemd/logind.conf` and set `HandleLidSwitch=ignore`
+```
+cp /etc/systemd/logind.conf /etc/systemd/logind.conf.bk
+echo 'HandleLidSwitch=ignore' >> /etc/systemd/logind.conf
+```
+
 ### Reduce grub timeout
 If you are using grub for boot management (e.g.: when you have a dual boot) you may want to reduce the default timeout.
 

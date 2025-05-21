@@ -3,7 +3,10 @@
 
 ---
 
-### [Editar videos automaticamente](pages/auto-editor/README.md)
+### [Produção musical em Linux](pages/linux-music/README.md)
+<img src="./assets/brazil.png" width="15"> Produção e edição de música em Linux com ênfase em ferramentas gratuitas e/ou open-source.
+
+### [Editar vídeos automaticamente](pages/auto-editor/README.md)
 <img src="./assets/brazil.png" width="15"> **auto-editor** é um aplicativo para edição automática de vídeos. Ele oferece diversos parâmetros para editar vídeos, como a remoção automática de trechos silenciosos.
 
 ### [Servidor Llama no Docker](pages/llama-no-docker/README.md)

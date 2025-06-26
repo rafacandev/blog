@@ -19,6 +19,9 @@ Sempre que possível, dê preferência a plugins no formato **LV2**, que oferece
 * `mda-lv2`
   Port dos plugins clássicos **MDA** (Paul Kellett) para o formato LV2.
 
+* `dragonfly-reverb-lv2`
+  Excelente reverb.
+
 #### Plugins nativos no formato LV2
 
 * [**Airwindows**](https://www.airwindows.com/)

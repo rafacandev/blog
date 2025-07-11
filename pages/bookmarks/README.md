@@ -1,21 +1,24 @@
 Bookmarks
 =========
 
-Office and Productivity
------------------------
-**Scribe** Record your screen and export as step-by-step documents. Excellent for tutorials and manuals.
+## Office and Productivity
 
+**Scribe** Record your screen and export as step-by-step documents. Excellent for tutorials and manuals.
 https://scribehow.com/
 
 
-Design
-------
+## Design
 Blush - Editable Illustruations
 
 https://blush.design/
 
-UI
---
+## UI
+
+Tailwind CSS plugin. It provides useful component classes to help you write less code and build faster.
+https://daisyui.com/
+
+Icons
+https://heroicons.com/
 
 Zag - UI components powered by Finite State Machines
 https://zagjs.com/

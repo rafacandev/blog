@@ -3,6 +3,9 @@
 
 ---
 
+### [Produção musical em Linux](pages/solidjs/README.md)
+<img src="./assets/brazil.png" width="15"> Guia Rápido: Configuração de SolidJS + Vite + TailwindCSS + DaisyUI
+
 ### [Produção musical em Linux](pages/linux-music/README.md)
 <img src="./assets/brazil.png" width="15"> Produção e edição de música em Linux com ênfase em ferramentas gratuitas e/ou open-source.
 

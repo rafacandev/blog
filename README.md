@@ -30,6 +30,9 @@
 ### [Meu Backup](pages/meu-backup/README.md)
 <img src="./assets/brazil.png" width="15"> Backup do meu Linux Mint.
 
+### [Recipes](pages/recipes/README.md)
+Easy recipes
+
 ### [Install Docker on Linux Mint](pages/intall-docker-on-linux-mint/README.md)
 Installing **Docker** on Linux Mint can sometimes lead to minor hiccups. This guide provides clear, step-by-step instructions to help you set up Docker seamlessly on your system.
 

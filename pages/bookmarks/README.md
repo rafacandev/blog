@@ -12,6 +12,9 @@ Blush - Editable Illustruations
 
 https://blush.design/
 
+Github Free Icons
+https://free-icons.github.io/free-icons/
+
 ## UI
 
 Tailwind CSS plugin. It provides useful component classes to help you write less code and build faster.

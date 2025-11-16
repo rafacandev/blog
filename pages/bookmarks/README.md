@@ -9,11 +9,20 @@ https://scribehow.com/
 
 ## Design
 Blush - Editable Illustruations
-
 https://blush.design/
+
+https://remixicon.com/
+
+https://iconoir.com/
 
 Github Free Icons
 https://free-icons.github.io/free-icons/
+
+Icon for popular brands
+https://simpleicons.org
+
+Icons on MIT license
+https://heroicons.com/
 
 ## UI
 

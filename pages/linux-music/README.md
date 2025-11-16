@@ -29,3 +29,6 @@ Sempre que possível, dê preferência a plugins no formato **LV2**, que oferece
 
 * [**Neural Amp Modeler (NAM)**](https://www.tone3000.com/)
   Simulador de amplificadores baseado em redes neurais. Ideal para guitarristas e baixistas que buscam timbres realistas com baixo consumo de CPU.
+
+* [**TAL Vocoder**](https://tal-software.com/products/tal-vocoder)
+  Free vocoder.

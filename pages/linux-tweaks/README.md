@@ -255,75 +255,6 @@ pactl info
 Desktop Tweaks
 ==============
 
-XFCE
----
-
-### Install Dracula Theme
-```bash
-mkdir -p ~/.local/share/themes/
-
-cd ~/Downloads/
-wget -O dracula.zip https://github.com/dracula/gtk/archive/master.zip
-unzip dracula.zip 
-mv gtk-master ~/.local/share/themes/dracula
-```
-
-### Keyboard
-```
-Behavior > Repeat speed: 50
-Application Shortcuts > xfce4-popup-whiskermenu: Super+Space
-Application Shortcuts > xfce4-taskmanager: Super+M
-Application Shortcuts > xfce4-terminal: Super+T
-Application Shortcuts > xkill: Super+K
-Application Shortcuts > exo-open --launch FileManager: Super+E
-```
-
-### Window Manager Keyboard
-```
-Keyboard > Raise window > Clear
-Keyboard > Lower window > Clear
-Keyboard > Move window to upper workspace > Clear
-Keyboard > Move window to bottom workspace > Clear
-Keyboard > Move window to left workspace > Clear
-Keyboard > Move window to right workspace > Clear
-Keyboard > Move window to previous workspace: Shift+Ctrl+Alt+Left
-Keyboard > Move window to next workspace: Shift+Ctrl+Alt+Right
-Keyboard > Move window to workspace 1 > Clear
-Keyboard > Move window to workspace 2 > Clear
-Keyboard > Move window to workspace 3 > Clear
-Keyboard > Move window to workspace 4 > Clear
-Keyboard > Move window to workspace 5 > Clear
-Keyboard > Move window to workspace 6 > Clear
-Keyboard > Move window to workspace 7 > Clear
-Keyboard > Move window to workspace 8 > Clear
-Keyboard > Move window to workspace 9 > Clear
-Keyboard > Tile window to the top: Super+Up
-Keyboard > Tile window to the bottom: Super+Down
-Keyboard > Tile window to the left: Super+Left
-Keyboard > Tile window to the right: Super+Right
-Keyboard > Show Desktop: Super+D
-Keyboard > Upper workspace > Clear
-Keyboard > Bottom workspace > Clear
-Keyboard > Left workspace > Clear
-Keyboard > Right workspace > Clear
-Keyboard > Next workspace: Ctrl+Alt+Right
-Keyboard > Previous workspace: Ctrl+Alt+Left
-Keyboard > Workspace 1 > Clear
-Keyboard > Workspace 2 > Clear
-Keyboard > Workspace 3 > Clear
-Keyboard > Workspace 4 > Clear
-Keyboard > Workspace 5 > Clear
-Keyboard > Workspace 6 > Clear
-Keyboard > Workspace 7 > Clear
-Keyboard > Workspace 8 > Clear
-Keyboard > Workspace 9 > Clear
-Keyboard > Workspace 10 > Clear
-Keyboard > Workspace 11 > Clear
-Keyboard > Workspace 12 > Clear
-Keyboard > Add workspace > Clear
-Keyboard > Delete last workspace > Clear
-```
-
 Cinnamon
 --------
 Turn off effects
@@ -337,13 +268,51 @@ Disable compositing for full-screen windows [off]
 Menu button >> Preferences >> Window Tiling [off]
 ```
 
-### Disable Unwanted Shortcuts
-The `Ctrl+Alt+Up` and `Ctrl+Alt+Down` are traditionally used with for toggle workspaces up and down but they conflic to many development IDEs.
+### Keyboard Shortcuts
 
-```bash
-## Lookup for shortcuts Ctrl+Alt+Up and Ctrl+Alt+Down
-## gsettings list-recursively | grep -i "up\|down" | grep -i "Alt" | grep -i "Control"
+Export shortcuts:
+```sh
+dconf dump /org/cinnamon/desktop/keybindings/ > dconf-settings.conf
+```
 
-gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-down []
-gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-up []
+Import shortcuts:
+```sh
+dconf load /org/cinnamon/desktop/keybindings/ < dconf-settings.conf
+```
+
+My `dconf-settings.conf`
+```conf
+[/]
+looking-glass-keybinding=@as []
+
+[media-keys]
+hibernate=['XF86Hibernate']
+home=['<Super>e', 'XF86Explorer']
+screensaver=@as []
+shutdown=['XF86PowerOff']
+suspend=@as []
+terminal=['<Super>t']
+
+[wm]
+begin-move=@as []
+begin-resize=@as []
+maximize-horizontally=['<Super>y']
+maximize-vertically=['<Super>u']
+move-to-side-e=['<Super>Right']
+move-to-side-n=['<Super>Up']
+move-to-side-s=['<Super>Down']
+move-to-side-w=['<Super>Left']
+move-to-workspace-left=@as []
+move-to-workspace-right=['<Super>p']
+push-tile-down=@as []
+push-tile-left=@as []
+push-tile-right=@as []
+push-tile-up=@as []
+switch-monitor=['<Super>0', 'XF86Display']
+switch-to-workspace-down=@as []
+switch-to-workspace-left=['<Super>h']
+switch-to-workspace-right=['<Super>l']
+switch-to-workspace-up=['<Super>F1']
+toggle-maximized=['<Super>m']
+unmaximize=@as []
 ```

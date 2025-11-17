@@ -36,9 +36,9 @@ sudo udevadm trigger
 # Load uinput module
 sudo modprobe uinput
 
-# Copy the simple.kbd configuration file
+# Copy the .kbd configuration file
 echo "Copying simple.kbd to ~/.kanata/kanata.kbd"
-cp simple.kbd ~/.kanata/kanata.kbd
+cp kanata.kbd ~/.kanata/kanata.kbd
 
 echo "Permissions have been set up. You may need to log out and log back in for the group changes to take effect."
 echo "After logging back in, you can run kanata using: ~/.kanata/kanata_linux_x64 --cfg ~/.kanata/kanata.kbd"

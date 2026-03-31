@@ -6,6 +6,9 @@
 ### [fzf](pages/fzf/README.md)
 **fzf** is a powerful fuzzy finder for your terminal.
 
+### [Quotes](pages/quotes/README.md)
+Cool technology and business quotes.
+
 ### [Produção musical em Linux](pages/solidjs/README.md)
 <img src="./assets/brazil.png" width="15"> Guia Rápido: Configuração de SolidJS + Vite + TailwindCSS + DaisyUI
 

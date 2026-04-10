@@ -1,23 +1,23 @@
-Linux Mint Tweaks
------------------
+# Linux Mint Tweaks
 
 Useful tweaks for linux distribution based on debian (ubuntu, mint, etc).
 
 ### Turn on the firewall
 It is turned off by default. Normally, you just need to search for _firewall_ in your distribution menu.
 
-
-### Useful Apps
+### Add Cool Apps
 
 Essential apps
 ```bash
-sudo apt install vim curl git chromium-browser vlc vlc-plugin-fluidsynth gimp htop
+sudo apt install vim curl git vlc vlc-plugin-fluidsynth gimp htop virt-manager
 ```
 
+```bash
+flatpak install flathub com.brave.Browser
+```
 
-### Remove 'unnecessary' apps
+### Remove Boring Apps
 * `mono-runtime-common`: .NET Framework for Linux
-* `gnome-orca`: screen reader
 * `apt-xapian-index`: indexing application speeds up certain search operations but in general isn't a good trade-off
 * `pidgin`: chatting app
 * `hexchat`: chatting app
@@ -25,19 +25,8 @@ sudo apt install vim curl git chromium-browser vlc vlc-plugin-fluidsynth gimp ht
 * `gnote`: postit notes
 
 ```bash
-sudo apt-get remove mono-runtime-common gnome-orca apt-xapian-index pidgin hexchat thunderbird gnote sticky
+sudo apt-get remove mono-runtime-common apt-xapian-index pidgin hexchat thunderbird gnote sticky
 ```
-
-
-### Update the Kernel
-```bash
-sudo apt-add-repository -y ppa:cappelikan/ppa
-sudo apt update
-sudo apt install mainline
-```
-
-Run mainline from the GUI start menu.
-
 
 ### Do nothing when lid is closed
 
@@ -128,11 +117,6 @@ GRUB_CMDLINE_LINUX_DEFAULT="quiet splash resume=UUID=putYourSwapUUIDhere"
 Update your grup:
 ```
 sudo update-grub
-```
-
-### Install Virt Manager
-```
-sudo apt install virt-manager
 ```
 
 ### Java Development

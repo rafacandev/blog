@@ -3,6 +3,9 @@
 
 ---
 
+### [fzf](pages/config-files)
+**config-files** configuration files for apps I use.
+
 ### [fzf](pages/fzf/README.md)
 **fzf** is a powerful fuzzy finder for your terminal.
 

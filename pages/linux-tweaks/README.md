@@ -5,7 +5,7 @@ Useful tweaks for linux distribution based on debian (ubuntu, mint, etc).
 ### Turn on the firewall
 It is turned off by default. Normally, you just need to search for _firewall_ in your distribution menu.
 
-### Add Cool Apps
+### Apt Install Essential
 
 Essential apps
 ```bash
@@ -16,7 +16,7 @@ sudo apt install vim curl git vlc vlc-plugin-fluidsynth gimp htop virt-manager
 flatpak install flathub com.brave.Browser
 ```
 
-### Remove Boring Apps
+### Apt Remove Bloat
 * `mono-runtime-common`: .NET Framework for Linux
 * `apt-xapian-index`: indexing application speeds up certain search operations but in general isn't a good trade-off
 * `pidgin`: chatting app
@@ -25,10 +25,10 @@ flatpak install flathub com.brave.Browser
 * `gnote`: postit notes
 
 ```bash
-sudo apt-get remove mono-runtime-common apt-xapian-index pidgin hexchat thunderbird gnote sticky
+sudo apt remove mono-runtime-common apt-xapian-index pidgin hexchat thunderbird gnote sticky
 ```
 
-### Do nothing when lid is closed
+### Do nothing when laptop lid is closed
 
 Edit `/etc/systemd/logind.conf` and set `HandleLidSwitch=ignore`
 ```
@@ -148,10 +148,6 @@ Install Gradle:
 sdk install gradle
 ```
 
-### Install Adobe Acrobat Reader
-[Install Adobe Acrobat Reader on Ubuntu Distros](/posts/install-adobe-reader-on-ubuntu-based-distributions/README.md)
-
-
 ### Docker
 Follow this guide if you are running Linux Mint:
 [Install Docker on Linux Mint](/posts/intall-docker-on-linux-mint/README.md)
@@ -165,7 +161,14 @@ newgrp docker
 docker run hello-world
 ```
 
-### Bash
+### Ghostty
+See [Ghostty Install](https://ghostty.org/docs/install/binary#ubuntu)
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+```
+
+### Bash Improvements
+
 *.inputrc*
 ```
 # Ctrl-Delete: delete next word
@@ -175,6 +178,13 @@ docker run hello-world
 "\C-H": shell-backward-kill-word
 ```
 
+#### Calendar
+
+```bash
+sudo apt install ncal
+cp ~/.bashrc ~/.bashrc.bk
+echo "alias cal='ncal -C3'" >> ~/.bashrc
+```
 
 ### NodeJS via Node Version Manager
 Github official page: https://github.com/nvm-sh/nvm
@@ -186,54 +196,6 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 nvm install node
 node -v
 npm -v
-```
-
-### Intellij
-```bash
-wget https://download-cf.jetbrains.com/idea/ideaIC-2018.2.4.tar.gz
-tar xfzv ideaIC-2018.2.4.tar.gz -C ~/dev/
-mv ~/dev/idea-IC-182.4505.22/ ~/dev/intellij
-~/dev/intellij/bin/idea.sh
-```
-
-Active tab color: `Action Context Menu (Ctrl + A) | Registry` search for `ide.new.editor.tabs.selection.color` and set it to something bright.
-
-Add asterisk to tabs with modified tabs:
-`Settings | Editor | Mark Modified tabs with asterisk`
-
-### VirtualBox
-Download and install [VirtualBox](https://www.virtualbox.org/wiki/Linux_Downloads).
-After installing the guest additions, add your user to the vboxsf group
-
-```
-cat /etc/group | grep vboxsf
-sudo usermod -aG vboxsf [YOUR_USERNAME]
-```
-
-Audio
-=====
-
-Install PipeWire
-----------------
-Steps to use [PipeWire](https://pipewire.org) instead of the default pulseaudio. *PipeWire* has better bluetooth support. See this tutorial for reference: https://linuxconfig.org/how-to-install-pipewire-on-ubuntu-linux
-
-```bash
-sudo add-apt-repository ppa:pipewire-debian/pipewire-upstream
-sudo apt update
-sudo apt install pipewire pipewire-audio-client-libraries
-sudo apt install gstreamer1.0-pipewire libpipewire-0.3-{0,dev,modules} libspa-0.2-{bluetooth,dev,jack,modules} pipewire{,-{audio-client-libraries,pulse,media-session,bin,locales,tests}}
-systemctl --user daemon-reload
-systemctl --user --now disable pulseaudio.service pulseaudio.socket
-systemctl --user --now enable pipewire pipewire-pulse
-```
-
-To revert the above changes:
-```bash
-sudo apt remove pipewire pipewire-audio-client-libraries
-sudo apt remove gstreamer1.0-pipewire libpipewire-0.3-{0,dev,modules} libspa-0.2-{bluetooth,dev,jack,modules} pipewire{,-{audio-client-libraries,pulse,media-session,bin,locales,tests}}
-systemctl --user daemon-reload
-systemctl --user --now enable pulseaudio.service pulseaudio.socket
-pactl info
 ```
 
 Desktop Tweaks

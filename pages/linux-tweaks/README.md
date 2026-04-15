@@ -119,35 +119,6 @@ Update your grup:
 sudo update-grub
 ```
 
-### Java Development
-
-Install SDKMAN
-```
-curl -s "https://get.sdkman.io" | bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
-sdk version
-```
-
-List available Java AdoptOpenJDK candiates:
-```
-sdk list java | grep adpt
-```
-
-Install Java AdoptOpenJDK:
-```
-sdk install java 11.0.11.j9-adpt
-```
-
-Install Maven:
-```
-sdk install maven
-```
-
-Install Gradle:
-```
-sdk install gradle
-```
-
 ### Docker
 Follow this guide if you are running Linux Mint:
 [Install Docker on Linux Mint](/posts/intall-docker-on-linux-mint/README.md)
@@ -169,6 +140,44 @@ See [Ghostty Install](https://ghostty.org/docs/install/binary#ubuntu)
 
 ### Bash Improvements
 
+#### Yazi
+Download and instal `.deb` files: https://github.com/sxyazi/yazi/releases 
+
+Install extra options:
+```bash
+apt install ffmpeg 7zip jq poppler-utils fd-find ripgrep fzf zoxide imagemagick
+```
+
+Create a keyboard shortcut:
+*.bashrc*
+```
+# Change dir with yazi bound to ctrl+e
+function cd-yazi() {
+        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+        command yazi "$@" --cwd-file="$tmp"
+        IFS= read -r -d '' cwd < "$tmp"
+        rm -f -- "$tmp"
+
+        # Insert at cursor position
+        local final_path=$cwd
+        local left=${READLINE_LINE:0:$READLINE_POINT}
+        local right=${READLINE_LINE:$READLINE_POINT}
+        READLINE_LINE="${left}${final_path}${right}"
+        READLINE_POINT=$(( ${#left} + ${#final_path} ))
+}
+bind -x '"\C-e": cd-yazi'
+```
+
+### Calendar
+
+```bash
+sudo apt install ncal
+cp ~/.bashrc ~/.bashrc.bk
+echo "alias cal='ncal -C3'" >> ~/.bashrc
+```
+
+#### Mix
+
 *.inputrc*
 ```
 # Ctrl-Delete: delete next word
@@ -176,14 +185,6 @@ See [Ghostty Install](https://ghostty.org/docs/install/binary#ubuntu)
 
 # Ctrl-Backspace: delete previous word
 "\C-H": shell-backward-kill-word
-```
-
-#### Calendar
-
-```bash
-sudo apt install ncal
-cp ~/.bashrc ~/.bashrc.bk
-echo "alias cal='ncal -C3'" >> ~/.bashrc
 ```
 
 ### NodeJS via Node Version Manager

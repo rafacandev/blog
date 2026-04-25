@@ -4,7 +4,7 @@
   "description": "<img src=\"./assets/bookmark-regular.svg\" width=\"12\"> My personal bookmarks",
   "main": "index.js",
   "scripts": {
-    "build": "tsc && node dist/build.js",
+    "build": "tsx build.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,6 +27,7 @@
     "typescript": "^6.0.3"
   },
   "devDependencies": {
-    "@types/node": "^25.6.0"
+    "@types/node": "^25.6.0",
+    "tsx": "^4.21.0"
   }
 }

@@ -193,9 +193,13 @@ function generateIndex(pages: { title?: string; description?: string; order?: nu
 }
 
 function copyStyles(): void {
-  const src = path.join(WEBSITE_DIR, 'styles.css');
-  const dest = path.join(OUTPUT_DIR, 'styles.css');
-  fs.copyFileSync(src, dest);
+  const copy = (filename: string) => {
+    const src = path.join(WEBSITE_DIR, filename);
+    const dest = path.join(OUTPUT_DIR, filename);
+    fs.copyFileSync(src, dest);
+  }
+  copy('styles.css')
+  copy('pico.classless.orange.min.css')
 }
 
 function clean(): void {

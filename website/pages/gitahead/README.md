@@ -5,6 +5,9 @@ description: A cross-platform graphical git client.
 
 # GitAhead
 
+change-me
+
+
 [GitAhead](https://github.com/gitahead/gitahead) is a graphical Git client designed to help you understand and manage your source code history.
 It's available for Windows, Linux, and macOS.
 
@@ -19,3 +22,4 @@ ll ~/.local/share/applications/gitahead.desktop
 ```
 
 ![Screenshot](screenshot.png "GitAhead log screenshot")
+

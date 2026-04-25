@@ -136,3 +136,12 @@ For each subdirectory in `website/pages/{subdir}/`, the `README.md` becomes `doc
 - No build-time optimizations
 
 The pipeline produces raw, readable HTML and CSS. Visitors and search engines receive the same content developers see in source files.
+
+
+
+- npm run build - runs the build pipeline (unchanged)
+- npm run dev - runs Vite dev server:
+  - Builds first
+  - Watches website/** for changes
+  - Auto-rebuilds and reloads on changes
+  - Opens at http://localhost:3000

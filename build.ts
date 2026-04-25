@@ -184,7 +184,7 @@ function generateIndex(pages: { title?: string; description?: string; order?: nu
 
   const template = fs.readFileSync(path.join(WEBSITE_DIR, 'index-template.html'), 'utf-8');
   const html = applyTemplate(template, {
-    title: 'Home',
+    title: 'Rafael Santos Blog',
     description: 'Rafael Santos Blog',
     content: `<ul>${content}</ul>`
   });

@@ -39,9 +39,11 @@ function watchPlugin(): Plugin {
       });
 
       watcher.on('all', async (event, file) => {
-        console.log(`Rebuilding due to ${event}: ${path.relative('.', file)}`);
+        console.log(`[DEBUG] Change detected: ${event} - ${path.relative('.', file)}`);
         await build();
-        server.ws.send('full-reload');
+        console.log('[DEBUG] Build complete, sending reload');
+        server.ws.send({ type: 'full-reload', payload: { path: '*' } });
+        console.log('[DEBUG] Reload sent');
       });
     },
   };

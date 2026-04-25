@@ -6,10 +6,15 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate": "npx src/generate.ts"
   },
   "devDependencies": {
     "typescript": "~6.0.2",
     "vite": "^8.0.10"
+  },
+  "dependencies": {
+    "markdown-it": "^14.1.1",
+    "slugify": "^1.6.9"
   }
 }

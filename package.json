@@ -1,0 +1,32 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "<img src=\"./assets/bookmark-regular.svg\" width=\"12\"> My personal bookmarks",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && node dist/build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafacandev/blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rafacandev/blog/issues"
+  },
+  "homepage": "https://github.com/rafacandev/blog#readme",
+  "dependencies": {
+    "@types/markdown-it": "^14.1.2",
+    "fs-extra": "^11.3.4",
+    "markdown-it": "^14.1.1",
+    "slugify": "^1.6.9",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0"
+  }
+}

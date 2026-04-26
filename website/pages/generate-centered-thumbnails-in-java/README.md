@@ -1,5 +1,10 @@
-Generate Centered Thumbnails In Java
-====================================
+---
+title: Generate Centered Thumbnails In Java
+description: Generate centered thumbnails in Java without external dependencies
+order: 90
+---
+
+# Generate Centered Thumbnails In Java
 There are many thumbnail libraries out there but if you need a simple thumbnail generator for Java without any external dependencies you can use this `ImageUtil` class.
 
 ```java

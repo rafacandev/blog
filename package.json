@@ -1,7 +1,7 @@
 {
   "name": "rafael-santos-blog",
   "version": "1.0.0",
-  "description": "",
+  "description": "A collection of tech articles I have been writting over the years for my own reference.",
   "main": "index.js",
   "devDependencies": {
     "@types/markdown-it": "^14.1.2",

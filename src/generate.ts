@@ -6,7 +6,7 @@ const md = new MarkdownIt();
 const ROOT_DIR = process.cwd();
 const WEBSITE_DIR = path.join(ROOT_DIR, 'website');
 const PAGES_DIR = path.join(WEBSITE_DIR, 'pages');
-const OUTPUT_DIR = path.join(ROOT_DIR, 'docs');
+const OUTPUT_DIR = path.join(ROOT_DIR, 'public');
 
 interface FrontMatter {
   title?: string;

@@ -1,9 +1,10 @@
-import { createServer, IncomingMessage, ServerResponse } from 'http';
-import { readFileSync, watch, statSync, createReadStream } from 'fs';
+import { createServer, ServerResponse } from 'http';
+import { watch, statSync, createReadStream } from 'fs';
 import { extname, join } from 'path';
 import { spawn } from 'child_process';
 
 const PORT = 3000;
+const BASE_PATH = '/blog'; // The subpath we want to host on
 const MIME: Record<string, string> = {
   '.html': 'text/html',
   '.css': 'text/css',
@@ -20,21 +21,15 @@ let timer: ReturnType<typeof setTimeout> | null = null;
 let currentBuild: any = null;
 
 function notifyClients() {
-  // Send "reload" as a raw string instead of a JSON object
   for (const res of clients) {
-    res.write(`data: reload\n\n`); 
+    res.write(`data: reload\n\n`); // Clean string for easier client-side matching
   }
 }
 
 function regenerate() {
   if (timer) clearTimeout(timer);
-  
   timer = setTimeout(() => {
-    // 1. Fix Race Condition: Kill existing build if still running
-    if (currentBuild) {
-      console.log('Aborting previous build...');
-      currentBuild.kill();
-    }
+    if (currentBuild) currentBuild.kill();
 
     console.log('Regenerating...');
     currentBuild = spawn('npx', ['tsx', 'src/generate.ts'], {
@@ -49,14 +44,15 @@ function regenerate() {
         notifyClients();
       }
     });
-  }, 150); // Increased slightly for stability
+  }, 150);
 }
 
 const server = createServer((req, res) => {
   const url = new URL(req.url || '/', `http://localhost:${PORT}`);
+  const pathname = decodeURIComponent(url.pathname);
 
-  // SSE Endpoint
-  if (url.pathname === '/events') {
+  // 1. Live Reload Endpoint
+  if (pathname === '/events') {
     res.writeHead(200, {
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
@@ -67,46 +63,52 @@ const server = createServer((req, res) => {
     return;
   }
 
-  // 2. Fix Encoding: Decode URI (handles spaces/special chars)
-  const pathname = decodeURIComponent(url.pathname);
-  let filePath: string;
-
-  if (pathname === '/') {
-    filePath = join('docs', 'index.html');
-  } else if (!extname(pathname)) {
-    filePath = join('docs', pathname, 'index.html');
-  } else {
-    filePath = join('docs', pathname);
+  // 2. Handle the missing trailing slash for the base path
+  // Redirects /blog -> /blog/ so relative assets load correctly
+  if (pathname === BASE_PATH) {
+    res.writeHead(301, { Location: BASE_PATH + '/' });
+    res.end();
+    return;
   }
 
-  try {
-    // 3. Fix EISDIR: Use statSync to ensure it's a file, not a directory
-    const stats = statSync(filePath, { throwIfNoEntry: false });
+  // 3. Route everything else starting with /blog
+  if (pathname.startsWith(BASE_PATH)) {
+    // Strip the "/blog" prefix to get the internal path
+    const internalPath = pathname.slice(BASE_PATH.length) || '/';
     
-    if (stats && stats.isFile()) {
-      const ext = extname(filePath);
-      res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
-      
-      // 4. Optimization: Use Streams instead of readFileSync for large files
-      createReadStream(filePath).pipe(res);
+    let filePath: string;
+    if (internalPath === '/') {
+      filePath = join('docs', 'index.html');
+    } else if (!extname(internalPath)) {
+      filePath = join('docs', internalPath, 'index.html');
     } else {
-      res.writeHead(404);
-      res.end('Not found');
+      filePath = join('docs', internalPath);
     }
-  } catch (err) {
-    res.writeHead(500);
-    res.end('Internal Server Error');
+
+    try {
+      const stats = statSync(filePath, { throwIfNoEntry: false });
+      if (stats && stats.isFile()) {
+        const ext = extname(filePath);
+        res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
+        createReadStream(filePath).pipe(res);
+        return;
+      }
+    } catch (e) {
+      // Fall through to 404
+    }
   }
+
+  res.writeHead(404);
+  res.end('Not found');
 });
 
-// Watcher
 watch('website/pages', { recursive: true }, (eventType, filename) => {
-  if (filename && filename.endsWith('.md')) {
+  if (filename?.endsWith('.md')) {
     console.log(`Changed: ${filename}`);
     regenerate();
   }
 });
 
 server.listen(PORT, () => {
-  console.log(`Dev server running at http://localhost:${PORT}`);
+  console.log(`Dev server running at http://localhost:${PORT}${BASE_PATH}/`);
 });

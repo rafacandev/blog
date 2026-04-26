@@ -181,6 +181,29 @@ function generateIndex(pages: { title?: string; description?: string; order?: nu
   fs.writeFileSync(path.join(OUTPUT_DIR, 'index.html'), html);
 }
 
+function generateIndexData(pages: { title?: string; description?: string; order?: number; _slug?: string }[]): void {
+  const sortedPages = pages.sort((a, b) => {
+    const orderA = a.order ?? Number.MAX_SAFE_INTEGER;
+    const orderB = b.order ?? Number.MAX_SAFE_INTEGER;
+    if (orderA !== orderB) {
+      return orderA - orderB;
+    }
+    return 0;
+  });
+
+  const content = sortedPages.map(page => {
+    const href = page._slug || '/';
+    return {
+      title: page.title,
+      description: page.description,
+      href
+    }
+  })
+
+  fs.writeFileSync(path.join(OUTPUT_DIR, 'index.json'), JSON.stringify(content, null, 2));
+}
+
+
 function copyStyles(): void {
   const copy = (filename: string) => {
     const src = path.join(WEBSITE_DIR, filename);
@@ -207,6 +230,9 @@ function build(): void {
 
   console.log('Generating index...');
   generateIndex(pages);
+
+  console.log('Generating index data...')
+  generateIndexData(pages)
 
   console.log('Copying styles...');
   copyStyles();

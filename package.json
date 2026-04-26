@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "generate": "npx src/generate.ts"
+    "generate": "tsx src/generate.ts"
   },
   "devDependencies": {
     "@types/markdown-it": "^14.1.2",
@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "markdown-it": "^14.1.1",
-    "slugify": "^1.6.9"
+    "slugify": "^1.6.9",
+    "tsx": "^4.21.0"
   }
 }

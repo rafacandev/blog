@@ -30,10 +30,21 @@ sh GitAhead
 ll ~/.local/share/applications/gitahead.desktop
 </code></pre>
 <p><img src="screenshot.png" alt="Screenshot" title="GitAhead log screenshot"></p>
+<p>Sat 25 Apr 2026 10:54:46 PM EDT
+Sat 25 Apr 2026 11:07:21 PM EDT
+Sat 25 Apr 2026 11:11:06 PM EDT</p>
 
   </main>
   <footer style="color:burlywood">
     2026 - Rafael Santos
   </footer>
+  <script>
+    (function() {
+      const es = new EventSource('/events');
+      es.onmessage = function(e) {
+        if (e.data === 'reload') location.reload();
+      };
+    })();
+  </script>
 </body>
 </html>

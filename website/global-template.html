@@ -23,5 +23,13 @@
   <footer style="color:burlywood">
     2026 - Rafael Santos
   </footer>
+  <script>
+    (function() {
+      const es = new EventSource('/events');
+      es.onmessage = function(e) {
+        if (e.data === 'reload') location.reload();
+      };
+    })();
+  </script>
 </body>
 </html>

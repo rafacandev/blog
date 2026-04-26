@@ -13,7 +13,7 @@
 <body>
   <header>
     <nav>
-      <a href="/">Home</a>
+      <a href="/blog/">Home</a>
       <a href="https://github.com/rafacandev/blog">GitHub</a>
     </nav>
   </header>
@@ -25,12 +25,13 @@
     2026 - Rafael Santos
   </footer>
   <script>
-    (function() {
+    (function () {
       const es = new EventSource('/events');
-      es.onmessage = function(e) {
+      es.onmessage = function (e) {
         if (e.data === 'reload') location.reload();
       };
     })();
   </script>
 </body>
+
 </html>

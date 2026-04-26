@@ -75,7 +75,7 @@ const server = createServer((req, res) => {
   if (pathname.startsWith(BASE_PATH)) {
     // Strip the "/blog" prefix to get the internal path
     const internalPath = pathname.slice(BASE_PATH.length) || '/';
-    
+
     let filePath: string;
     if (internalPath === '/') {
       filePath = join('docs', 'index.html');
@@ -102,11 +102,9 @@ const server = createServer((req, res) => {
   res.end('Not found');
 });
 
-watch('website/pages', { recursive: true }, (eventType, filename) => {
-  if (filename?.endsWith('.md')) {
-    console.log(`Changed: ${filename}`);
-    regenerate();
-  }
+watch('website', { recursive: true }, (eventType, filename) => {
+  console.log(`Changed: ${filename}`);
+  regenerate();
 });
 
 server.listen(PORT, () => {

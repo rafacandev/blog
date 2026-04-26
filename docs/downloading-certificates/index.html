@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Download HTTPS Certificates</title>
+  <link rel="stylesheet" href="/blog/styles.css">
+  <link rel="stylesheet" href="/blog/pico.classless.orange.min.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/blog/">Home</a>
+      <a href="https://github.com/rafacandev/blog">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Download Certificates From HTTPS Page</h1>
+<p>Download certificates from an existing HTTPS website.
+Useful when you trust a website which uses self-signed certificates.</p>
+<pre><code class="language-bash"># In this example we are downloading the HTTPS cerficates from google.com
+openssl s_client -showcerts -connect google.com:443 &lt;/dev/null 2&gt;/dev/null|openssl x509 -outform PEM &gt;mycertfile.pem
+</code></pre>
+<p>Now you can import the exported certificate <code>mycertfile.pem</code> in the application that requires it (e.g: Web Browsers).</p>
+<p>Some tools also have their own importing feature. Here is how to import a certificate in Java.</p>
+<pre><code class="language-bash"># Find the certificate file
+# In this example it is located at: ./usr/lib/jvm/java-11-openjdk/lib/security/cacerts
+find -name cacerts 2&gt;/dev/null
+
+# Import the certificate using Java's keytool
+keytool -import -file mycerfile.pem -keystore ./usr/lib/jvm/java-11-openjdk/lib/security/cacerts
+</code></pre>
+
+  </main>
+  <footer style="color:burlywood">
+    2026 - Rafael Santos
+  </footer>
+  <script>
+    (function() {
+      const es = new EventSource('/events');
+      es.onmessage = function(e) {
+        if (e.data === 'reload') location.reload();
+      };
+    })();
+  </script>
+</body>
+</html>

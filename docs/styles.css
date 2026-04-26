@@ -1,0 +1,8 @@
+:root {
+  color-scheme: light;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+}

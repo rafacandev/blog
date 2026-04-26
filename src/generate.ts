@@ -6,7 +6,7 @@ const md = new MarkdownIt();
 const ROOT_DIR = process.cwd();
 const WEBSITE_DIR = path.join(ROOT_DIR, 'website');
 const PAGES_DIR = path.join(WEBSITE_DIR, 'pages');
-const OUTPUT_DIR = path.join(ROOT_DIR, 'public');
+const OUTPUT_DIR = path.join(ROOT_DIR, 'docs');
 
 interface FrontMatter {
   title?: string;
@@ -178,7 +178,7 @@ function generateIndex(pages: { title?: string; description?: string; order?: nu
     content: `<ul>${content}</ul>`
   });
 
-  fs.writeFileSync(path.join(ROOT_DIR, 'index.html'), html);
+  fs.writeFileSync(path.join(OUTPUT_DIR, 'index.html'), html);
 }
 
 function copyStyles(): void {

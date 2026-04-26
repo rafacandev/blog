@@ -88,3 +88,12 @@ Keep YAML front matter optional. If present, extract:
   - Watches website/** for changes
   - Auto-rebuilds and reloads on changes
   - Opens at http://localhost:3000
+
+## Run and Kill
+
+Use timeout if you want to run a command for a short period of time and kill it imediately after. Useful when trying to `npm run dev` for a quick test.
+
+```bash
+# Run 'npm run dev' for 10 seconds and force kill after subsenquent 5 seconds
+timeout -k 5s 10s npm run dev
+```

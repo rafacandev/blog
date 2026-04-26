@@ -1,10 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import MarkdownIt from 'markdown-it';
-import slugifyLib from 'slugify';
 
 const md = new MarkdownIt();
-const slugify = slugifyLib;
 const ROOT_DIR = process.cwd();
 const WEBSITE_DIR = path.join(ROOT_DIR, 'website');
 const PAGES_DIR = path.join(WEBSITE_DIR, 'pages');
@@ -14,14 +12,6 @@ interface FrontMatter {
   title?: string;
   description?: string;
   order?: number;
-}
-
-function removeExt(filename: string): string {
-  return filename.replace(/\.[^.]+$/, '');
-}
-
-function getSlug(filename: string): string {
-  return slugify(removeExt(filename), { lower: true, strict: true });
 }
 
 function parseFrontMatter(content: string): { frontMatter: FrontMatter; content: string } {
@@ -111,7 +101,6 @@ function processPages(): FrontMatter[] {
 
   for (const file of files) {
     if (!file.endsWith('.md')) {
-      const ext = path.extname(file);
       const dirPath = path.dirname(file);
       const outDir = path.join(OUTPUT_DIR, dirPath);
       ensureDir(outDir);

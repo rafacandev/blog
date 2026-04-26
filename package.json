@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npm run generate && tsx src/dev-watch.ts",
+    "dev": "npm run generate && tsx src/dev-server.ts",
     "generate": "tsx src/generate.ts"
   },
   "repository": {

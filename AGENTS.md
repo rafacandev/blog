@@ -2,7 +2,7 @@ A static blog webiste where users write full Markdown files that get exported in
 
 ## Architecture
 
-Input Layer (`website/`) => Building Pipeline (`src/generate.ts`) => Output Layer (`public/`)
+Input Layer (`website/`) => Building Pipeline (`src/generate.ts`) => Output Layer (`docs/`)
 
 ### Input Layer
 
@@ -17,27 +17,27 @@ Input Layer (`website/`) => Building Pipeline (`src/generate.ts`) => Output Laye
 **Input Layer**
 ```
 website/index-template.html
-website/pages/gitahead/README.md
-website/pages/gitahead/screenshot.png
 website/global-template.html
 website/styles.css
+website/pages/gitahead/README.md
+website/pages/gitahead/screenshot.png
 ```
 
 **Output Layer** _after running the building pipeline_
 ```
-index.html : index page generated from all pages
-public/gitahead/index.html : converted from website/pages/gitahead/README.md
-public/gitahead/screenshot.png : not converted but kept for reference because is used in public/gitahead/index.html
-public/styles.css : reference by all generated html files
+docs/index.html : index page generated from all pages
+docs/gitahead/index.html : converted from website/pages/gitahead/README.md
+docs/gitahead/screenshot.png : copied from website/pages/gitahead/screenshot.png because it is used as an image in docs/gitahead/index.html
+docs/styles.css : reference by all generated html files
 ```
 
 ## Building Pipeline
 
-The build process transforms `website/` content into static HTML in `public/` and root `index.html`. It runs via Node.js scripts and processes files in the following order:
+The build process transforms `website/` content into static HTML in `docs/`. It runs via `src/generate.ts` and processes files in the following order:
 
 ### Process Steps
 
-1. **Clean** - Empty `public/` directory before build
+1. **Clean** - Empty `docs/` directory before build
 2. **Copy static assets** - Non-.md files (images, etc.) pass through to output as-is
 3. **Convert Markdown** - Each `.md` file (README.md, index.md, or _index.md) becomes a directory with `index.html`
 4. **Generate Index** - Auto-generate the main index page listing all pages sorted by `order`
@@ -49,11 +49,11 @@ The pipeline flattens directory nesting to produce clean URLs:
 
 | Input | Output |
 |-------|--------|
-| `website/pages/README.md` | `public/index.html` |
-| `website/pages/gitahead/README.md` | `public/gitahead/index.html` |
-| `website/pages/gitahead/screenshot.png` | `public/gitahead/screenshot.png` |
+| `website/pages/README.md` | `docs/index.html` |
+| `website/pages/gitahead/README.md` | `docs/gitahead/index.html` |
+| `website/pages/gitahead/screenshot.png` | `docs/gitahead/screenshot.png` |
 
-For each subdirectory in `website/pages/{subdir}/`, the `README.md` becomes `public/{subdir}/index.html`. This allows clean URLs like `/gitahead/` instead of `/gitahead/README.html`.
+For each subdirectory in `website/pages/{subdir}/`, the `README.md` becomes `docs/{subdir}/index.html`. This allows clean URLs like `/gitahead/` instead of `/gitahead/README.html`.
 
 ### Index Page Generation
 
@@ -82,9 +82,9 @@ Keep YAML front matter optional. If present, extract:
 
 ## Scripts
 
-- `npm run build` - runs the build pipeline (unchanged)
-- `npm run dev` - runs dev server:
-  - Opens at http://localhost:3000
+- `npm run generate` - runs the build pipeline (`src/generate.ts`)
+- `npm run dev` - runs generate then starts dev server (`src/dev-server.ts`):
+  - Opens at http://localhost:3000/blog/
 
 ## Run and Kill
 

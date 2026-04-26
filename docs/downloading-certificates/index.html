@@ -21,18 +21,18 @@
     <h1>Download Certificates From HTTPS Page</h1>
 <p>Download certificates from an existing HTTPS website.
 Useful when you trust a website which uses self-signed certificates.</p>
-<pre><code class="language-bash"># In this example we are downloading the HTTPS cerficates from google.com
-openssl s_client -showcerts -connect google.com:443 &lt;/dev/null 2&gt;/dev/null|openssl x509 -outform PEM &gt;mycertfile.pem
-</code></pre>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #6B737C"># In this example we are downloading the HTTPS cerficates from google.com</span></span>
+<span class="line"><span style="color: #B392F0">openssl </span><span style="color: #9DB1C5">s_client</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-showcerts</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-connect</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">google.com:443</span><span style="color: #B392F0"> </span><span style="color: #F97583">&lt;</span><span style="color: #9DB1C5">/dev/null</span><span style="color: #B392F0"> </span><span style="color: #F97583">2&gt;</span><span style="color: #9DB1C5">/dev/null</span><span style="color: #F97583">|</span><span style="color: #B392F0">openssl </span><span style="color: #9DB1C5">x509</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-outform</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">PEM</span><span style="color: #B392F0"> </span><span style="color: #F97583">&gt;</span><span style="color: #9DB1C5">mycertfile.pem</span></span>
+<span class="line"></span></code></pre>
 <p>Now you can import the exported certificate <code>mycertfile.pem</code> in the application that requires it (e.g: Web Browsers).</p>
 <p>Some tools also have their own importing feature. Here is how to import a certificate in Java.</p>
-<pre><code class="language-bash"># Find the certificate file
-# In this example it is located at: ./usr/lib/jvm/java-11-openjdk/lib/security/cacerts
-find -name cacerts 2&gt;/dev/null
-
-# Import the certificate using Java's keytool
-keytool -import -file mycerfile.pem -keystore ./usr/lib/jvm/java-11-openjdk/lib/security/cacerts
-</code></pre>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #6B737C"># Find the certificate file</span></span>
+<span class="line"><span style="color: #6B737C"># In this example it is located at: ./usr/lib/jvm/java-11-openjdk/lib/security/cacerts</span></span>
+<span class="line"><span style="color: #B392F0">find </span><span style="color: #9DB1C5">-name</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">cacerts</span><span style="color: #B392F0"> </span><span style="color: #F97583">2&gt;</span><span style="color: #9DB1C5">/dev/null</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Import the certificate using Java&#39;s keytool</span></span>
+<span class="line"><span style="color: #B392F0">keytool </span><span style="color: #9DB1C5">-import</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-file</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">mycerfile.pem</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-keystore</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">./usr/lib/jvm/java-11-openjdk/lib/security/cacerts</span></span>
+<span class="line"></span></code></pre>
 
   </main>
   <footer style="color:burlywood">

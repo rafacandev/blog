@@ -1,12 +1,26 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import MarkdownIt from 'markdown-it';
+import { getHighlighter } from 'shiki';
 
-const md = new MarkdownIt();
 const ROOT_DIR = process.cwd();
 const WEBSITE_DIR = path.join(ROOT_DIR, 'website');
 const PAGES_DIR = path.join(WEBSITE_DIR, 'pages');
 const OUTPUT_DIR = path.join(ROOT_DIR, 'docs');
+
+let highlighter: any;
+let md: MarkdownIt;
+
+function highlightCode(code: string, lang: string): string {
+  if (!highlighter || !lang) {
+    return code;
+  }
+  try {
+    return highlighter.codeToHtml(code, { lang, theme: 'min-dark' });
+  } catch {
+    return code;
+  }
+}
 
 interface FrontMatter {
   title?: string;
@@ -198,20 +212,33 @@ function clean(): void {
   ensureDir(OUTPUT_DIR);
 }
 
-function build(): void {
-  console.log('Cleaning output directory...');
-  clean();
+function build(): Promise<void> {
+  console.log('Initializing syntax highlighter...');
 
-  console.log('Processing pages...');
-  const pages = processPages();
+  return (async () => {
+    highlighter = await getHighlighter({
+      themes: ['min-dark'],
+      langs: ['shellscript']
+    });
 
-  console.log('Generating index...');
-  generateIndex(pages);
+    md = new MarkdownIt({
+      highlight: (code: string, lang: string) => highlightCode(code, lang)
+    });
 
-  console.log('Copying styles...');
-  copyStyles();
+    console.log('Cleaning output directory...');
+    clean();
 
-  console.log('Build complete!');
+    console.log('Processing pages...');
+    const pages = processPages();
+
+    console.log('Generating index...');
+    generateIndex(pages);
+
+    console.log('Copying styles...');
+    copyStyles();
+
+    console.log('Build complete!');
+  })();
 }
 
 build();

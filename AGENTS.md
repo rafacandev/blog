@@ -83,10 +83,7 @@ Keep YAML front matter optional. If present, extract:
 ## Scripts
 
 - `npm run build` - runs the build pipeline (unchanged)
-- `npm run dev` - runs Vite dev server:
-  - Builds first
-  - Watches website/** for changes
-  - Auto-rebuilds and reloads on changes
+- `npm run dev` - runs dev server:
   - Opens at http://localhost:3000
 
 ## Run and Kill

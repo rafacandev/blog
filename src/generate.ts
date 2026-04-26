@@ -215,10 +215,10 @@ function clean(): void {
 function build(): Promise<void> {
   console.log('Initializing syntax highlighter...');
 
-  return (async () => {
+return (async () => {
     highlighter = await getHighlighter({
       themes: ['min-dark'],
-      langs: ['shellscript']
+      langs: ['shellscript', 'typescript', 'javascript', 'java', 'python', 'markdown']
     });
 
     md = new MarkdownIt({

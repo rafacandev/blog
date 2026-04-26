@@ -6,3 +6,14 @@ footer {
   display: flex;
   justify-content: center;
 }
+
+.copy-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.4rem;
+  font-size: 0.6rem;
+  background: dimgray;
+  color: ivory;
+  border: none;
+}

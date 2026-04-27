@@ -1,0 +1,10 @@
+theme = Embark
+background = 282430
+
+window-height = 80
+window-width = 200
+
+keybind = shift+ctrl+page_down=move_tab:1
+keybind = shift+ctrl+page_up=move_tab:-1
+
+font-feature = -liga, -calt, -clig

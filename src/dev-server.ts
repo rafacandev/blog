@@ -32,7 +32,7 @@ function regenerate() {
     if (currentBuild) currentBuild.kill();
 
     console.log('Regenerating...');
-    currentBuild = spawn('npx', ['tsx', 'src/generate.ts'], {
+    currentBuild = spawn('npx', ['tsx', 'src/generate.ts', '--dev'], {
       shell: true,
       stdio: 'inherit',
     });

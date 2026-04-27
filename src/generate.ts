@@ -208,6 +208,7 @@ function copyResources(): void {
   copy('pico.classless.orange.min.css')
   copy('events.js')
   copy('copy-button.js')
+  copy('avatar.gif')
 }
 
 function clean(): void {

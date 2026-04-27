@@ -82,7 +82,8 @@ Keep YAML front matter optional. If present, extract:
 
 ## Scripts
 
-- `npm run generate` - runs the build pipeline (`src/generate.ts`)
+- `npm run generate` - runs the build pipeline (`src/generate.ts`) and saves the static website in the `docs/` dir
+  - `--dev` - imports events script for auto-reload
 - `npm run dev` - runs generate then starts dev server (`src/dev-server.ts`):
   - Opens at http://localhost:3000/blog/
 

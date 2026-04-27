@@ -4,6 +4,8 @@ import MarkdownIt from 'markdown-it';
 import { getHighlighter } from 'shiki';
 
 const ROOT_DIR = process.cwd();
+const args = process.argv.slice(2);
+const isDev = args.includes('--dev');
 const WEBSITE_DIR = path.join(ROOT_DIR, 'website');
 const PAGES_DIR = path.join(WEBSITE_DIR, 'pages');
 const OUTPUT_DIR = path.join(ROOT_DIR, 'docs');
@@ -77,7 +79,8 @@ function applyTemplate(template: string, data: { title: string; description: str
   return template
     .replace(/{{title}}/g, data.title)
     .replace(/{{description}}/g, data.description)
-    .replace(/{{content}}/g, data.content);
+    .replace(/{{content}}/g, data.content)
+    .replace(/{{importEventScript}}/g, isDev ? `<script type="text/javascript" src="/blog/events.js"></script>` : '');
 }
 
 function getFiles(dir: string, relativePath = ''): string[] {

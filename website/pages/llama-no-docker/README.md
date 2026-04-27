@@ -1,3 +1,9 @@
+---
+title: 🇧🇷 Servidor Llama No Docker
+description: Rode Llama pelo Docker expondo o servidor REST.
+order: 15
+---
+
 # Servidor Llama No Docker
 
 Este guia mostra como executar o Llama em um ambiente Docker expondo o servidor REST. Uma excelente opção para rodar um modelo de linguagem (LLM) localmente e integrá-lo a outras aplicações.

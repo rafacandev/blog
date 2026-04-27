@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>🇧🇷 Servidor Llama No Docker</title>
+  <link rel="stylesheet" href="/blog/styles.css">
+  <link rel="stylesheet" href="/blog/pico.classless.orange.min.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/blog/">Home</a>
+      <a href="https://github.com/rafacandev/blog">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Servidor Llama No Docker</h1>
+<p>Este guia mostra como executar o Llama em um ambiente Docker expondo o servidor REST. Uma excelente opção para rodar um modelo de linguagem (LLM) localmente e integrá-lo a outras aplicações.</p>
+<h3>Configuração do Docker Compose</h3>
+<p>Em um diretório de sua máquina, crie um arquivo chamado <code>docker-compose.yml</code> com o seguinte conteúdo:</p>
+<p><a href="./docker-compose.yml">docker-compose.yml</a></p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #F8F8F8">version</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&#39;3.8&#39;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F8F8F8">services</span><span style="color: #F97583">:</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #F8F8F8">ollama</span><span style="color: #F97583">:</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">image</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">ollama/ollama</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">container_name</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">ollama</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">ports</span><span style="color: #F97583">:</span></span>
+<span class="line"><span style="color: #B392F0">      - </span><span style="color: #FFAB70">&quot;11434:11434&quot;</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">volumes</span><span style="color: #F97583">:</span></span>
+<span class="line"><span style="color: #B392F0">      - </span><span style="color: #FFAB70">./ollama:/root/.ollama</span></span>
+<span class="line"></span></code></pre>
+<h3>Preparação do Volume</h3>
+<p>No mesmo diretório, crie um subdiretório chamado ollama. Esse subdiretório será usado para persistir os dados do container, permitindo que ele seja reiniciado sem a necessidade de baixar os modelos novamente.</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">mkdir </span><span style="color: #9DB1C5">ollama</span></span>
+<span class="line"></span></code></pre>
+<h3>Inicializando o Docker Compose</h3>
+<p>Execute o comando abaixo para iniciar o Docker Compose:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">docker </span><span style="color: #9DB1C5">compose</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">up</span></span>
+<span class="line"></span></code></pre>
+<p>O Docker irá baixar as dependências necessárias e iniciar o servidor anexado ao terminal atual.</p>
+<h3>Baixando o Modelo</h3>
+<p>Em outro terminal, faça o download de um dos <a href="https://github.com/ollama/ollama?tab=readme-ov-file#model-library">modelos disponíveis</a>). Para este guia, utilizaremos o modelo <code>llama3.2</code>:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">curl </span><span style="color: #9DB1C5">http://localhost:11434/api/pull</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-d</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&#39;{&quot;model&quot;: &quot;llama3.2&quot;}&#39;</span></span>
+<span class="line"></span></code></pre>
+<h3>Interagindo com o Llama</h3>
+<p>Agora você pode interagir com o Llama usando curl:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">curl </span><span style="color: #9DB1C5">http://localhost:11434/api/generate</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-d</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&#39;{</span></span>
+<span class="line"><span style="color: #FFAB70">  &quot;model&quot;: &quot;llama3.2&quot;,</span></span>
+<span class="line"><span style="color: #FFAB70">  &quot;prompt&quot;:&quot;Quantos minutos tem uma hora?&quot;,</span></span>
+<span class="line"><span style="color: #FFAB70">  &quot;stream&quot;: false</span></span>
+<span class="line"><span style="color: #FFAB70">}&#39;</span></span>
+<span class="line"></span></code></pre>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">{</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #F8F8F8">&quot;model&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;llama3.2&quot;</span><span style="color: #BBBBBB">,</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #F8F8F8">&quot;created_at&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;2024-11-30T02:56:10.335418081Z&quot;</span><span style="color: #BBBBBB">,</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #F8F8F8">&quot;response&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;Uma hora é igual a 60 minutos.&quot;</span><span style="color: #BBBBBB">,</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #F8F8F8">&quot;done&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #79B8FF">true</span><span style="color: #BBBBBB">,</span></span>
+<span class="line"><span style="color: #B392F0">}</span></span>
+<span class="line"></span></code></pre>
+
+  </main>
+  <footer style="color:burlywood">
+    2026 - Rafael Santos
+  </footer>
+  <script type="text/javascript" src="/blog/events.js"></script>
+  <script type="text/javascript" src="/blog/copy-button.js"></script>
+</body>
+
+</html>

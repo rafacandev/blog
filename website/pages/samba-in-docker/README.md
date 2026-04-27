@@ -1,6 +1,6 @@
 ---
-title: Rode samba pelo Docker
-description: 🇧🇷 Rode um servidor de arquivos samba pelo Docker
+title: 🇧🇷 Rode samba pelo Docker
+description: Rode um servidor de arquivos samba pelo Docker
 order: 20
 ---
 

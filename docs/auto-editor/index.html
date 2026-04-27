@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Auto Editor</title>
+  <link rel="stylesheet" href="/blog/styles.css">
+  <link rel="stylesheet" href="/blog/pico.classless.orange.min.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/blog/">Home</a>
+      <a href="https://github.com/rafacandev/blog">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <h1>auto-editor</h1>
+<p>Use o <a href="https://github.com/WyattBlue/auto-editor">auto-editor</a> pelo docker.</p>
+<p>Crie um arquivo docker:</p>
+<p><a href="./dockerfile">dockerfile</a></p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #F97583">FROM</span><span style="color: #B392F0"> python:3</span></span>
+<span class="line"><span style="color: #F97583">WORKDIR</span><span style="color: #B392F0"> /app</span></span>
+<span class="line"><span style="color: #F97583">RUN</span><span style="color: #B392F0"> pip install auto-editor</span></span>
+<span class="line"><span style="color: #F97583">ENTRYPOINT</span><span style="color: #B392F0"> [</span><span style="color: #FFAB70">&quot;auto-editor&quot;</span><span style="color: #B392F0">]</span></span>
+<span class="line"><span style="color: #F97583">VOLUME</span><span style="color: #B392F0"> /app</span></span>
+<span class="line"></span></code></pre>
+<p>Compile uma imagem do <code>auto-editor</code>:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">docker </span><span style="color: #9DB1C5">build</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-t</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">auto-editor</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">.</span></span>
+<span class="line"></span></code></pre>
+<p>Rode o <code>auto-editor</code> pelo docker. Por exemple, <code>auto-editor --version</code>:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">docker </span><span style="color: #9DB1C5">run</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">--rm</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-v</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">$(</span><span style="color: #B392F0">pwd</span><span style="color: #FFAB70">)</span><span style="color: #9DB1C5">:/app</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">auto-editor</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">auto-editor</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">--version</span></span>
+<span class="line"></span></code></pre>
+<p>Cria um alias para facilitar execuções:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #F97583">alias</span><span style="color: #B392F0"> auto-editor</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&#39;docker run --rm -v $(pwd):/app auto-editor auto-editor&#39;</span></span>
+<span class="line"></span></code></pre>
+<p>Exemplos:</p>
+<p>Auto cortar onde o audio estiver silencioso com uma margem de <code>0.5s</code> o arquivo <code>input.mkv</code> como <code>output.mkv</code>:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">auto-editor </span><span style="color: #9DB1C5">-m</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">0.5</span><span style="color: #9DB1C5">s</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-o</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">output.mkv</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">input.mkv</span><span style="color: #B392F0"> </span></span>
+<span class="line"></span></code></pre>
+<p>Auto acelerar em 3 vezes onde o audio estiver silencioso com uma margem de <code>0.5s</code> o arquivo <code>input.mkv</code> como <code>output.mkv</code>:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">auto-editor </span><span style="color: #9DB1C5">-m</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">0.5</span><span style="color: #9DB1C5">s</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-s</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">3</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-o</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">output.mkv</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">input.mkv</span><span style="color: #B392F0"> </span></span>
+<span class="line"></span></code></pre>
+<p>Shell script para auto editar o arquivo <code>input.mkv</code> como <code>output.mkv</code>:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">SOURCE</span><span style="color: #F97583">=</span><span style="color: #FFAB70">$(</span><span style="color: #B392F0">realpath</span><span style="color: #FFAB70"> &quot;$1&quot;)</span></span>
+<span class="line"><span style="color: #B392F0">DESTINATION</span><span style="color: #F97583">=</span><span style="color: #FFAB70">$(</span><span style="color: #B392F0">realpath</span><span style="color: #FFAB70"> &quot;$2&quot;)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&quot;auto editing from $SOURCE to $DESTINATION&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">docker </span><span style="color: #9DB1C5">run</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">--rm</span><span style="color: #B392F0"> \</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #9DB1C5">-v</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;$SOURCE&quot;</span><span style="color: #9DB1C5">:</span><span style="color: #FFAB70">&quot;$SOURCE&quot;</span><span style="color: #B392F0"> \</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #9DB1C5">-v</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;/temp&quot;</span><span style="color: #9DB1C5">:</span><span style="color: #FFAB70">&quot;/app/temp&quot;</span><span style="color: #B392F0"> \</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #9DB1C5">auto-editor</span><span style="color: #B392F0"> \</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #9DB1C5">auto-editor</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">--no-open</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-o</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;/app/temp/destination.mkv&quot;</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;$SOURCE&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">cp </span><span style="color: #9DB1C5">/temp/destination.mkv</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;$DESTINATION&quot;</span></span>
+<span class="line"></span></code></pre>
+<p>Shell script para auto editar o arquivo mais recent de um diretorio para o outro:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">DIR</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;$1&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Check if the provided argument is a valid directory</span></span>
+<span class="line"><span style="color: #F97583">if</span><span style="color: #B392F0"> [ </span><span style="color: #F97583">!</span><span style="color: #B392F0"> </span><span style="color: #F97583">-d</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;$DIR&quot;</span><span style="color: #B392F0"> ]; </span><span style="color: #F97583">then</span></span>
+<span class="line"><span style="color: #B392F0">    echo </span><span style="color: #FFAB70">&quot;Error: &#39;$DIR&#39; is not a valid directory.&quot;</span></span>
+<span class="line"><span style="color: #B392F0">    exit </span><span style="color: #F8F8F8">1</span></span>
+<span class="line"><span style="color: #F97583">fi</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Find the most recent file in the directory</span></span>
+<span class="line"><span style="color: #B392F0">SOURCE</span><span style="color: #F97583">=</span><span style="color: #FFAB70">$(</span><span style="color: #B392F0">ls</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">-t</span><span style="color: #FFAB70"> &quot;$DIR&quot;</span><span style="color: #9DB1C5">*.mkv</span><span style="color: #FFAB70"> </span><span style="color: #F97583">2&gt;</span><span style="color: #9DB1C5">/dev/null</span><span style="color: #FFAB70"> </span><span style="color: #F97583">|</span><span style="color: #FFAB70"> </span><span style="color: #B392F0">head</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">-n</span><span style="color: #FFAB70"> </span><span style="color: #F8F8F8">1</span><span style="color: #FFAB70">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Check if the directory is empty</span></span>
+<span class="line"><span style="color: #F97583">if</span><span style="color: #B392F0"> [ </span><span style="color: #F97583">-z</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;$SOURCE&quot;</span><span style="color: #B392F0"> ]; </span><span style="color: #F97583">then</span></span>
+<span class="line"><span style="color: #B392F0">    echo </span><span style="color: #FFAB70">&quot;No files found in &#39;$SOURCE&#39;.&quot;</span></span>
+<span class="line"><span style="color: #B392F0">    exit </span><span style="color: #F8F8F8">2</span></span>
+<span class="line"><span style="color: #F97583">else</span></span>
+<span class="line"><span style="color: #B392F0">    echo </span><span style="color: #FFAB70">&quot;Most recent file: $SOURCE&quot;</span></span>
+<span class="line"><span style="color: #F97583">fi</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">DESTINATION</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;$2&quot;</span></span>
+<span class="line"><span style="color: #B392F0">DESTINATION_FILE</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;$DESTINATION&quot;</span><span style="color: #9DB1C5">/</span><span style="color: #FFAB70">$(</span><span style="color: #B392F0">basename</span><span style="color: #FFAB70"> &quot;$SOURCE&quot;)&quot;.auto.mkv&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&quot;Auto editing from $SOURCE to $DESTINATION_FILE&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">docker </span><span style="color: #9DB1C5">run</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">--rm</span><span style="color: #B392F0"> \</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #9DB1C5">-v</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">$(</span><span style="color: #B392F0">realpath</span><span style="color: #FFAB70"> $SOURCE)</span><span style="color: #9DB1C5">:/app/source.mkv</span><span style="color: #B392F0"> \</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #9DB1C5">-v</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;/temp&quot;</span><span style="color: #9DB1C5">:</span><span style="color: #FFAB70">&quot;/app/temp&quot;</span><span style="color: #B392F0"> \</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #9DB1C5">auto-editor</span><span style="color: #B392F0"> \</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #9DB1C5">auto-editor</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">--no-open</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">--edit</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">audio:0.02</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-m</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">0.4</span><span style="color: #9DB1C5">s,0.4s</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-o</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">/app/temp/destination.mkv</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">/app/source.mkv</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">cp </span><span style="color: #9DB1C5">/temp/destination.mkv</span><span style="color: #B392F0"> $DESTINATION_FILE</span></span>
+<span class="line"></span></code></pre>
+
+  </main>
+  <footer style="color:burlywood">
+    2026 - Rafael Santos
+  </footer>
+  <script type="text/javascript" src="/blog/events.js"></script>
+  <script type="text/javascript" src="/blog/copy-button.js"></script>
+</body>
+
+</html>

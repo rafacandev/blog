@@ -1,3 +1,9 @@
+---
+title: Auto Editor
+description: Edite vídeos automáticamente usando Auto Editor
+order: 90
+---
+
 # auto-editor
 Use o [auto-editor](https://github.com/WyattBlue/auto-editor) pelo docker.
 

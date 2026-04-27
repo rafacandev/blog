@@ -1,5 +1,5 @@
 ---
-title: Bookmarks
+title: 📖 Bookmarks
 description: My personal bookmarks
 order: 1
 ---

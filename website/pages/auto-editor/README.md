@@ -1,5 +1,5 @@
 ---
-title: Auto Editor
+title: 🇧🇷 Auto Editor
 description: Edite vídeos automáticamente usando Auto Editor
 order: 90
 ---

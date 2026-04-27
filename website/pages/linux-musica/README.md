@@ -1,3 +1,10 @@
+---
+title: Produção Musical no Linux
+description: 🇧🇷 Meu setup para produção musical no Linux
+order: 30
+---
+
+
 ## Produção Musical no Linux
 
 ### Editor

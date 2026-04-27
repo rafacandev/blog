@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Docker MySQL</title>
+  <link rel="stylesheet" href="/blog/styles.css">
+  <link rel="stylesheet" href="/blog/pico.classless.orange.min.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/blog/">Home</a>
+      <a href="https://github.com/rafacandev/blog">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Standalone MySql with Docker</h2>
+<p>Very useful MySQL docker image with an external data folder named <code>volume-mysql</code> and which also allows connections from external hosts.</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #6B737C"># Install Docker</span></span>
+<span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">apt</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">install</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">docker.io</span></span>
+<span class="line"><span style="color: #B392F0"> </span></span>
+<span class="line"><span style="color: #6B737C"># Show Docker version</span></span>
+<span class="line"><span style="color: #B392F0">docker </span><span style="color: #9DB1C5">-v</span></span>
+<span class="line"><span style="color: #B392F0"> </span></span>
+<span class="line"><span style="color: #6B737C"># Install Docker Compose</span></span>
+<span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">apt</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">install</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">docker-compose</span></span>
+<span class="line"><span style="color: #B392F0"> </span></span>
+<span class="line"><span style="color: #6B737C"># Show Docker Compose version</span></span>
+<span class="line"><span style="color: #B392F0">docker-compose </span><span style="color: #9DB1C5">--version</span></span>
+<span class="line"><span style="color: #B392F0"> </span></span>
+<span class="line"><span style="color: #6B737C"># Create folder for your docker image</span></span>
+<span class="line"><span style="color: #B392F0">mkdir </span><span style="color: #9DB1C5">-p</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">~/docker-mysql</span></span>
+<span class="line"><span style="color: #B392F0">cd </span><span style="color: #9DB1C5">~/docker-mysql</span></span>
+<span class="line"><span style="color: #B392F0"> </span></span>
+<span class="line"><span style="color: #6B737C">##### Create a Dockerfile (see content below)</span></span>
+<span class="line"><span style="color: #B392F0"> </span></span>
+<span class="line"><span style="color: #6B737C">##### Create a docker-compose.yml (see content below)</span></span>
+<span class="line"><span style="color: #B392F0"> </span></span>
+<span class="line"><span style="color: #6B737C"># Start docker-compose</span></span>
+<span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">docker-compose</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">up</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-d</span></span>
+<span class="line"><span style="color: #B392F0"> </span></span>
+<span class="line"><span style="color: #6B737C"># Done, your docker container up and running!</span></span>
+<span class="line"><span style="color: #B392F0"> </span></span>
+<span class="line"><span style="color: #6B737C"># If you want to stop your container, enter:</span></span>
+<span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">docker</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">stop</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">docker-mysql</span></span>
+<span class="line"><span style="color: #B392F0"> </span></span>
+<span class="line"><span style="color: #6B737C"># If you want to stop your container, enter:</span></span>
+<span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">docker</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">start</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">docker-mysql</span></span>
+<span class="line"><span style="color: #B392F0"> </span></span>
+<span class="line"><span style="color: #6B737C"># If you want to backup your data you just need to copy/restore the folder &#39;volume-mysql&#39;</span></span>
+<span class="line"></span></code></pre>
+<p><code>Dockerfile</code></p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #6B737C"># Extend from mysql docker image</span></span>
+<span class="line"><span style="color: #B392F0">FROM </span><span style="color: #9DB1C5">mysql/mysql-server:5.7</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">### ENVIRONMENT VARIABLES</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Specifies a password that is set for the MySQL root account</span></span>
+<span class="line"><span style="color: #B392F0">ENV </span><span style="color: #9DB1C5">MYSQL_ROOT_PASSWORD</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">root</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Allow connections from other hosts</span></span>
+<span class="line"><span style="color: #B392F0">ENV </span><span style="color: #9DB1C5">MYSQL_ROOT_HOST</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">%</span></span>
+<span class="line"></span></code></pre>
+<p><code>docker-compose.yml</code></p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">version: </span><span style="color: #FFAB70">&#39;2&#39;</span></span>
+<span class="line"><span style="color: #B392F0">services:</span></span>
+<span class="line"><span style="color: #B392F0">  docker-mysql:</span></span>
+<span class="line"><span style="color: #B392F0">    image: </span><span style="color: #9DB1C5">docker-mysql:0.1</span></span>
+<span class="line"><span style="color: #B392F0">    container_name: </span><span style="color: #9DB1C5">docker-mysql</span></span>
+<span class="line"><span style="color: #B392F0">    build:</span></span>
+<span class="line"><span style="color: #B392F0">      context: </span><span style="color: #9DB1C5">.</span></span>
+<span class="line"><span style="color: #B392F0">      dockerfile: </span><span style="color: #9DB1C5">./Dockerfile</span></span>
+<span class="line"><span style="color: #B392F0">    ports:</span></span>
+<span class="line"><span style="color: #B392F0">     - </span><span style="color: #FFAB70">&quot;3306:3306&quot;</span></span>
+<span class="line"><span style="color: #B392F0">    volumes:</span></span>
+<span class="line"><span style="color: #B392F0">     - </span><span style="color: #9DB1C5">./volume-mysql:/var/lib/mysql</span></span>
+<span class="line"></span></code></pre>
+
+  </main>
+  <footer style="color:burlywood">
+    2026 - Rafael Santos
+  </footer>
+  <script type="text/javascript" src="/blog/events.js"></script>
+  <script type="text/javascript" src="/blog/copy-button.js"></script>
+</body>
+
+</html>

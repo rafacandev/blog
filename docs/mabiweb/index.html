@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Mabiweb Games Alert</title>
+  <link rel="stylesheet" href="/blog/styles.css">
+  <link rel="stylesheet" href="/blog/pico.classless.orange.min.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/blog/">Home</a>
+      <a href="https://github.com/rafacandev/blog">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <p>Bash script to alert when is your turn on Mabiweb games:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">wget </span><span style="color: #FFAB70">&#39;http://www.mabiweb.com/modules.php?name=GM_Nations&amp;g_id=81541&amp;op=view_game_reset&#39;</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-O</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">mabiweb.log</span></span>
+<span class="line"><span style="color: #B392F0">cat </span><span style="color: #9DB1C5">mabiweb.log</span><span style="color: #B392F0"> </span><span style="color: #F97583">|</span><span style="color: #B392F0"> grep </span><span style="color: #9DB1C5">Players</span><span style="color: #B392F0"> </span><span style="color: #F97583">|</span><span style="color: #B392F0"> grep </span><span style="color: #9DB1C5">-o</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-P</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&#39;lukard.{0,5}&#39;</span><span style="color: #B392F0"> </span><span style="color: #F97583">&gt;</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">players.txt</span></span>
+<span class="line"><span style="color: #B392F0">cat </span><span style="color: #9DB1C5">mabiweb.log</span><span style="color: #B392F0"> </span><span style="color: #F97583">|</span><span style="color: #B392F0"> grep </span><span style="color: #9DB1C5">Players</span><span style="color: #B392F0"> </span><span style="color: #F97583">|</span><span style="color: #B392F0"> grep </span><span style="color: #9DB1C5">-o</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-P</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&#39;nations.{0,5}&#39;</span><span style="color: #B392F0"> </span><span style="color: #F97583">&gt;&gt;</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">players.txt</span></span>
+<span class="line"><span style="color: #B392F0">cat </span><span style="color: #9DB1C5">mabiweb.log</span><span style="color: #B392F0"> </span><span style="color: #F97583">|</span><span style="color: #B392F0"> grep </span><span style="color: #9DB1C5">Players</span><span style="color: #B392F0"> </span><span style="color: #F97583">|</span><span style="color: #B392F0"> grep </span><span style="color: #9DB1C5">-o</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-P</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&#39;ng701.{0,5}&#39;</span><span style="color: #B392F0"> </span><span style="color: #F97583">&gt;&gt;</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">players.txt</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">ACTIVE_PLAYER</span><span style="color: #F97583">=</span><span style="color: #FFAB70">$(</span><span style="color: #B392F0">cat</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">players.txt</span><span style="color: #FFAB70"> </span><span style="color: #F97583">|</span><span style="color: #FFAB70"> </span><span style="color: #B392F0">grep</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">-o</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">-P</span><span style="color: #FFAB70"> &#39;.{0,10}B&gt;&#39; </span><span style="color: #F97583">|</span><span style="color: #FFAB70"> </span><span style="color: #B392F0">cut</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">-c1-5</span><span style="color: #FFAB70">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&quot;ACTIVE PLAYYER: $ACTIVE_PLAYER&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">if</span><span style="color: #B392F0"> [ </span><span style="color: #FFAB70">&quot;$ACTIVE_PLAYER&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">==</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;lukard&quot;</span><span style="color: #B392F0"> ]; </span><span style="color: #F97583">then</span></span>
+<span class="line"><span style="color: #B392F0">  echo </span><span style="color: #FFAB70">&quot;LUKARD is the active player&quot;</span></span>
+<span class="line"><span style="color: #B392F0">  speaker-test </span><span style="color: #9DB1C5">-l</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">1</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-P</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">800</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-t</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">sine</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-f</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">350</span></span>
+<span class="line"><span style="color: #F97583">fi</span></span>
+<span class="line"></span></code></pre>
+
+  </main>
+  <footer style="color:burlywood">
+    2026 - Rafael Santos
+  </footer>
+  <script type="text/javascript" src="/blog/events.js"></script>
+  <script type="text/javascript" src="/blog/copy-button.js"></script>
+</body>
+
+</html>

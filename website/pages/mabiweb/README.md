@@ -1,3 +1,10 @@
+---
+title: Mabiweb Games Alert
+description: Play an alert sound when it is your turn on Mabiweb games.
+order: 60
+---
+
+
 Bash script to alert when is your turn on Mabiweb games:
 
 ```bash

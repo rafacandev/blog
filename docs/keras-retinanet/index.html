@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Tensorflow Object Detection Training</title>
+  <link rel="stylesheet" href="/blog/styles.css">
+  <link rel="stylesheet" href="/blog/pico.classless.orange.min.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/blog/">Home</a>
+      <a href="https://github.com/rafacandev/blog">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Tensorflow Object Detection Training With One Custom Class and Transfer Learning Tutorial</h2>
+<h2>Introduction</h2>
+<p>This tutorial describes how to training a custom Tensorflow (v2.2.0) with Tensorflow Keras. It also automates some of the common tasks and also demonstrates how to execute the process in a docker container.</p>
+<p>It also serves as basis if we want to expand and create your own training setup. For simplicity, we are going to train a custom model to detect car's tire.</p>
+<h2>Requirements</h2>
+<p>The following applications should be installed:</p>
+<ul>
+<li><strong>Docker</strong>: as described in <a href="https://docs.docker.com/get-docker/">Docker Website</a>.</li>
+<li><strong>LabelImg</strong>: as described in <a href="https://github.com/tzutalin/labelImg">LabelImg Website</a></li>
+</ul>
+<h1>Create a Project Folder</h1>
+<p>Create a project root folder in your system. From now on, this folder will be referenced as <code>PRJ_FOLDER</code>.</p>
+<pre><code>mkdir PRJ_FOLDER
+cd PRJ_FOLDER
+</code></pre>
+<h2>Preparing the Workspace</h2>
+<p>Create the necessary folders for our project:</p>
+<pre><code># PRJ_FOLDER
+mkdir training
+mkdir training/images
+mkdir training/images/train
+mkdir training/images/validation
+mkdir training/pre-trained-model
+mkdir training/scripts
+</code></pre>
+<h2>Directory Layout</h2>
+<p>At this point your <code>PRJ_FOLDER</code> should look like:</p>
+<pre><code>├── Dockerfile
+└── training
+    ├── images
+    │   ├── train
+    │   └── validation
+    ├── pre-trained-model
+    ├── scripts
+</code></pre>
+<ul>
+<li><code>Dockerfile</code>: used when training in a docker container</li>
+<li><code>training</code>: files for training our custom model</li>
+<li><code>training/annotations</code>: all <code>*.csv</code> files and the respective TensorFlow <code>*.record</code> files, which contain the list of annotations for our dataset images.</li>
+<li><code>training/images</code>: files related to our dataset. It contains all images and annotation files.</li>
+<li><code>training/images/train</code>: training images and their respective Pascal VOC annotation files used to train our model</li>
+<li><code>training/images/validation</code>: validation images and their respective Pascal VOC annotation files used to validate our model</li>
+<li><code>training/pre-trained-model</code>: pre-trained model of our choice to be used as a starting checkpoint for our training job</li>
+</ul>
+<h1>Prepare the Dataset</h1>
+<h2>Download Images</h2>
+<p>Save the training images in the <code>PRJ_FOLDER/training/images/train</code>. In our example, save the <a href="training/scripts/download_training_images.sh">download_training_images.sh</a> in <code>PRJ_FOLDER/training/scripts/download_training_images.sh</code> and executed it to download our images:</p>
+<pre><code># PRJ_FOLDER
+sh training/scripts/download_training_images.sh
+</code></pre>
+<p>Verify that the images are downloaded in the correct folders:</p>
+<pre><code># PRJ_FOLDER
+ls -l training/images/train/ | grep jpg | wc -l
+#> 120
+ls -l training/images/test/ | grep jpg | wc -l
+#> 20
+</code></pre>
+<h2>Label the Images</h2>
+<p>Run <strong>LabelImg</strong> and label the images in <code>PRJ_FOLDER/training/images/train</code> and <code>PRJ_FOLDER/training/images/train</code>. Make sure to label the images using <strong>PascalVOC</strong> format as described in <a href="https://github.com/tzutalin/labelImg#steps-pascalvoc">LabelImg Usage</a>. In some instances, you might see a image without any tire, that is alright just make sure to save a corresponding <code>.xml</code> label file without objects in it. Alternatively, if you want to skip the manual labelling; then, you can donwload our <a href="training/images/train">train labels</a> and <a href="training/images/test">validation labels</a>.</p>
+<blockquote>
+<p><strong>Note</strong>: <em>Labels</em> are also known as <em>classes</em> and these terms are used interchangeably.</p>
+</blockquote>
+<p>At this point, <code>PRJ_FOLDER/training/images/train</code> and <code>PRJ_FOLDER/training/images/train</code> should contain a label <code>.xml</code> file for each image.</p>
+<p>Verify that the labels are created:</p>
+<pre><code># PRJ_FOLDER
+ls -l training/images/train/ | grep xml | wc -l
+#> 120
+ls -l training/images/test/ | grep xml | wc -l
+#> 20
+</code></pre>
+<h2>Create a Labels File</h2>
+<p>We need a file to describe the labels (aka classes) that we are going to use. In our case, there will be only one label named <code>tire</code> at index 0.</p>
+<p>Create <code>PRJ_FOLDER/training/images/labels.csv</code> as:</p>
+<pre><code>tire,0
+</code></pre>
+<h2>Converting *.xml to *.csv</h2>
+<p>Save the <a href="training/scripts/pascal_xml_to_csv.py">pascal_xml_to_csv.py</a> in <code>PRJ_FOLDER/training/scripts/pascal_xml_to_csv.py</code>.</p>
+<p>Convert the <em>Pascal VOC</em> labels as <code>.csv</code> files</p>
+<pre><code># PRJ_FOLDER
+python training/scripts/pascal_xml_to_csv.py -i training/images/train -o training/images/train_labels.csv -p train
+python training/scripts/pascal_xml_to_csv.py -i training/images/validation -o training/images/validation_labels.csv -p validation
+</code></pre>
+<h1>Prepare a Pre Trained Model</h1>
+<p>Save <code>resnet50_coco</code> pre-trained model:</p>
+<pre><code># PRJ_FOLDER
+wget -P training/pre-trained-model https://github.com/fizyr/keras-retinanet/releases/download/0.5.1/resnet50_coco_best_v2.1.0.h5
+</code></pre>
+<h1>Train using a Docker Container</h1>
+<h2>Build a Docker Container</h2>
+<p>Save our <a href="Dockerfile">Dockerfile</a> in <code>PRJ_FOLDER</code>.</p>
+<p>Build a docker image named <code>keras-retinanet</code> with tagged as <code>1.0</code>:</p>
+<pre><code># PRJ_FOLDER
+docker build --tag keras-retinanet:1.0 .
+</code></pre>
+<p>Run a docker container:</p>
+<pre><code># PRJ_FOLDER
+docker run --name kr -it --rm -p 0.0.0.0:6006:6006 -v $PWD:/tensorflow/workspace keras-retinanet:1.0 bash
+</code></pre>
+<ul>
+<li><code>--name</code>: a name for the container.</li>
+<li><code>-it</code>: run in a interactive terminal.</li>
+<li><code>--rm</code>: remove the container when done.</li>
+<li><code>-p</code>: binds ports from the container to our host system.</li>
+<li><code>-v</code>: populates the content of <code>$PWD</code> (current directory) into the container's <code>/tensorflow/workspace</code> folder.</li>
+<li><code>keras-retinanet:1.0</code>: the docker image, in our case the one we just built.</li>
+<li><code>bash</code>: runs bash in the interactive terminal.</li>
+</ul>
+<p>Now the terminal is attached to bash running in our docker container. Moreover, <code>-v $PWD:/tensorflow/workspace</code> mounts the content of the current folder into the container's <code>/tensorflow/workspace</code> which means that we should see the content <code>PRJ_FOLDER</code> from this interactive terminal.</p>
+<p>In <code>Docker Interactive Terminal</code>,</p>
+<pre><code>sh training/train.sh
+</code></pre>
+<p>In <code>PRJ_FOLDER</code>, start an instance of <em>tensorboard</em>:</p>
+<pre><code>docker exec kr tensorboard --host 0.0.0.0 --port 6006 --logdir=/tensorflow/workspace/training/tensorboard
+</code></pre>
+<p>Navigate to <a href="http://localhost:6006">http://localhost:6006</a> to visualize the training performance.</p>
+<h2>User Docker Commands</h2>
+<p>Run the training in detached mode:</p>
+<pre><code># PRJ_FOLDER
+docker run --name kr -d --rm -p 0.0.0.0:6006:6006 -v $PWD:/tensorflow/workspace keras-retinanet:1.0 sh training/train.sh
+</code></pre>
+<p>See docker container's logs:</p>
+<pre><code># PRJ_FOLDER
+docker logs -f kr
+</code></pre>
+<h1>Local Development</h1>
+<p>We can also use our local machine for training and development. When using our local development; then the docker steps won't be necessary.</p>
+<h2>Virtual Environment</h2>
+<p>This project uses .</p>
+<p>Create a virtual environment using <a href="https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/">pip Virtual Environment</a> in the <code>venv/</code> folder:</p>
+<pre><code># PRJ_FOLDER
+python -m venv venv
+</code></pre>
+<p>To activate the virtual environment:</p>
+<pre><code># PRJ_FOLDER
+source venv/bin/activate
+</code></pre>
+<p>To leave the virtual environment (when finished working on the project):</p>
+<pre><code>deactivate
+</code></pre>
+<h2>Environment Setup</h2>
+<p>Install <em>keras-retinanet</em>:</p>
+<pre><code># PRJ_FOLDER
+git clone https://github.com/fizyr/keras-retinanet.git
+cd keras-retinanet
+pip install .
+python setup.py build_ext --inplace
+</code></pre>
+<p>Install project dependencies:</p>
+<pre><code>pip install pandas
+pip install cython
+pip install matplotlib
+pip install progressbar2
+</code></pre>
+<h1>Start Training</h1>
+<p>Run the traininng:</p>
+<pre><code># PRJ_FOLDER
+python ../keras-retinanet/keras_retinanet/bin/train.py \
+    --freeze-backbone \
+    --random-transform \
+    --batch-size 1 \
+    --steps 5 \
+    --epochs 50 \
+    --weights training/pre-trained-model/resnet50_coco_best_v2.1.0.h5 \
+    --tensorboard-dir training/tensorboard \
+    csv training/images/train_labels.csv training/images/labels.csv --val-annotations training/images/validation_labels.csv
+</code></pre>
+<p>Run <em>tensorboard</em>:</p>
+<pre><code>tensorboard --host 0.0.0.0 --port 6006 --logdir=/tensorflow/workspace/training/tensorboard
+</code></pre>
+<p>Navigate to <a href="http://localhost:6006">http://localhost:6006</a> to visualize the training performance.</p>
+<p>WARNING: You are running this container as root, which can cause new files in
+mounted volumes to be created as the root user on your host machine.</p>
+<p>To avoid this, run the container by specifying your user's userid:</p>
+<p>$ docker run -u $(id -u):$(id -g) args...</p>
+<h1>References</h1>
+
+  </main>
+  <footer style="color:burlywood">
+    2026 - Rafael Santos
+  </footer>
+  <script type="text/javascript" src="/blog/events.js"></script>
+  <script type="text/javascript" src="/blog/copy-button.js"></script>
+</body>
+
+</html>

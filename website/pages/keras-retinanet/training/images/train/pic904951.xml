@@ -1,0 +1,26 @@
+<annotation>
+	<folder>test</folder>
+	<filename>pic904951.jpg</filename>
+	<path>/home/rafa/dev/prj/stone-age-object-detection/training_demo/images/test/pic904951.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>800</width>
+		<height>530</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>card</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>633</xmin>
+			<ymin>172</ymin>
+			<xmax>793</xmax>
+			<ymax>358</ymax>
+		</bndbox>
+	</object>
+</annotation>

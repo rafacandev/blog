@@ -1,4 +1,10 @@
-Linux - Disable USB Auto Suspend
+---
+title: Linux Mint: Disable USB Auto Suspend
+description: How to disable USB auto suspend. Useful when you want to wake up your computer when typing on your keyboard
+order: 50
+---
+
+Linux Mint - Disable USB Auto Suspend
 --------------------------------
 
 On my Linux Mint distribution, I am not able to weak up my computer from suspension using my USB keyboard. This happens because Linux Mint disables the USB when the computer is suspended (good strategy if you want to save some energy, although inconvenient if you use an USB keyboard).

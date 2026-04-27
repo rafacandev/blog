@@ -1,3 +1,11 @@
+---
+title: Tensorflow Object Detection Training
+description:  how to training a custom Tensorflow (v2.2.0) with Tensorflow Keras for image detection
+order: 80
+---
+
+
+
 Tensorflow Object Detection Training With One Custom Class and Transfer Learning Tutorial
 -----------------------------------------------------------------------------------------
 

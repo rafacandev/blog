@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Linux Mint: Disable USB Auto Suspend</title>
+  <link rel="stylesheet" href="/blog/styles.css">
+  <link rel="stylesheet" href="/blog/pico.classless.orange.min.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/blog/">Home</a>
+      <a href="https://github.com/rafacandev/blog">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Linux Mint - Disable USB Auto Suspend</h2>
+<p>On my Linux Mint distribution, I am not able to weak up my computer from suspension using my USB keyboard. This happens because Linux Mint disables the USB when the computer is suspended (good strategy if you want to save some energy, although inconvenient if you use an USB keyboard).</p>
+<p>Below is a possible approach to disable USB autosuspend.</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #6B737C">## Create a shell script to disable autosuspend for each USB port</span></span>
+<span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">vim</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">/etc/init.d/usb-disable-autosuspend.sh</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">## Content of /etc/init.d/usb-disable-autosuspend.sh</span></span>
+<span class="line"><span style="color: #F97583">for</span><span style="color: #B392F0"> i </span><span style="color: #F97583">in</span><span style="color: #B392F0"> /sys/bus/usb/devices/</span><span style="color: #F97583">*</span><span style="color: #B392F0">/power/autosuspend;</span></span>
+<span class="line"><span style="color: #F97583">do</span><span style="color: #B392F0"> echo </span><span style="color: #9DB1C5">-1</span><span style="color: #B392F0"> </span><span style="color: #F97583">&gt;</span><span style="color: #B392F0"> $i;</span></span>
+<span class="line"><span style="color: #F97583">done</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">for</span><span style="color: #B392F0"> j </span><span style="color: #F97583">in</span><span style="color: #B392F0"> /sys/bus/usb/devices/</span><span style="color: #F97583">*</span><span style="color: #B392F0">/power/level;</span></span>
+<span class="line"><span style="color: #F97583">do</span><span style="color: #B392F0"> echo </span><span style="color: #9DB1C5">on</span><span style="color: #B392F0"> </span><span style="color: #F97583">&gt;</span><span style="color: #B392F0"> $j;</span></span>
+<span class="line"><span style="color: #F97583">done</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">for</span><span style="color: #B392F0"> k </span><span style="color: #F97583">in</span><span style="color: #B392F0"> /sys/bus/usb/devices/</span><span style="color: #F97583">*</span><span style="color: #B392F0">/power/wakeup;</span></span>
+<span class="line"><span style="color: #F97583">do</span><span style="color: #B392F0"> echo </span><span style="color: #9DB1C5">enabled</span><span style="color: #B392F0"> </span><span style="color: #F97583">&gt;</span><span style="color: #B392F0"> $k;</span></span>
+<span class="line"><span style="color: #F97583">done</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">## Save the file</span></span>
+<span class="line"><span style="color: #6B737C">## Grant execution permission</span></span>
+<span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">chmod</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">+x</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">/etc/init.d/usb-disable-autosuspend.sh</span><span style="color: #B392F0"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">## Resister the shell script to run automatically during startup</span></span>
+<span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">update-rc.d</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">usb-disable-autosuspend.sh</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">defaults</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">100</span></span>
+<span class="line"></span></code></pre>
+<p>Now you should be able resume your computer with your USB keyboard.</p>
+<p>If you notice that your computer restarts when you shutdown or suspend, then you also need to instruct the kernel to set <code>acpi=noirq</code> as follows:</p>
+<pre><code>vim /etc/default/grub
+
+## Add acpi=noirq to GRUB_CMDLINE_LINUX_DEFAULT, example:
+GRUB_CMDLINE_LINUX_DEFAULT="acpi=noirq quite splash"
+
+## Update grub configuration
+sudo update-grub2
+</code></pre>
+
+  </main>
+  <footer style="color:burlywood">
+    2026 - Rafael Santos
+  </footer>
+  <script type="text/javascript" src="/blog/events.js"></script>
+  <script type="text/javascript" src="/blog/copy-button.js"></script>
+</body>
+
+</html>

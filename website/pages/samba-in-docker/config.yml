@@ -1,0 +1,31 @@
+auth:
+  - user: joao
+    group: joao
+    uid: 1000
+    gid: 1000
+    password: debarro
+
+global:
+  - "force user = joao"
+  - "force group = joao"
+
+share:
+  - name: publico
+    comment: Compartilhamento publico
+    path: /samba/publico
+    browsable: yes
+    readonly: no
+    guestok: yes
+    veto: no
+    recycle: no
+  - name: joao
+    comment: Compartilhamento privado com arquivos do joao
+    path: /samba/joao
+    browsable: yes
+    readonly: no
+    guestok: no
+    validusers: joao
+    writelist: joao
+    veto: no
+    recycle: yes
+

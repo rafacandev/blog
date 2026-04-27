@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Rode samba pelo Docker</title>
+  <link rel="stylesheet" href="/blog/styles.css">
+  <link rel="stylesheet" href="/blog/pico.classless.orange.min.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/blog/">Home</a>
+      <a href="https://github.com/rafacandev/blog">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Servidor de Arquivos Samba em Docker</h2>
+<p>Neste post vamos criar um servidor de arquivos samba usando docker.
+Na minha opinião, a principal vantagem deste método e a facilidade de recriar este servidor, pois podemos executar os mesmos passos, independente do sistema operacional.</p>
+<p>A minha motivação particular foi montar um servidor de arquivos caseiro para eu guardar meus arquivos pessoais em um servidor remoto como muito espaço em disco.
+Adicionalmente, fica muito fácil de transferir arquivos do meu celular para a minha pasta remota.
+Finalmente, eu também costumo criar uma pasta publica para transferir arquivos entre membros da minha família (chega de ficar enviando arquivos anexos por e-mail).</p>
+<h2>Requirimentos</h2>
+<p>Precisaremos do <strong>docker</strong> e do <strong>docker compose</strong>.</p>
+<p>Eu vou descrever os passos executados em um Linux, mas eu acredito que os passos no Windows sejam muito próximos. Por favor, comentem as diferenças se alguém aqui seguir este post pelo Windows.</p>
+<h3>Instalação</h3>
+<h4>docker</h4>
+<p>Aqui esta a pagina oficial em inglês para o <em>docker</em>:
+https://docs.docker.com/engine/install/</p>
+<p>Aqui um tutorial em português pelo Ubuntu (pare no passo 2):
+<a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04-pt">https://www.digitalocean.com/community/tutorials...</a></p>
+<h4>docker compose</h4>
+<p>Aqui esta a pagina oficial em inglês:
+https://docs.docker.com/compose/install/</p>
+<p>Aqui um tutorial em português pelo Ubuntu (pare no passo 1):
+<a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04-pt">https://www.digitalocean.com/community/tutorials...</a></p>
+<h4>docker e docker compose pelo WSL</h4>
+<p>Aqui temos uma instalação pelo WSL: <a href="https://www.tabnews.com.br/Yagasaki/instalando-o-docker-no-wsl-2-sem-o-docker-desktop">https://www.tabnews.com.br/Yagasaki...</a></p>
+<h2>Objetivo</h2>
+<p>Criar um servidor samba pelo docker com um compartilhamento publico e um compartilhamento privado protegido por usuário + senha.</p>
+<h2>Estrutura de Pastas e Arquivos</h2>
+<p>Vamos criar a seguinte estrutura de pastas e arquivos:</p>
+<pre><code>samba/
+├── data
+│   └── config.yml
+├── docker-compose.yml
+├── joao
+│   └── arquivo-do-joao.txt
+└── publico
+    └── arquivo-publico.txt
+</code></pre>
+<ul>
+<li><strong>samba</strong>: Pasta raiz</li>
+<li><strong>samba/docker-compose.yml</strong>: Arquivo de configuração do nossos serviços docker</li>
+<li><strong>samba/data</strong>: Pasta para o funcionamento do servidor samba</li>
+<li><strong>samba/data/config.yml</strong>: Configuração do servidor samba</li>
+<li><strong>samba/joao</strong>: Pasta para o compartilhamento privado do usuário <em>joao</em></li>
+<li><strong>samba/publico</strong>: Pasta para o compartilhamento publico</li>
+</ul>
+<p>Aqui os comandos para criar esta estrutura de pastas e arquivos:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">mkdir </span><span style="color: #9DB1C5">-p</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">samba/data</span></span>
+<span class="line"><span style="color: #B392F0">mkdir </span><span style="color: #9DB1C5">-p</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">samba/joao</span></span>
+<span class="line"><span style="color: #B392F0">mkdir </span><span style="color: #9DB1C5">-p</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">samba/publico</span></span>
+<span class="line"><span style="color: #B392F0">touch </span><span style="color: #9DB1C5">samba/data/config.yml</span></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&#39;Um arquivo do joao&#39;</span><span style="color: #B392F0"> </span><span style="color: #F97583">&gt;</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">samba/joao/arquivo-do-joao.txt</span></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&#39;Um arquivo publico&#39;</span><span style="color: #B392F0"> </span><span style="color: #F97583">&gt;</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">samba/publico/arquivo-publico.txt</span></span>
+<span class="line"><span style="color: #B392F0">touch </span><span style="color: #9DB1C5">samba/docker-compose.yml</span></span>
+<span class="line"></span></code></pre>
+<h2>Descrição do docker compose (docker-compose.yml)</h2>
+<p>Colar este conteúdo no arquivo <strong>samba/docker-compose.yml</strong>:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #F8F8F8">version</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;3.5&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F8F8F8">services</span><span style="color: #F97583">:</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #F8F8F8">samba</span><span style="color: #F97583">:</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">image</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">crazymax/samba</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">container_name</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">samba</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">network_mode</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">host</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">volumes</span><span style="color: #F97583">:</span></span>
+<span class="line"><span style="color: #B392F0">      - </span><span style="color: #FFAB70">&quot;./data:/data&quot;</span></span>
+<span class="line"><span style="color: #B392F0">      - </span><span style="color: #FFAB70">&quot;./publico:/samba/publico&quot;</span></span>
+<span class="line"><span style="color: #B392F0">      - </span><span style="color: #FFAB70">&quot;./joao:/samba/joao&quot;</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">environment</span><span style="color: #F97583">:</span></span>
+<span class="line"><span style="color: #B392F0">      - </span><span style="color: #FFAB70">&quot;SAMBA_LOG_LEVEL=0&quot;</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">restart</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">always</span></span>
+<span class="line"></span></code></pre>
+<p>O <em>docker-compose.yml</em> descreve os serviços que serão rodados pelo docker.
+Este arquivo e utilizado pelo docker para criar containers.
+Por simplicidade, podemos pensar em containers como se fossem separadas maquinas virtuais;
+no nosso caso, uma máquina virtual rodando um servidor samba.</p>
+<p>Temos apenas um serviço chamado <code>samba</code> baseado na imagem <code>crazymax/samba</code>.
+A documentação completa da imagem: https://github.com/crazy-max/docker-samba</p>
+<p>Temos também volumes, que no nosso caso estão associadas com as pastas que criamos anteriormente.
+Por exemplo: o volume <code>./publico:/samba/publico</code> diz que montaremos o conteúdo da pasta <code>./publico</code>
+em uma pasta interna ao container chamada <code>/samba/publico</code>.</p>
+<h2>Descrição da configuração do servidor samba (config.yml)</h2>
+<p>Colar este conteúdo no arquivo <strong>config.yml</strong>:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #F8F8F8">auth</span><span style="color: #F97583">:</span></span>
+<span class="line"><span style="color: #B392F0">  - </span><span style="color: #F8F8F8">user</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">joao</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">group</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">joao</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">uid</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">1000</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">gid</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">1000</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">password</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">debarro</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F8F8F8">global</span><span style="color: #F97583">:</span></span>
+<span class="line"><span style="color: #B392F0">  - </span><span style="color: #FFAB70">&quot;force user = joao&quot;</span></span>
+<span class="line"><span style="color: #B392F0">  - </span><span style="color: #FFAB70">&quot;force group = joao&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F8F8F8">share</span><span style="color: #F97583">:</span></span>
+<span class="line"><span style="color: #B392F0">  - </span><span style="color: #F8F8F8">name</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">publico</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">comment</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">Compartilhamento publico</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">path</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">/samba/publico</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">browsable</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #79B8FF">yes</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">readonly</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #79B8FF">no</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">guestok</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #79B8FF">yes</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">veto</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #79B8FF">no</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">recycle</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #79B8FF">no</span></span>
+<span class="line"><span style="color: #B392F0">  - </span><span style="color: #F8F8F8">name</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">joao</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">comment</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">Compartilhamento privado com arquivos do joao</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">path</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">/samba/joao</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">browsable</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #79B8FF">yes</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">readonly</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #79B8FF">no</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">guestok</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #79B8FF">no</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">validusers</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">joao</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">writelist</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">joao</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">veto</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #79B8FF">no</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">recycle</span><span style="color: #F97583">:</span><span style="color: #B392F0"> </span><span style="color: #79B8FF">yes</span></span>
+<span class="line"></span></code></pre>
+<p>O <em>config.yml</em> descreve a configuração do servidor samba.</p>
+<p>O objeto <code>auth</code> descreve que teremos um usurário <code>joao</code> com a senha <code>debarro</code>.</p>
+<p>O objeto <code>share</code> descreve os compartilhamentos.
+Queremos um compartilhamento publico que aceita usuários anônimos <code>guestok: yes</code>.
+Queremos um compartilhamento privado <code>guestok: yes</code> onde o joao e o único usuário com acesso <code>validusers: joao</code>.</p>
+<p>Uma descricao mais detalhada do <strong>config.yml</strong>: https://github.com/crazy-max/docker-samba#configuration</p>
+<h2>Iniciar o Servidor</h2>
+<p>Com esta estrutura de pastas e arquivos apenas precisamos deste comando na mesma pasta onde o <strong>samba/docker-compose.yml</strong> esta presente:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">docker </span><span style="color: #9DB1C5">compose</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">up</span></span>
+<span class="line"></span></code></pre>
+<p>Pronto o servidor está rodando, no meu <em>Linux Mint</em> e eu consigo acessar pelo gerenciado de arquivos <code>smb://&lt;ip&gt;/&lt;compartilhament&gt;</code>.
+Por exemplo, para acessar o compartilhamento privado <code>smb://192.168.0.10/joao/</code>, lembrando que o usuário e <code>joao</code> e a senha <code>debarro</code>.</p>
+<p>No Windows, você pode seguir estes passos https://pt.wikihow.com/Acessar-Pastas-Compartilhadas-em-Uma-Rede onde o endereço de rede e <code>//192.168.0.10/joao/</code>. O nome do grupo de trabalho e <code>WORKGROUP</code> caso perguntado.</p>
+<p>Nossa, este post ficou meio longo. Vou parando por aqui, caso tenham dúvidas ou sugestões bastar deixar nos comentários.</p>
+
+  </main>
+  <footer style="color:burlywood">
+    2026 - Rafael Santos
+  </footer>
+  <script type="text/javascript" src="/blog/events.js"></script>
+  <script type="text/javascript" src="/blog/copy-button.js"></script>
+</body>
+
+</html>

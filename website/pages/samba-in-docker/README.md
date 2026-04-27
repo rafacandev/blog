@@ -1,3 +1,9 @@
+---
+title: Rode samba pelo Docker
+description: 🇧🇷 Rode um servidor de arquivos samba pelo Docker
+order: 20
+---
+
 Servidor de Arquivos Samba em Docker
 ------------------------------------
 Neste post vamos criar um servidor de arquivos samba usando docker.

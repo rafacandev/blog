@@ -1,6 +1,6 @@
 ---
 title: Docker MySQL
-description: Run MySQL in a Docker image with an external data folder.
+description: Run MySQL from a Docker container with an external data folder.
 order: 20
 ---
 

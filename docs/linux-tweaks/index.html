@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>My Linux Mint Setup</title>
+  <link rel="stylesheet" href="/blog/styles.css">
+  <link rel="stylesheet" href="/blog/pico.classless.orange.min.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/blog/">Home</a>
+      <a href="https://github.com/rafacandev/blog">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Linux Mint Tweaks</h1>
+<p>Useful tweaks for linux distribution based on debian (ubuntu, mint, etc).</p>
+<h3>Turn on the firewall</h3>
+<p>It is turned off by default. Normally, you just need to search for <em>firewall</em> in your distribution menu.</p>
+<h3>Apt Install Essential</h3>
+<p>Essential apps</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">apt</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">install</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">vim</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">curl</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">git</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">vlc</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">vlc-plugin-fluidsynth</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">gimp</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">htop</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">virt-manager</span></span>
+<span class="line"></span></code></pre>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">flatpak </span><span style="color: #9DB1C5">install</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">flathub</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">com.brave.Browser</span></span>
+<span class="line"></span></code></pre>
+<h3>Apt Remove Bloat</h3>
+<ul>
+<li><code>mono-runtime-common</code>: .NET Framework for Linux</li>
+<li><code>apt-xapian-index</code>: indexing application speeds up certain search operations but in general isn't a good trade-off</li>
+<li><code>pidgin</code>: chatting app</li>
+<li><code>hexchat</code>: chatting app</li>
+<li><code>thunderbird</code>: email client</li>
+<li><code>gnote</code>: postit notes</li>
+</ul>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">apt</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">remove</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">mono-runtime-common</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">apt-xapian-index</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">pidgin</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">hexchat</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">thunderbird</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">gnote</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">sticky</span></span>
+<span class="line"></span></code></pre>
+<h3>Do nothing when laptop lid is closed</h3>
+<p>Edit <code>/etc/systemd/logind.conf</code> and set <code>HandleLidSwitch=ignore</code></p>
+<pre><code>cp /etc/systemd/logind.conf /etc/systemd/logind.conf.bk
+echo 'HandleLidSwitch=ignore' >> /etc/systemd/logind.conf
+</code></pre>
+<h3>Reduce grub timeout</h3>
+<p>If you are using grub for boot management (e.g.: when you have a dual boot) you may want to reduce the default timeout.</p>
+<pre><code>sudo cp /etc/default/grub /etc/default/grub.bk
+sudo vim /etc/default/grub
+# Change the value of GRUB_TIMEOUT to 1
+GRUB_TIMEOUT=1
+sudo update-grub
+</code></pre>
+<h3>Increase swap file size</h3>
+<p>https://arcolinux.com/how-to-increase-the-size-of-your-swapfile/</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #6B737C"># Turn off all swap processes</span></span>
+<span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">swapoff</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-a</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Resize the swap to 20Gb</span></span>
+<span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">dd</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">if=/dev/zero</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">of=/swapfile</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">bs=</span><span style="color: #F8F8F8">1</span><span style="color: #9DB1C5">G</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">count=</span><span style="color: #F8F8F8">20</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Make the file usable as swap</span></span>
+<span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">mkswap</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">/swapfile</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Check usage</span></span>
+<span class="line"><span style="color: #B392F0">free </span><span style="color: #9DB1C5">-m</span></span>
+<span class="line"></span></code></pre>
+<h3>Change swapping tendency</h3>
+<p>The tendency to swap 60 is a good value for servers. For normal home use a lower value is more adequate.</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #6B737C"># Check current value</span></span>
+<span class="line"><span style="color: #B392F0">cat </span><span style="color: #9DB1C5">/proc/sys/vm/swappiness</span></span>
+<span class="line"><span style="color: #6B737C"># Backup current configuration</span></span>
+<span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">cp</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">/etc/sysctl.conf</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">/etc/sysctl.conf.bk</span></span>
+<span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">vim</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">/etc/sysctl.conf</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Add the following line</span></span>
+<span class="line"><span style="color: #6B737C"># Reduce the swap tendency </span></span>
+<span class="line"><span style="color: #B392F0">vm.swappiness </span><span style="color: #9DB1C5">=</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">1</span></span>
+<span class="line"></span></code></pre>
+<h3>Mount additional partitions at startup</h3>
+<p>If you have additional partitions you may want to mount them during startup. See more details at: <a href="http://www.howtogeek.com/howto/38125/htg-explains-what-is-the-linux-fstab-and-how-does-it-work/">What Is the Linux fstab File, and How Does It Work?</a></p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #6B737C"># List devices by UUID</span></span>
+<span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">blkid</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Create a mount point</span></span>
+<span class="line"><span style="color: #B392F0">mkdir </span><span style="color: #9DB1C5">/home/YOUR_HOME_USER/files</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Add the partition in etc/fstab</span></span>
+<span class="line"><span style="color: #6B737C"># Mount extra HDD at startup</span></span>
+<span class="line"><span style="color: #B392F0">UUID</span><span style="color: #F97583">=</span><span style="color: #9DB1C5">YOUR_UUID</span><span style="color: #B392F0">  /home/YOUR_HOME_USER/files  </span><span style="color: #9DB1C5">ext4</span><span style="color: #B392F0">  </span><span style="color: #9DB1C5">relatime,noexec</span><span style="color: #B392F0">  </span><span style="color: #F8F8F8">0</span><span style="color: #B392F0">  </span><span style="color: #F8F8F8">2</span></span>
+<span class="line"><span style="color: #6B737C"># Mount extra HDD at startup (alternative options)</span></span>
+<span class="line"><span style="color: #B392F0">LABEL</span><span style="color: #F97583">=</span><span style="color: #9DB1C5">YOUR_LABEL</span><span style="color: #B392F0"> /mnt/YOUR_DESIRED_FOLDER_NAME </span><span style="color: #9DB1C5">auto</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">defaults,rw,user,x-gvfs-show,noauto</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">0</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">0</span></span>
+<span class="line"></span></code></pre>
+<h3>Enable Hibernate</h3>
+<p>Based on this excellent tutorial: https://forums.linuxmint.com/viewtopic.php?t=273202</p>
+<p>Lookup for your swap partition:</p>
+<pre><code>cat /etc/fstab
+</code></pre>
+<p>Backup your grub config:</p>
+<pre><code>sudo cp /etc/default/grub.bk /etc/default/grub
+</code></pre>
+<p>Edit your grub config:</p>
+<pre><code>GRUB_CMDLINE_LINUX_DEFAULT="quiet splash resume=UUID=putYourSwapUUIDhere"
+</code></pre>
+<p>Update your grup:</p>
+<pre><code>sudo update-grub
+</code></pre>
+<h3>Docker</h3>
+<p>Follow this guide if you are running Linux Mint:
+<a href="/posts/intall-docker-on-linux-mint/README.md">Install Docker on Linux Mint</a></p>
+<h4>Configure docker to run without <code>sudo</code>.</h4>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">groupadd</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">docker</span></span>
+<span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">usermod</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-aG</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">docker</span><span style="color: #B392F0"> $USER</span></span>
+<span class="line"><span style="color: #B392F0">newgrp </span><span style="color: #9DB1C5">docker</span><span style="color: #B392F0"> </span></span>
+<span class="line"><span style="color: #B392F0">docker </span><span style="color: #9DB1C5">run</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">hello-world</span></span>
+<span class="line"></span></code></pre>
+<h3>Ghostty</h3>
+<p>See <a href="https://ghostty.org/docs/install/binary#ubuntu">Ghostty Install</a></p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">/bin/bash </span><span style="color: #9DB1C5">-c</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;$(</span><span style="color: #B392F0">curl</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">-fsSL</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh</span><span style="color: #FFAB70">)&quot;</span></span>
+<span class="line"></span></code></pre>
+<h3>Bash Improvements</h3>
+<h4>Yazi</h4>
+<p>Download and instal <code>.deb</code> files: https://github.com/sxyazi/yazi/releases</p>
+<p>Install extra options:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">apt </span><span style="color: #9DB1C5">install</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">ffmpeg</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">7</span><span style="color: #9DB1C5">zip</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">jq</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">poppler-utils</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">fd-find</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">ripgrep</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">fzf</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">zoxide</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">imagemagick</span></span>
+<span class="line"></span></code></pre>
+<p>Create a keyboard shortcut:
+<em>.bashrc</em></p>
+<pre><code># Change dir with yazi bound to ctrl+e
+function cd-yazi() {
+        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+        command yazi "$@" --cwd-file="$tmp"
+        IFS= read -r -d '' cwd < "$tmp"
+        rm -f -- "$tmp"
+
+        # Insert at cursor position
+        local final_path=$cwd
+        local left=${READLINE_LINE:0:$READLINE_POINT}
+        local right=${READLINE_LINE:$READLINE_POINT}
+        READLINE_LINE="${left}${final_path}${right}"
+        READLINE_POINT=$(( ${#left} + ${#final_path} ))
+}
+bind -x '"\C-e": cd-yazi'
+</code></pre>
+<h3>Calendar</h3>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">apt</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">install</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">ncal</span></span>
+<span class="line"><span style="color: #B392F0">cp </span><span style="color: #9DB1C5">~/.bashrc</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">~/.bashrc.bk</span></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&quot;alias cal=&#39;ncal -C3&#39;&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">&gt;&gt;</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">~/.bashrc</span></span>
+<span class="line"></span></code></pre>
+<h4>Mix</h4>
+<p><em>.inputrc</em></p>
+<pre><code># Ctrl-Delete: delete next word
+"\e[3;5~": shell-kill-word
+
+# Ctrl-Backspace: delete previous word
+"\C-H": shell-backward-kill-word
+</code></pre>
+<h3>NodeJS via Node Version Manager</h3>
+<p>Github official page: https://github.com/nvm-sh/nvm</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">curl </span><span style="color: #9DB1C5">-o-</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh</span><span style="color: #B392F0"> </span><span style="color: #F97583">|</span><span style="color: #B392F0"> bash</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Need to exit and reopen the current terminal so the changes take effect</span></span>
+<span class="line"><span style="color: #B392F0">nvm </span><span style="color: #9DB1C5">install</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">node</span></span>
+<span class="line"><span style="color: #B392F0">node </span><span style="color: #9DB1C5">-v</span></span>
+<span class="line"><span style="color: #B392F0">npm </span><span style="color: #9DB1C5">-v</span></span>
+<span class="line"></span></code></pre>
+<h1>Desktop Tweaks</h1>
+<h2>Cinnamon</h2>
+<p>Turn off effects</p>
+<pre><code>Menu Button >> Preferences >> Effects
+Turn everything [off]
+
+Menu button >> Preferences >> System Settings >> General
+Disable compositing for full-screen windows [off]
+
+Menu button >> Preferences >> Window Tiling [off]
+</code></pre>
+<h3>Keyboard Shortcuts</h3>
+<p>Export shortcuts:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">dconf </span><span style="color: #9DB1C5">dump</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">/org/cinnamon/desktop/keybindings/</span><span style="color: #B392F0"> </span><span style="color: #F97583">&gt;</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">dconf-settings.conf</span></span>
+<span class="line"></span></code></pre>
+<p>Import shortcuts:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">dconf </span><span style="color: #9DB1C5">load</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">/org/cinnamon/desktop/keybindings/</span><span style="color: #B392F0"> </span><span style="color: #F97583">&lt;</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">dconf-settings.conf</span></span>
+<span class="line"></span></code></pre>
+<p>My <code>dconf-settings.conf</code></p>
+<pre><code class="language-conf">[/]
+looking-glass-keybinding=@as []
+
+[media-keys]
+terminal=['<Super>t']
+
+[wm]
+maximize=@as []
+maximize-horizontally=['<Super>h']
+maximize-vertically=['<Super>y']
+minimize=['<Super>comma']
+move-to-side-e=['<Super>Right']
+move-to-side-n=['<Super>Up']
+move-to-side-s=['<Super>Down']
+move-to-side-w=['<Super>Left']
+move-to-workspace-left=['<Super>u']
+move-to-workspace-right=['<Super>p']
+push-tile-down=@as []
+push-tile-left=@as []
+push-tile-right=@as []
+push-tile-up=@as []
+switch-monitor=['XF86Display']
+switch-to-workspace-left=['<Super>j']
+switch-to-workspace-right=['<Super>semicolon']
+toggle-maximized=['<Super>m']
+</code></pre>
+
+  </main>
+  <footer style="color:burlywood">
+    2026 - Rafael Santos
+  </footer>
+  <script type="text/javascript" src="/blog/events.js"></script>
+  <script type="text/javascript" src="/blog/copy-button.js"></script>
+</body>
+
+</html>

@@ -1,3 +1,10 @@
+---
+title: My Linux Mint Setup
+description: My Linux Mint setup for software development
+order: 2
+---
+
+
 # Linux Mint Tweaks
 
 Useful tweaks for linux distribution based on debian (ubuntu, mint, etc).

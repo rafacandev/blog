@@ -2,9 +2,19 @@
   color-scheme: light;
 }
 
-footer {
+header>nav {
   display: flex;
   justify-content: center;
+  gap: 4em;
+  align-items: center;
+}
+
+footer {
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
 }
 
 .copy-btn {

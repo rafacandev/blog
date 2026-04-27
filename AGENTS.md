@@ -95,3 +95,70 @@ Use timeout if you want to run a command for a short period of time and kill it 
 # Run 'npm run dev' for 10 seconds and force kill after subsenquent 5 seconds
 timeout -k 5s 10s npm run dev
 ```
+
+
+
+
+
+
+
+
+
+background-repeatno-repeat
+box-sizingborder-box
+colorrgb(194, 199, 208)
+color-schemedark
+displayflex
+font-familysystem-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, Helvetica, Arial, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+font-size19px
+font-weight400
+height98.4801px
+justify-contentspace-between
+line-height28.5px
+overflow-wrapbreak-word
+overflow-xvisible
+overflow-yvisible
+tab-size4
+text-renderingoptimizelegibility
+text-size-adjust100%
+text-underline-offset1.9px
+unicode-bidiisolate
+width211.094px
+-webkit-tap-highlight-colorrgba(0, 0, 0, 0)
+
+
+background-repeatno-repeat
+box-sizingborder-box
+colorrgb(194, 199, 208)
+color-schemedark
+displayflex
+font-familysystem-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, Helvetica, Arial, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+font-size19px
+font-weight400
+height98.4801px
+justify-contentspace-between
+line-height28.5px
+overflow-wrapbreak-word
+overflow-xvisible
+overflow-yvisible
+tab-size4
+text-renderingoptimizelegibility
+text-size-adjust100%
+text-underline-offset1.9px
+unicode-bidiisolate
+width950px
+-webkit-tap-highlight-colorrgba(0, 0, 0, 0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+

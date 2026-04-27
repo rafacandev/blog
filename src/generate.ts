@@ -195,7 +195,7 @@ function generateIndex(pages: { title?: string; description?: string; order?: nu
   fs.writeFileSync(path.join(OUTPUT_DIR, 'index.html'), html);
 }
 
-function copyStyles(): void {
+function copyResources(): void {
   const copy = (filename: string) => {
     const src = path.join(WEBSITE_DIR, filename);
     const dest = path.join(OUTPUT_DIR, filename);
@@ -203,6 +203,8 @@ function copyStyles(): void {
   }
   copy('styles.css')
   copy('pico.classless.orange.min.css')
+  copy('events.js')
+  copy('copy-button.js')
 }
 
 function clean(): void {
@@ -235,7 +237,7 @@ return (async () => {
     generateIndex(pages);
 
     console.log('Copying styles...');
-    copyStyles();
+    copyResources();
 
     console.log('Build complete!');
   })();

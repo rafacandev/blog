@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>fzf Explorer Function</title>
+  <link rel="stylesheet" href="/blog/styles.css">
+  <link rel="stylesheet" href="/blog/pico.classless.orange.min.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/blog/">Home</a>
+      <a href="https://github.com/rafacandev/blog">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Install fzf (if not already installed)</h2>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #6B737C"># Check if fzf is installed</span></span>
+<span class="line"><span style="color: #B392F0">which </span><span style="color: #9DB1C5">fzf</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># If not installed, install via your package manager:</span></span>
+<span class="line"><span style="color: #6B737C"># Ubuntu/Debian:</span></span>
+<span class="line"><span style="color: #B392F0">sudo </span><span style="color: #9DB1C5">apt</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">install</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">fzf</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Or install from GitHub for latest version:</span></span>
+<span class="line"><span style="color: #B392F0">git </span><span style="color: #9DB1C5">clone</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">--depth</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">1</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">https://github.com/junegunn/fzf.git</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">~/.fzf</span></span>
+<span class="line"><span style="color: #F97583">~</span><span style="color: #B392F0">/.fzf/install</span></span>
+<span class="line"></span></code></pre>
+<h2>Create a unified file/directory explorer function</h2>
+<p>Add this comprehensive function to your <code>~/.bashrc</code> file:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #6B737C"># Unified file and directory explorer with drill-down capability</span></span>
+<span class="line"><span style="color: #B392F0">_fzf_explore</span><span style="color: #BBBBBB">()</span><span style="color: #B392F0"> {</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F97583">local</span><span style="color: #B392F0"> current_dir</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;.&quot;</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F97583">local</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">selected</span></span>
+<span class="line"><span style="color: #B392F0">    </span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F97583">while</span><span style="color: #B392F0"> true; </span><span style="color: #F97583">do</span></span>
+<span class="line"><span style="color: #B392F0">        </span><span style="color: #6B737C"># List both files and directories with type indicators</span></span>
+<span class="line"><span style="color: #B392F0">        </span><span style="color: #F97583">local</span><span style="color: #B392F0"> items</span><span style="color: #F97583">=</span><span style="color: #FFAB70">$(</span><span style="color: #B392F0">find</span><span style="color: #FFAB70"> &quot;$current_dir&quot; </span><span style="color: #9DB1C5">-maxdepth</span><span style="color: #FFAB70"> </span><span style="color: #F8F8F8">1</span><span style="color: #FFAB70"> \( </span><span style="color: #9DB1C5">-type</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">f</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">-o</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">-type</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">d</span><span style="color: #FFAB70"> \) </span><span style="color: #F97583">2&gt;</span><span style="color: #9DB1C5">/dev/null</span><span style="color: #FFAB70"> </span><span style="color: #F97583">|</span><span style="color: #FFAB70"> \</span></span>
+<span class="line"><span style="color: #FFAB70">            </span><span style="color: #B392F0">sed</span><span style="color: #FFAB70"> &quot;s|^$current_dir/||&quot; </span><span style="color: #F97583">|</span><span style="color: #FFAB70"> \</span></span>
+<span class="line"><span style="color: #FFAB70">            </span><span style="color: #F97583">while</span><span style="color: #FFAB70"> IFS</span><span style="color: #F97583">=</span><span style="color: #FFAB70"> </span><span style="color: #B392F0">read</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">-r</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">item</span><span style="color: #FFAB70">; </span><span style="color: #F97583">do</span></span>
+<span class="line"><span style="color: #FFAB70">                </span><span style="color: #F97583">if</span><span style="color: #FFAB70"> [[ &quot;$item&quot; </span><span style="color: #F97583">==</span><span style="color: #FFAB70"> &quot;.&quot; ]]; </span><span style="color: #F97583">then</span></span>
+<span class="line"><span style="color: #FFAB70">                    </span><span style="color: #F97583">continue</span></span>
+<span class="line"><span style="color: #FFAB70">                </span><span style="color: #F97583">fi</span></span>
+<span class="line"><span style="color: #FFAB70">                full_path</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;$current_dir/$item&quot;</span></span>
+<span class="line"><span style="color: #FFAB70">                </span><span style="color: #F97583">if</span><span style="color: #FFAB70"> [[ </span><span style="color: #F97583">-d</span><span style="color: #FFAB70"> &quot;$full_path&quot; ]]; </span><span style="color: #F97583">then</span></span>
+<span class="line"><span style="color: #FFAB70">                    </span><span style="color: #B392F0">echo</span><span style="color: #FFAB70"> &quot;📁 $item/&quot;</span></span>
+<span class="line"><span style="color: #FFAB70">                </span><span style="color: #F97583">else</span></span>
+<span class="line"><span style="color: #FFAB70">                    </span><span style="color: #B392F0">echo</span><span style="color: #FFAB70"> &quot;📄 $item&quot;</span></span>
+<span class="line"><span style="color: #FFAB70">                </span><span style="color: #F97583">fi</span></span>
+<span class="line"><span style="color: #FFAB70">            </span><span style="color: #F97583">done</span><span style="color: #FFAB70"> </span><span style="color: #F97583">|</span><span style="color: #FFAB70"> </span><span style="color: #B392F0">sort</span><span style="color: #FFAB70">)</span></span>
+<span class="line"><span style="color: #B392F0">        </span></span>
+<span class="line"><span style="color: #B392F0">        </span><span style="color: #6B737C"># Add parent directory option if not in root</span></span>
+<span class="line"><span style="color: #B392F0">        </span><span style="color: #F97583">if</span><span style="color: #B392F0"> [[ </span><span style="color: #FFAB70">&quot;$current_dir&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">!=</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;.&quot;</span><span style="color: #B392F0"> ]]; </span><span style="color: #F97583">then</span></span>
+<span class="line"><span style="color: #B392F0">            items</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;📁 ../&quot;{{content}}#39;\n&#39;&quot;$items&quot;</span></span>
+<span class="line"><span style="color: #B392F0">        </span><span style="color: #F97583">fi</span></span>
+<span class="line"><span style="color: #B392F0">        </span></span>
+<span class="line"><span style="color: #B392F0">        </span><span style="color: #6B737C"># Show fzf with custom key bindings</span></span>
+<span class="line"><span style="color: #B392F0">        selected</span><span style="color: #F97583">=</span><span style="color: #FFAB70">$(</span><span style="color: #B392F0">echo</span><span style="color: #FFAB70"> &quot;$items&quot; </span><span style="color: #F97583">|</span><span style="color: #FFAB70"> </span><span style="color: #B392F0">fzf</span><span style="color: #FFAB70"> \</span></span>
+<span class="line"><span style="color: #FFAB70">            </span><span style="color: #9DB1C5">--height</span><span style="color: #FFAB70"> </span><span style="color: #F8F8F8">60</span><span style="color: #9DB1C5">%</span><span style="color: #FFAB70"> \</span></span>
+<span class="line"><span style="color: #FFAB70">            </span><span style="color: #9DB1C5">--reverse</span><span style="color: #FFAB70"> \</span></span>
+<span class="line"><span style="color: #FFAB70">            </span><span style="color: #9DB1C5">--border</span><span style="color: #FFAB70"> \</span></span>
+<span class="line"><span style="color: #FFAB70">            </span><span style="color: #9DB1C5">--header</span><span style="color: #FFAB70"> &quot;Navigate: ←/→ to drill down/up, Enter to select, Esc to cancel&quot; \</span></span>
+<span class="line"><span style="color: #FFAB70">            </span><span style="color: #9DB1C5">--bind</span><span style="color: #FFAB70"> &quot;right:execute(_fzf_drill_down \&quot;$current_dir\&quot; {})+abort&quot; \</span></span>
+<span class="line"><span style="color: #FFAB70">            </span><span style="color: #9DB1C5">--bind</span><span style="color: #FFAB70"> &quot;left:execute(_fzf_go_up \&quot;$current_dir\&quot;)+abort&quot; \</span></span>
+<span class="line"><span style="color: #FFAB70">            </span><span style="color: #9DB1C5">--expect</span><span style="color: #FFAB70"> &quot;right,left&quot; \</span></span>
+<span class="line"><span style="color: #FFAB70">            </span><span style="color: #9DB1C5">--layout</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">reverse-list</span><span style="color: #FFAB70"> \</span></span>
+<span class="line"><span style="color: #FFAB70">            </span><span style="color: #9DB1C5">--margin</span><span style="color: #FFAB70"> </span><span style="color: #F8F8F8">5</span><span style="color: #9DB1C5">%</span><span style="color: #FFAB70">)</span></span>
+<span class="line"><span style="color: #B392F0">        </span></span>
+<span class="line"><span style="color: #B392F0">        </span><span style="color: #6B737C"># Handle the result</span></span>
+<span class="line"><span style="color: #B392F0">        </span><span style="color: #F97583">if</span><span style="color: #B392F0"> [[ </span><span style="color: #F97583">-z</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;$selected&quot;</span><span style="color: #B392F0"> ]]; </span><span style="color: #F97583">then</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #6B737C"># User cancelled</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #F97583">return</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">1</span></span>
+<span class="line"><span style="color: #B392F0">        </span><span style="color: #F97583">fi</span></span>
+<span class="line"><span style="color: #B392F0">        </span></span>
+<span class="line"><span style="color: #B392F0">        </span><span style="color: #F97583">local</span><span style="color: #B392F0"> key</span><span style="color: #F97583">=</span><span style="color: #FFAB70">$(</span><span style="color: #B392F0">echo</span><span style="color: #FFAB70"> &quot;$selected&quot; </span><span style="color: #F97583">|</span><span style="color: #FFAB70"> </span><span style="color: #B392F0">head</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">-1</span><span style="color: #FFAB70">)</span></span>
+<span class="line"><span style="color: #B392F0">        </span><span style="color: #F97583">local</span><span style="color: #B392F0"> choice</span><span style="color: #F97583">=</span><span style="color: #FFAB70">$(</span><span style="color: #B392F0">echo</span><span style="color: #FFAB70"> &quot;$selected&quot; </span><span style="color: #F97583">|</span><span style="color: #FFAB70"> </span><span style="color: #B392F0">tail</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">-1</span><span style="color: #FFAB70">)</span></span>
+<span class="line"><span style="color: #B392F0">        </span></span>
+<span class="line"><span style="color: #B392F0">        </span><span style="color: #F97583">if</span><span style="color: #B392F0"> [[ </span><span style="color: #FFAB70">&quot;$key&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">==</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;right&quot;</span><span style="color: #B392F0"> ]]; </span><span style="color: #F97583">then</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #6B737C"># Drill down into directory</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #F97583">local</span><span style="color: #B392F0"> clean_choice</span><span style="color: #F97583">=</span><span style="color: #FFAB70">$(</span><span style="color: #B392F0">echo</span><span style="color: #FFAB70"> &quot;$choice&quot; </span><span style="color: #F97583">|</span><span style="color: #FFAB70"> </span><span style="color: #B392F0">sed</span><span style="color: #FFAB70"> &#39;s/^📁 //&#39; </span><span style="color: #F97583">|</span><span style="color: #FFAB70"> </span><span style="color: #B392F0">sed</span><span style="color: #FFAB70"> &#39;s/^📄 //&#39;)</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #F97583">if</span><span style="color: #B392F0"> [[ </span><span style="color: #FFAB70">&quot;$choice&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">=~</span><span style="color: #B392F0"> ^📁 ]]; </span><span style="color: #F97583">then</span></span>
+<span class="line"><span style="color: #B392F0">                </span><span style="color: #F97583">if</span><span style="color: #B392F0"> [[ </span><span style="color: #FFAB70">&quot;$clean_choice&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">==</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;../&quot;</span><span style="color: #B392F0"> ]]; </span><span style="color: #F97583">then</span></span>
+<span class="line"><span style="color: #B392F0">                    current_dir</span><span style="color: #F97583">=</span><span style="color: #FFAB70">$(</span><span style="color: #B392F0">dirname</span><span style="color: #FFAB70"> &quot;$current_dir&quot;)</span></span>
+<span class="line"><span style="color: #B392F0">                    [[ </span><span style="color: #FFAB70">&quot;$current_dir&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">==</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;.&quot;</span><span style="color: #B392F0"> ]] </span><span style="color: #F97583">||</span><span style="color: #B392F0"> current_dir</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;.&quot;</span></span>
+<span class="line"><span style="color: #B392F0">                </span><span style="color: #F97583">else</span></span>
+<span class="line"><span style="color: #B392F0">                    current_dir</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;$current_dir/${clean_choice</span><span style="color: #F97583">%/</span><span style="color: #FFAB70">}&quot;</span></span>
+<span class="line"><span style="color: #B392F0">                </span><span style="color: #F97583">fi</span></span>
+<span class="line"><span style="color: #B392F0">                </span><span style="color: #F97583">continue</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #F97583">fi</span></span>
+<span class="line"><span style="color: #B392F0">        </span><span style="color: #F97583">elif</span><span style="color: #B392F0"> [[ </span><span style="color: #FFAB70">&quot;$key&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">==</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;left&quot;</span><span style="color: #B392F0"> ]]; </span><span style="color: #F97583">then</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #6B737C"># Go up one directory</span></span>
+<span class="line"><span style="color: #B392F0">            current_dir</span><span style="color: #F97583">=</span><span style="color: #FFAB70">$(</span><span style="color: #B392F0">dirname</span><span style="color: #FFAB70"> &quot;$current_dir&quot;)</span></span>
+<span class="line"><span style="color: #B392F0">            [[ </span><span style="color: #FFAB70">&quot;$current_dir&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">==</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;.&quot;</span><span style="color: #B392F0"> ]] </span><span style="color: #F97583">||</span><span style="color: #B392F0"> current_dir</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;.&quot;</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #F97583">continue</span></span>
+<span class="line"><span style="color: #B392F0">        </span><span style="color: #F97583">else</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #6B737C"># Selection made - clean up the choice and insert</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #F97583">local</span><span style="color: #B392F0"> clean_choice</span><span style="color: #F97583">=</span><span style="color: #FFAB70">$(</span><span style="color: #B392F0">echo</span><span style="color: #FFAB70"> &quot;$choice&quot; </span><span style="color: #F97583">|</span><span style="color: #FFAB70"> </span><span style="color: #B392F0">sed</span><span style="color: #FFAB70"> &#39;s/^📁 //&#39; </span><span style="color: #F97583">|</span><span style="color: #FFAB70"> </span><span style="color: #B392F0">sed</span><span style="color: #FFAB70"> &#39;s/^📄 //&#39;)</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #F97583">local</span><span style="color: #B392F0"> final_path</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;$current_dir/$clean_choice&quot;</span></span>
+<span class="line"><span style="color: #B392F0">            </span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #6B737C"># Normalize path</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #F97583">if</span><span style="color: #B392F0"> [[ </span><span style="color: #FFAB70">&quot;$current_dir&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">==</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;.&quot;</span><span style="color: #B392F0"> ]]; </span><span style="color: #F97583">then</span></span>
+<span class="line"><span style="color: #B392F0">                final_path</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;$clean_choice&quot;</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #F97583">fi</span></span>
+<span class="line"><span style="color: #B392F0">            </span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #6B737C"># Remove trailing slash for directories</span></span>
+<span class="line"><span style="color: #B392F0">            final_path</span><span style="color: #F97583">=</span><span style="color: #B392F0">${final_path</span><span style="color: #F97583">%/</span><span style="color: #B392F0">}</span></span>
+<span class="line"><span style="color: #B392F0">            </span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #6B737C"># Smart quoting - add quotes if filename has spaces</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #F97583">if</span><span style="color: #B392F0"> [[ </span><span style="color: #FFAB70">&quot;$final_path&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">=~</span><span style="color: #B392F0"> [[:space:]] ]]; </span><span style="color: #F97583">then</span></span>
+<span class="line"><span style="color: #B392F0">                final_path</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;\&quot;$final_path\&quot;&quot;</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #F97583">fi</span></span>
+<span class="line"><span style="color: #B392F0">            </span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #6B737C"># Insert at cursor position</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #F97583">local</span><span style="color: #B392F0"> left</span><span style="color: #F97583">=</span><span style="color: #B392F0">${READLINE_LINE</span><span style="color: #F97583">:</span><span style="color: #B392F0">0</span><span style="color: #F97583">:</span><span style="color: #B392F0">$READLINE_POINT}</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #F97583">local</span><span style="color: #B392F0"> right</span><span style="color: #F97583">=</span><span style="color: #B392F0">${READLINE_LINE</span><span style="color: #F97583">:</span><span style="color: #B392F0">$READLINE_POINT}</span></span>
+<span class="line"><span style="color: #B392F0">            READLINE_LINE</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;${left}${final_path}${right}&quot;</span></span>
+<span class="line"><span style="color: #B392F0">            READLINE_POINT</span><span style="color: #F97583">=</span><span style="color: #9DB1C5">$(( ${</span><span style="color: #F97583">#</span><span style="color: #9DB1C5">left} </span><span style="color: #F97583">+</span><span style="color: #9DB1C5"> ${</span><span style="color: #F97583">#</span><span style="color: #9DB1C5">final_path} ))</span></span>
+<span class="line"><span style="color: #B392F0">            </span><span style="color: #F97583">break</span></span>
+<span class="line"><span style="color: #B392F0">        </span><span style="color: #F97583">fi</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F97583">done</span></span>
+<span class="line"><span style="color: #B392F0">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Bind Ctrl+E to trigger the unified explorer</span></span>
+<span class="line"><span style="color: #B392F0">bind </span><span style="color: #9DB1C5">-x</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&#39;&quot;\C-e&quot;: _fzf_explore&#39;</span></span>
+<span class="line"></span></code></pre>
+<h2>Apply the configuration</h2>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #6B737C"># Reload your bash configuration</span></span>
+<span class="line"><span style="color: #B392F0">source </span><span style="color: #9DB1C5">~/.bashrc</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Or restart your terminal</span></span>
+<span class="line"></span></code></pre>
+<h2>Usage Examples</h2>
+<p>Now you can use the unified explorer:</p>
+<ol>
+<li><strong>Type</strong>: <code>cat </code> → <strong>Press Ctrl+E</strong> → Navigate with arrow keys → <strong>Press Enter</strong> to select file</li>
+<li><strong>Type</strong>: <code>cp </code> → <strong>Press Ctrl+E</strong> → Navigate to source → <strong>Press Enter</strong> → Type space → <strong>Press Ctrl+E</strong> → Navigate to destination</li>
+<li><strong>Navigation</strong>:
+<ul>
+<li><strong>Up/Down</strong>: Go up and down the list</li>
+<li><strong>Right Arrow</strong>: Enter/drill down into a directory</li>
+<li><strong>Left Arrow</strong>: Go up to parent directory</li>
+<li><strong>Enter</strong>: Select current item (file or directory)</li>
+<li><strong>Esc</strong>: Cancel selection</li>
+<li><strong>Visual indicators</strong>: 📁 for directories, 📄 for files</li>
+</ul>
+</li>
+</ol>
+
+  </main>
+  <footer style="color:burlywood">
+    2026 - Rafael Santos
+  </footer>
+  <script type="text/javascript" src="/blog/events.js"></script>
+  <script type="text/javascript" src="/blog/copy-button.js"></script>
+</body>
+
+</html>

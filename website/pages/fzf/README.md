@@ -1,3 +1,10 @@
+---
+title: fzf Explorer Function
+describe: Create a unified explorer function using fzf. So, you can press a short cut to find and enter a directory path to any bash session
+order: 70
+---
+
+
 ## Install fzf (if not already installed)
 
 ```bash

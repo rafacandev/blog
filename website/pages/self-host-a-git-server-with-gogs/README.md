@@ -1,3 +1,9 @@
+---
+title: Self Host a Git Server With Gogs
+description: Create a private git server with Docker and Gogs
+order: 70
+---
+
 Self Hosted Git Server With Gogs
 --------------------------------
 

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Git Rebase Tutorial</title>
+  <link rel="stylesheet" href="/blog/styles.css">
+  <link rel="stylesheet" href="/blog/pico.classless.orange.min.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/blog/">Home</a>
+      <a href="https://github.com/rafacandev/blog">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Git Rebase Tutorial</h2>
+<p>I find Git rebase to be very different from Git merge. So, I decided to create a step-by-step to practice and illustrate how it works.</p>
+<p><em>Note</em>: The <code>#:</code> represents my comments whereas <code>#&gt;</code> indicates the console output.</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"><span style="color: #6B737C">#: Let&#39;s create our local repository</span></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: Creates a directory named git-rebase-tutorial</span></span>
+<span class="line"><span style="color: #B392F0">mkdir </span><span style="color: #9DB1C5">git-rebase-tutorial</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: Changes to directory git-rebase-tutorial</span></span>
+<span class="line"><span style="color: #B392F0">cd </span><span style="color: #9DB1C5">git-rebase-tutorial/</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: Initilizes a local git repository</span></span>
+<span class="line"><span style="color: #B392F0">git </span><span style="color: #9DB1C5">init</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Initialized empty Git repository in /home/lukard/dev/git-rebase-tutorial/.git/</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"><span style="color: #6B737C">#: Let&#39;s create one file and commit the changes</span></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: Appends the text &quot;m1&quot; to tutorial-file1.txt</span></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&quot;m1&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">&gt;&gt;</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">tutorial-file1.txt</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: Adds the file to git index</span></span>
+<span class="line"><span style="color: #B392F0">git </span><span style="color: #9DB1C5">add</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">tutorial-file1.txt</span><span style="color: #B392F0"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: Commits all changes with the message &quot;Developed m1&quot;</span></span>
+<span class="line"><span style="color: #B392F0">git </span><span style="color: #9DB1C5">commit</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-a</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-m</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;Developed m1&quot;</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; [master (root-commit) 672be4a] Developed m1</span></span>
+<span class="line"><span style="color: #6B737C">#&gt;  1 file changed, 1 insertion(+)</span></span>
+<span class="line"><span style="color: #6B737C">#&gt;  create mode 100644 tutorial-file1.txt</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"><span style="color: #6B737C">#: Let&#39;s create a new branch, create one file and commit the changes</span></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: Creates a new branch and moves to it</span></span>
+<span class="line"><span style="color: #B392F0">git </span><span style="color: #9DB1C5">checkout</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-b</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">tutorial-branch</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Switched to a new branch &#39;tutorial-branch&#39;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: Appends the text &quot;b1&quot; to tutorial-file2.txt</span></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&quot;b1&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">&gt;&gt;</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">tutorial-file2.txt</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">git </span><span style="color: #9DB1C5">add</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">tutorial-file2.txt</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">git </span><span style="color: #9DB1C5">commit</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-a</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-m</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;Developed b1&quot;</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; [tutorial-branch 5ea6cf3] Developed b1</span></span>
+<span class="line"><span style="color: #6B737C">#&gt;  1 file changed, 1 insertion(+)</span></span>
+<span class="line"><span style="color: #6B737C">#&gt;  create mode 100644 tutorial-file2.txt</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&quot;b2&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">&gt;&gt;</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">tutorial-file2.txt</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">git </span><span style="color: #9DB1C5">commit</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-a</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-m</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;Developed b2&quot;</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"><span style="color: #6B737C">#: Now, let&#39;s go back to master and make other changes</span></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">git </span><span style="color: #9DB1C5">checkout</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">master</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Switched to branch &#39;master&#39;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&quot;m2&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">&gt;&gt;</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">tutorial-file1.txt</span><span style="color: #B392F0"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">git </span><span style="color: #9DB1C5">commit</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-a</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-m</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;Developed m2&quot;</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; [master e899673] Developed m2</span></span>
+<span class="line"><span style="color: #6B737C">#&gt;  1 file changed, 1 insertion(+)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">git </span><span style="color: #9DB1C5">checkout</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">tutorial-branch</span><span style="color: #B392F0"> </span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Switched to branch &#39;tutorial-branch&#39;</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"><span style="color: #6B737C">#: Finally, let&#39;s rebase the content from master into the tutorial-branch</span></span>
+<span class="line"><span style="color: #6B737C">#: During the process we also wanto to squash commits b1 and b2</span></span>
+<span class="line"><span style="color: #6B737C">#: We want our branch to look like: m1, m2, [b1 &amp; b2]</span></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: Shows the log from master</span></span>
+<span class="line"><span style="color: #B392F0">git </span><span style="color: #9DB1C5">log</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">master</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">--pretty=format:</span><span style="color: #FFAB70">&quot;%h - %ar - %s&quot;</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; e899673 - 80 seconds ago - Developed m2</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; 672be4a - 4 minutes ago - Developed m1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: Shows the log from tutorial-branch</span></span>
+<span class="line"><span style="color: #B392F0">git </span><span style="color: #9DB1C5">log</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">tutorial-branch</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">--pretty=format:</span><span style="color: #FFAB70">&quot;%h - %ar - %s&quot;</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; 0d3eaf0 - 2 minutes ago - Developed b2</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; 5ea6cf3 - 3 minutes ago - Developed b1</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; 672be4a - 4 minutes ago - Developed m1</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: Rebases the content from master into tutorial-branch</span></span>
+<span class="line"><span style="color: #B392F0">git </span><span style="color: #9DB1C5">rebase</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-i</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">master</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">tutorial-branch</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"><span style="color: #6B737C">#: Git will prompt you with a text editor.</span></span>
+<span class="line"><span style="color: #6B737C">#: Here you can squash b1 and b2 together</span></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#&gt; pick 5ea6cf3 Developed b1</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; squash 0d3eaf0 Developed b2</span></span>
+<span class="line"><span style="color: #6B737C">#&gt;</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; # Rebase e899673..0d3eaf0 onto e899673</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; #</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; # Commands:</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; #  p, pick = use commit</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; #  r, reword = use commit, but edit the commit message</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; #  e, edit = use commit, but stop for amending</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; #  s, squash = use commit, but meld into previous commit</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; #  f, fixup = like &quot;squash&quot;, but discard this commit&#39;s log message</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; #  x, exec = run command (the rest of the line) using shell</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; #</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; # These lines can be re-ordered; they are executed from top to bottom.</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; #</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; # If you remove a line here THAT COMMIT WILL BE LOST.</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; #</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; # However, if you remove everything, the rebase will be aborted.</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; #</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; # Note that empty commits are commented out</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"><span style="color: #6B737C">#: Git will prompt you with a text editor.</span></span>
+<span class="line"><span style="color: #6B737C">#: Here you can change the resulting commit message.</span></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#&gt; # This is a combination of 2 commits.</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; # The first commit&#39;s message is:</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; </span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Developed b1</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; </span></span>
+<span class="line"><span style="color: #6B737C">#&gt; # This is the 2nd commit message:</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; </span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Developed b2</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; </span></span>
+<span class="line"><span style="color: #6B737C">#&gt; # Please enter the commit message for your changes. Lines starting</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; # with &#39;#&#39; will be ignored, and an empty message aborts the commit.</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; # rebase in progress; onto e899673</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; # You are currently editing a commit while rebasing branch &#39;tutorial-branch&#39; on &#39;e899673&#39;.</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; #</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; # Changes to be committed:</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; #       new file:   tutorial-file2.txt</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; #</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"><span style="color: #6B737C">#: Git will also dispaly the end result of the rebase.</span></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#&gt; [detached HEAD cfdd39d] Developed b1</span></span>
+<span class="line"><span style="color: #6B737C">#&gt;  1 file changed, 2 insertions(+)</span></span>
+<span class="line"><span style="color: #6B737C">#&gt;  create mode 100644 tutorial-file2.txt</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Successfully rebased and updated refs/heads/tutorial-branch.</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"><span style="color: #6B737C">#: If we check the logs, we can see that we achieved: m1, m2, [b1 &amp; b2]</span></span>
+<span class="line"><span style="color: #6B737C">#: =========================</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">git </span><span style="color: #9DB1C5">log</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; commit cfdd39dd120f9b1c2ce72ea6d43302f3b0aa3ef7</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Author: Rafa &lt;rafa&gt;</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Date:   Sat Apr 2 19:29:20 2016 -0400</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; </span></span>
+<span class="line"><span style="color: #6B737C">#&gt;     Developed b1</span></span>
+<span class="line"><span style="color: #6B737C">#&gt;     </span></span>
+<span class="line"><span style="color: #6B737C">#&gt;     Developed b2</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; </span></span>
+<span class="line"><span style="color: #6B737C">#&gt; commit e899673500abfc515b4c3c0cb3e4e8965c98087e</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Author: Rafa &lt;rafa&gt;</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Date:   Sat Apr 2 19:30:51 2016 -0400</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; </span></span>
+<span class="line"><span style="color: #6B737C">#&gt;     Developed m2</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; </span></span>
+<span class="line"><span style="color: #6B737C">#&gt; commit 672be4a2b10d93503f3ad0d2e08d1b2069ed1c7c</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Author: Rafa &lt;rafa&gt;</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Date:   Sat Apr 2 19:28:20 2016 -0400</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; </span></span>
+<span class="line"><span style="color: #6B737C">#&gt;     Developed m1</span></span>
+<span class="line"></span></code></pre>
+
+  </main>
+  <footer style="color:burlywood">
+    2026 - Rafael Santos
+  </footer>
+  <script type="text/javascript" src="/blog/events.js"></script>
+  <script type="text/javascript" src="/blog/copy-button.js"></script>
+</body>
+
+</html>

@@ -1,3 +1,9 @@
+---
+title: Git Rebase Tutorial
+describe: A tutorial to explain how git rebase works
+order: 70
+---
+
 Git Rebase Tutorial
 -------------------
 I find Git rebase to be very different from Git merge. So, I decided to create a step-by-step to practice and illustrate how it works.

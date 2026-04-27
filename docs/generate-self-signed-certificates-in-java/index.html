@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Generate Self Signed Certificates in Java</title>
+  <link rel="stylesheet" href="/blog/styles.css">
+  <link rel="stylesheet" href="/blog/pico.classless.orange.min.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/blog/">Home</a>
+      <a href="https://github.com/rafacandev/blog">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Generate Self Signed Certificates (PKCS 12 Format) in Java</h2>
+<p>Generate Self Signed certificates in PKCS 12 format in Java might not be trivial.
+Here are the steps. Recommended read: <a href="http://www.littlebigextra.com/how-to-enable-communication-over-https-between-2-spring-boot-applications-using-self-signed-certificate">How to enable communication over https between 2 spring boot applications using self signed certificate</a></p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">Generating </span><span style="color: #9DB1C5">a</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">self-signed</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">certificate</span></span>
+<span class="line"><span style="color: #6B737C"># Generate Public and Private keys</span></span>
+<span class="line"><span style="color: #B392F0">openssl </span><span style="color: #9DB1C5">req</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-x509</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-newkey</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">rsa:4096</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-keyout</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">my-keyout.pem</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-out</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">my-selfsigned.pem</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-days</span><span style="color: #B392F0"> </span><span style="color: #F8F8F8">365</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-subj</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;/C=CA/ST=Ontario/L=Toronto/O=RBC/OU=RBC/CN=localhost&quot;</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Enter PEM pass phrase: myPass</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Check if the generated PEM file is correct</span></span>
+<span class="line"><span style="color: #B392F0">openssl </span><span style="color: #9DB1C5">x509</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-in</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">my-selfsigned.pem</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-text</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-noout</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Combine your key and certificate in a PKCS#12 (P12) bundle</span></span>
+<span class="line"><span style="color: #B392F0">openssl </span><span style="color: #9DB1C5">pkcs12</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-export</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-keypbe</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">PBE-SHA1-3DES</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-certpbe</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">PBE-SHA1-3DES</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-export</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-in</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">my-selfsigned.pem</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-inkey</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">my-keyout.pem</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-name</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">selfsigned</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-out</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">my-keystore.p12</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Enter pass phrase for my-keyout.pem: myPass</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Enter Export Password: myPass</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Verifying - Enter Export Password: myPass</span></span>
+<span class="line"><span style="color: #6B737C"># Create a JKS from self-signed PEM</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">keytool </span><span style="color: #9DB1C5">-importkeystore</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-srcstoretype</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">PKCS12</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-srckeystore</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">my-keystore.p12</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-destkeystore</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">my-keystore.jks</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-deststoretype</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">pkcs12</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Enter destination keystore password: myPass  </span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Re-enter new password: myPass </span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Enter source keystore password: myPass </span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Entry for alias selfsigned successfully imported.</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Import command completed:  1 entries successfully imported, 0 entries failed or cancelled</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># To generate certificate from keystore(.jks file) </span></span>
+<span class="line"><span style="color: #B392F0">keytool </span><span style="color: #9DB1C5">-export</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-keystore</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">my-keystore.jks</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-alias</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">selfsigned</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-file</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">my-selfsigned.crt</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Enter keystore password: myPass  </span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Certificate stored in file &lt;my-selfsigned.crt&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6B737C"># Import the certificate to cacerts</span></span>
+<span class="line"><span style="color: #B392F0">keytool </span><span style="color: #9DB1C5">-importcert</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-file</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">my-selfsigned.crt</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-alias</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">selfsigned</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-keystore</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/jre/lib/security/cacerts</span></span>
+<span class="line"><span style="color: #6B737C">#### JDK default password for cacerts keystore is &#39;changeit&#39;</span></span>
+<span class="line"><span style="color: #6B737C">#&gt; Enter keystore password: changeit</span></span>
+<span class="line"></span></code></pre>
+
+  </main>
+  <footer style="color:burlywood">
+    2026 - Rafael Santos
+  </footer>
+  <script type="text/javascript" src="/blog/events.js"></script>
+  <script type="text/javascript" src="/blog/copy-button.js"></script>
+</body>
+
+</html>

@@ -1,3 +1,9 @@
+---
+title: Generate Self Signed Certificates in Java
+description: Steps to generate a self signed certificates in PKCS 12 format in Java
+order: 80
+---
+
 Generate Self Signed Certificates (PKCS 12 Format) in Java
 ----------------------------------------------------------
 Generate Self Signed certificates in PKCS 12 format in Java might not be trivial.

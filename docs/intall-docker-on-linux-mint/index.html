@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Install Docker on Linux Mint</title>
+  <link rel="stylesheet" href="/blog/styles.css">
+  <link rel="stylesheet" href="/blog/pico.classless.orange.min.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/blog/">Home</a>
+      <a href="https://github.com/rafacandev/blog">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Install Docker on Linux Mint</h2>
+<p>If you are trying to install Docker on your Linux Mint distribution you will notice that the official instructions will not work.</p>
+<p>The official instructions are not going to work correctly because Mint won't return the expected result when using <code>$(lsb_release -cs)</code> it should read the <code>UBUNTU_CODENAME from /etc/os-release</code> instead.</p>
+<p>Hence I decided to create a quick shell script to facilitate the process.</p>
+<p><code>install-docker.sh</code></p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #6B737C">#!/bin/bash</span></span>
+<span class="line"><span style="color: #B392F0">UBUNTU_CODENAME</span><span style="color: #F97583">=</span><span style="color: #FFAB70">$(</span><span style="color: #B392F0">grep</span><span style="color: #FFAB70"> &quot;UBUNTU_CODENAME&quot; </span><span style="color: #9DB1C5">/etc/os-release</span><span style="color: #FFAB70"> </span><span style="color: #F97583">|</span><span style="color: #FFAB70"> </span><span style="color: #B392F0">awk</span><span style="color: #FFAB70"> </span><span style="color: #9DB1C5">-F</span><span style="color: #FFAB70">&#39;=&#39; &#39;{print $2}&#39;)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&quot;Trying to install docker. See official website for more details.&quot;</span></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&quot;https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-using-the-repository&quot;</span></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&quot;Found UBUNTU_CODENAME=$UBUNTU_CODENAME&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&quot;Installing dependencies&quot;</span></span>
+<span class="line"><span style="color: #B392F0">apt-get </span><span style="color: #9DB1C5">install</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">linux-image-generic</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">linux-image-extra-virtual</span></span>
+<span class="line"><span style="color: #B392F0">apt-get </span><span style="color: #9DB1C5">install</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">apt-transport-https</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">ca-certificates</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">curl</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">software-properties-common</span></span>
+<span class="line"><span style="color: #B392F0">curl </span><span style="color: #9DB1C5">-fsSL</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">https://download.docker.com/linux/ubuntu/gpg</span><span style="color: #B392F0"> </span><span style="color: #F97583">|</span><span style="color: #B392F0"> sudo </span><span style="color: #9DB1C5">apt-key</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">add</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">-</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&quot;Installing repository&quot;</span></span>
+<span class="line"><span style="color: #6B737C"># Chose which repository matches your distribution. Default is arch=amd64</span></span>
+<span class="line"><span style="color: #B392F0">add-apt-repository </span><span style="color: #FFAB70">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $UBUNTU_CODENAME stable&quot;</span></span>
+<span class="line"><span style="color: #6B737C"># add-apt-repository &quot;deb [arch=armhf] https://download.docker.com/linux/ubuntu $UBUNTU_CODENAME -cs stable&quot;</span></span>
+<span class="line"><span style="color: #6B737C"># add-apt-repository &quot;deb [arch=s390x] https://download.docker.com/linux/ubuntu$ $UBUNTU_CODENAME stable&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&quot;Updating repository&quot;</span></span>
+<span class="line"><span style="color: #B392F0">apt-get </span><span style="color: #9DB1C5">update</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">echo </span><span style="color: #FFAB70">&quot;Installing docker&quot;</span></span>
+<span class="line"><span style="color: #B392F0">apt-get </span><span style="color: #9DB1C5">install</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">docker-ce</span></span>
+<span class="line"></span></code></pre>
+
+  </main>
+  <footer style="color:burlywood">
+    2026 - Rafael Santos
+  </footer>
+  <script type="text/javascript" src="/blog/events.js"></script>
+  <script type="text/javascript" src="/blog/copy-button.js"></script>
+</body>
+
+</html>

@@ -1,3 +1,9 @@
+---
+title: Install Docker on Linux Mint
+description: Guide to install Docker on Linux Mint
+order: 20
+---
+
 Install Docker on Linux Mint
 ----------------------------
 

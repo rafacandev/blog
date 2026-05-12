@@ -148,7 +148,7 @@ See [Ghostty Install](https://ghostty.org/docs/install/binary#ubuntu)
 ### Bash Improvements
 
 #### Yazi
-Download and instal `.deb` files: https://github.com/sxyazi/yazi/releases 
+Download and install the latest `.deb` file on their [Github releases page.](https://github.com/sxyazi/yazi/releases)
 
 Install extra options:
 ```bash

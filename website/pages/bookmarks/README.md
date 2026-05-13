@@ -29,6 +29,10 @@ A simple agents orchestration. Excellent staring point when coding with multiple
 
 [Heroicons - Icons on MIT license](https://heroicons.com/)
 
+[Compart - Unicode Characters](https://www.compart.com/en/unicode)
+
+[Huge list of unicode symbols](https://www.vertex42.com/ExcelTips/unicode-symbols.html)
+
 ## UI
 
 [daisyUI](https://daisyui.com/) - Tailwind CSS plugin. It provides useful component classes to help you write less code and build faster.

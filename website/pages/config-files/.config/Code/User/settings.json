@@ -1,0 +1,16 @@
+{
+    "workbench.startupEditor": "none",
+    "editor.minimap.enabled": false,
+    "git.openRepositoryInParentFolders": "never",
+    "editor.stickyScroll.enabled": false,
+    "editor.stickyScroll.scrollWithEditor": false,
+    "workbench.tree.enableStickyScroll": false,
+    "editor.stickyTabStops": true,
+    "terminal.integrated.stickyScroll.enabled": false,
+    "extensions.ignoreRecommendations": true,
+    "update.mode": "none",
+    "chat.agent.enabled": false,
+    "chat.disableAIFeatures": true,
+    "terminal.integrated.initialHint": false,
+    "files.autoSave": "onFocusChange"
+}

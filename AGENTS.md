@@ -80,14 +80,11 @@ Keep YAML front matter optional. If present, extract:
 - `description`: Page title
 - `order`: Order in the index page
 
-## Scripts
-
+## Development
 - `npm run generate` - runs the build pipeline (`src/generate.ts`) and saves the static website in the `docs/` dir
   - `--dev` - imports events script for auto-reload
 - `npm run dev` - runs generate then starts dev server (`src/dev-server.ts`):
   - Opens at http://localhost:3000/blog/
-
-## Run and Kill
 
 Use timeout if you want to run a command for a short period of time and kill it imediately after. Useful when trying to `npm run dev` for a quick test.
 
@@ -96,69 +93,17 @@ Use timeout if you want to run a command for a short period of time and kill it 
 timeout -k 5s 10s npm run dev
 ```
 
+## How to Add a New Page
 
-
-
-
-
-
-
-
-background-repeatno-repeat
-box-sizingborder-box
-colorrgb(194, 199, 208)
-color-schemedark
-displayflex
-font-familysystem-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, Helvetica, Arial, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
-font-size19px
-font-weight400
-height98.4801px
-justify-contentspace-between
-line-height28.5px
-overflow-wrapbreak-word
-overflow-xvisible
-overflow-yvisible
-tab-size4
-text-renderingoptimizelegibility
-text-size-adjust100%
-text-underline-offset1.9px
-unicode-bidiisolate
-width211.094px
--webkit-tap-highlight-colorrgba(0, 0, 0, 0)
-
-
-background-repeatno-repeat
-box-sizingborder-box
-colorrgb(194, 199, 208)
-color-schemedark
-displayflex
-font-familysystem-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, Helvetica, Arial, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
-font-size19px
-font-weight400
-height98.4801px
-justify-contentspace-between
-line-height28.5px
-overflow-wrapbreak-word
-overflow-xvisible
-overflow-yvisible
-tab-size4
-text-renderingoptimizelegibility
-text-size-adjust100%
-text-underline-offset1.9px
-unicode-bidiisolate
-width950px
--webkit-tap-highlight-colorrgba(0, 0, 0, 0)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+1. Create a subdirectory under `website/pages/{page-name}/`
+2. Add a `README.md` with optional YAML front matter:
+   ```markdown
+   ---
+   title: Page Title
+   description: Short description for index listing
+   order: 100
+   ---
+   ```
+   - Lower `order` values appear first in the index
+   - `order` is optional; pages without it sort last
+3. Run `npm run generate` to rebuild `/docs/`

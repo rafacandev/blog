@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Get a Facebook Page Access Token with cURL</title>
+  <link rel="stylesheet" href="/blog/styles.css">
+  <link rel="stylesheet" href="/blog/pico.classless.orange.min.css">
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="/blog/">Home</a>
+      <div>
+        <div style="font-family: monospace; font-size: small; color:darkorange; position: relative; cursor:default;">
+          <div>┌──────────── Rafael Santos ─────────────┐</div>
+          <div>│​<span style="color: darkslategray;">1:</span>                                      │</div>
+          <div>│<span style="color: darkslategray;">2:</span>   myArr                              │</div>
+          <div>│<span style="color: darkslategray;">3:</span>    .sort(priority)                   │</div>
+          <div>│<span style="color: darkslategray;">4:</span>    .groupBy(topic)                   │</div>
+          <div>│<span style="color: darkslategray;">5:</span>                                      │</div>
+          <div>└─
+            <span style="background-color: darkorange; color: black;"> branch:master </span>
+            ───
+            <span style="background-color: darkslateblue; color: darkorange;"> status:coding </span>
+            ─┘
+          </div>
+          <img src="/blog/avatar.gif" style="width: 80px; position: absolute; bottom: .5rem; left: 59%; z-index: -1;" />
+        </div>
+      </div>
+      <a href="https://github.com/rafacandev/blog">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Getting a Facebook Page Access Token with cURL</h1>
+<p>This guide describes how to obtain a <strong>Facebook Page Access Token</strong> for a Page you manage. The token can then be used by scripts (for example, Node.js automation) to publish posts and manage Page content through the Facebook Graph API.</p>
+<h2>Prerequisites</h2>
+<p>You need:</p>
+<ul>
+<li>A Meta Developer App</li>
+<li>A Facebook Page where your personal Facebook account has <strong>Full Control</strong></li>
+<li>The following environment variables:</li>
+</ul>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #F97583">export</span><span style="color: #B392F0"> FACEBOOK_APP_ID</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;your_app_id&quot;</span></span>
+<span class="line"><span style="color: #F97583">export</span><span style="color: #B392F0"> FACEBOOK_APP_SECRET</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;your_app_secret&quot;</span></span>
+<span class="line"><span style="color: #F97583">export</span><span style="color: #B392F0"> FACEBOOK_USER_TOKEN</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;your_user_access_token&quot;</span></span>
+<span class="line"></span></code></pre>
+<p>The User Access Token must include these permissions:</p>
+<ul>
+<li><code>pages_show_list</code></li>
+<li><code>pages_read_engagement</code></li>
+<li><code>pages_manage_posts</code></li>
+</ul>
+<hr>
+<h2>1. Verify the User Access Token</h2>
+<p>Confirm that the token belongs to your Facebook user:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">curl </span><span style="color: #9DB1C5">-s</span><span style="color: #B392F0"> \</span></span>
+<span class="line"><span style="color: #FFAB70">&quot;https://graph.facebook.com/v25.0/me?access_token=$FACEBOOK_USER_TOKEN&quot;</span></span>
+<span class="line"></span></code></pre>
+<p>Expected response:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">{</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #F8F8F8">&quot;name&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;Your Name&quot;</span><span style="color: #BBBBBB">,</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #F8F8F8">&quot;id&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;your_user_id&quot;</span></span>
+<span class="line"><span style="color: #B392F0">}</span></span>
+<span class="line"></span></code></pre>
+<hr>
+<h2>2. Verify Token Permissions</h2>
+<p>Check that the required permissions were granted:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">curl </span><span style="color: #9DB1C5">-s</span><span style="color: #B392F0"> \</span></span>
+<span class="line"><span style="color: #FFAB70">&quot;https://graph.facebook.com/v25.0/me/permissions?access_token=$FACEBOOK_USER_TOKEN&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">|</span><span style="color: #B392F0"> jq</span></span>
+<span class="line"></span></code></pre>
+<p>Expected:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">{</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #F8F8F8">&quot;permission&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;pages_manage_posts&quot;</span><span style="color: #BBBBBB">,</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #F8F8F8">&quot;status&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;granted&quot;</span></span>
+<span class="line"><span style="color: #B392F0">}</span></span>
+<span class="line"></span></code></pre>
+<p>Also verify:</p>
+<ul>
+<li><code>pages_show_list</code></li>
+<li><code>pages_read_engagement</code></li>
+</ul>
+<hr>
+<h2>3. Debug the Token</h2>
+<p>Verify that the token belongs to your Meta App:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">curl </span><span style="color: #9DB1C5">-s</span><span style="color: #B392F0"> \</span></span>
+<span class="line"><span style="color: #FFAB70">&quot;https://graph.facebook.com/debug_token?input_token=$FACEBOOK_USER_TOKEN&amp;access_token=${FACEBOOK_APP_ID}|${FACEBOOK_APP_SECRET}&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">|</span><span style="color: #B392F0"> jq</span></span>
+<span class="line"></span></code></pre>
+<p>Expected:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">{</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #F8F8F8">&quot;data&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> {</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">&quot;app_id&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;your_app_id&quot;</span><span style="color: #BBBBBB">,</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">&quot;type&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;USER&quot;</span><span style="color: #BBBBBB">,</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">&quot;is_valid&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #79B8FF">true</span></span>
+<span class="line"><span style="color: #B392F0">  }</span></span>
+<span class="line"><span style="color: #B392F0">}</span></span>
+<span class="line"></span></code></pre>
+<hr>
+<h2>4. Get Your Page ID</h2>
+<p>The debug response contains the Pages available to the token:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #FFAB70">&quot;granular_scopes&quot;</span><span style="color: #B392F0">: [</span></span>
+<span class="line"><span style="color: #B392F0">  {</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">&quot;scope&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;pages_manage_posts&quot;</span><span style="color: #BBBBBB">,</span></span>
+<span class="line"><span style="color: #B392F0">    </span><span style="color: #F8F8F8">&quot;target_ids&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> [</span></span>
+<span class="line"><span style="color: #B392F0">      </span><span style="color: #FFAB70">&quot;123456789&quot;</span></span>
+<span class="line"><span style="color: #B392F0">    ]</span></span>
+<span class="line"><span style="color: #B392F0">  }</span></span>
+<span class="line"><span style="color: #B392F0">]</span></span>
+<span class="line"></span></code></pre>
+<p>Set:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #F97583">export</span><span style="color: #B392F0"> FACEBOOK_PAGE_ID</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;123456789&quot;</span></span>
+<span class="line"></span></code></pre>
+<hr>
+<h2>5. Verify Page Access</h2>
+<p>Confirm that Graph API can access the Page:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">curl </span><span style="color: #9DB1C5">-s</span><span style="color: #B392F0"> \</span></span>
+<span class="line"><span style="color: #FFAB70">&quot;https://graph.facebook.com/v25.0/$FACEBOOK_PAGE_ID?fields=id,name&amp;access_token=$FACEBOOK_USER_TOKEN&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">|</span><span style="color: #B392F0"> jq</span></span>
+<span class="line"></span></code></pre>
+<p>Expected:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">{</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #F8F8F8">&quot;id&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;123456789&quot;</span><span style="color: #BBBBBB">,</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #F8F8F8">&quot;name&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;My Business Page&quot;</span></span>
+<span class="line"><span style="color: #B392F0">}</span></span>
+<span class="line"></span></code></pre>
+<hr>
+<h2>6. Get the Page Access Token</h2>
+<p>Request the Page Access Token:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">curl </span><span style="color: #9DB1C5">-s</span><span style="color: #B392F0"> \</span></span>
+<span class="line"><span style="color: #FFAB70">&quot;https://graph.facebook.com/v25.0/$FACEBOOK_PAGE_ID?fields=name,access_token&amp;access_token=$FACEBOOK_USER_TOKEN&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">|</span><span style="color: #B392F0"> jq</span></span>
+<span class="line"></span></code></pre>
+<p>Expected:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">{</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #F8F8F8">&quot;name&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;My Business Page&quot;</span><span style="color: #BBBBBB">,</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #F8F8F8">&quot;access_token&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;EAAB...&quot;</span></span>
+<span class="line"><span style="color: #B392F0">}</span></span>
+<span class="line"></span></code></pre>
+<p>Save it:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #F97583">export</span><span style="color: #B392F0"> FACEBOOK_PAGE_ACCESS_TOKEN</span><span style="color: #F97583">=</span><span style="color: #FFAB70">&quot;EAAB...&quot;</span></span>
+<span class="line"></span></code></pre>
+<p>The Page Access Token is the token your automation script should use.</p>
+<hr>
+<h2>7. Test Publishing a Post</h2>
+<p>Create a test post:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">curl </span><span style="color: #9DB1C5">-X</span><span style="color: #B392F0"> </span><span style="color: #9DB1C5">POST</span><span style="color: #B392F0"> \</span></span>
+<span class="line"><span style="color: #FFAB70">&quot;https://graph.facebook.com/v25.0/$FACEBOOK_PAGE_ID/feed&quot;</span><span style="color: #B392F0"> \</span></span>
+<span class="line"><span style="color: #B392F0">-d </span><span style="color: #FFAB70">&quot;message=Hello from Graph API&quot;</span><span style="color: #B392F0"> \</span></span>
+<span class="line"><span style="color: #B392F0">-d </span><span style="color: #FFAB70">&quot;access_token=$FACEBOOK_PAGE_ACCESS_TOKEN&quot;</span><span style="color: #B392F0"> </span><span style="color: #F97583">|</span><span style="color: #B392F0"> jq</span></span>
+<span class="line"></span></code></pre>
+<p>Success response:</p>
+<pre class="shiki min-dark" style="background-color: #1f1f1f" tabindex="0"><code><span class="line"><span style="color: #B392F0">{</span></span>
+<span class="line"><span style="color: #B392F0">  </span><span style="color: #F8F8F8">&quot;id&quot;</span><span style="color: #BBBBBB">:</span><span style="color: #B392F0"> </span><span style="color: #FFAB70">&quot;123456789_987654321&quot;</span></span>
+<span class="line"><span style="color: #B392F0">}</span></span>
+<span class="line"></span></code></pre>
+<hr>
+<h2>Token Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Purpose</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FACEBOOK_USER_TOKEN</code></td>
+<td>Initial authentication</td>
+<td>Setup only</td>
+</tr>
+<tr>
+<td><code>FACEBOOK_PAGE_ACCESS_TOKEN</code></td>
+<td>Publish/manage Page content</td>
+<td>Automation scripts</td>
+</tr>
+</tbody>
+</table>
+<p>For a personal automation tool, store <code>FACEBOOK_PAGE_ACCESS_TOKEN</code> securely and load it from environment variables instead of hardcoding it.</p>
+<h2>Common Issues</h2>
+<h3><code>/me/accounts</code> returns an empty list</h3>
+<p>With the New Pages Experience, <code>/me/accounts</code> may return no pages even when the token has valid Page permissions.</p>
+<p>Use the Page ID from <code>granular_scopes.target_ids</code> instead.</p>
+<h3>&quot;Application has been deleted&quot; from debug_token</h3>
+<p>Check that:</p>
+<ul>
+<li><code>FACEBOOK_APP_ID</code> matches the App that created the token</li>
+<li><code>FACEBOOK_APP_SECRET</code> belongs to the same App</li>
+<li>The <code>|</code> character is quoted or escaped in the URL</li>
+</ul>
+
+  </main>
+  <footer style="color:burlywood">
+    2026 - Rafael Santos
+  </footer>
+  
+  <script type="text/javascript" src="/blog/copy-button.js"></script>
+</body>
+
+</html>

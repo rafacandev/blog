@@ -33,6 +33,10 @@ A simple agents orchestration. Excellent staring point when coding with multiple
 
 [Huge list of unicode symbols](https://www.vertex42.com/ExcelTips/unicode-symbols.html)
 
+[HTML Color Codes](https://htmlcolorcodes.com/color-chart)
+
+[Color Palette](https://coolors.co/)
+
 ## UI
 
 [daisyUI](https://daisyui.com/) - Tailwind CSS plugin. It provides useful component classes to help you write less code and build faster.
